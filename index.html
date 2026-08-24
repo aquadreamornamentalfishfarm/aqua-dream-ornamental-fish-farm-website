@@ -1,1 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aqua Dream | Ornamental Fish Farm</title>
+
+    <meta
+        name="description"
+        content="Aqua Dream Ornamental Fish Farm - Quality ornamental fish, guppies, bettas, shrimp and live foods."
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5fbff;
+            color: #123;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #063b4c;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+            margin-top: 3px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 600px;
+            padding: 80px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    rgba(0, 40, 60, 0.75),
+                    rgba(0, 40, 60, 0.75)
+                ),
+                url("https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&fit=crop&w=1600&q=80");
+
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 72px);
+            margin-bottom: 20px;
+        }
+
+        .hero h2 {
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button {
+            padding: 15px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .primary {
+            background: white;
+            color: #063b4c;
+        }
+
+        .secondary {
+            background: #19a974;
+            color: white;
+        }
+
+        /* ================= SECTIONS ================= */
+
+        .section {
+            padding: 75px 7%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 34px;
+            margin-bottom: 12px;
+            color: #063b4c;
+        }
+
+        .section-description {
+            max-width: 650px;
+            margin: 0 auto 45px;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        /* ================= CATEGORIES ================= */
+
+        .category-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 25px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .category {
+            background: white;
+            padding: 35px 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .category:hover {
+            transform: translateY(-6px);
+        }
+
+        .category-icon {
+            font-size: 55px;
+            margin-bottom: 18px;
+        }
+
+        .category h3 {
+            color: #063b4c;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .category p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* ================= WHY US ================= */
+
+        .why-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 25px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .why-card {
+            padding: 30px;
+        }
+
+        .why-card h3 {
+            margin: 15px 0 10px;
+            color: #063b4c;
+        }
+
+        .why-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .why-icon {
+            font-size: 40px;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            background: #063b4c;
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .cta h2 {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #022833;
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 7px;
+            color: #d6e5ea;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav a {
+                margin: 0 8px;
+                font-size: 13px;
+            }
+
+            .hero {
+                min-height: 550px;
+                padding: 60px 20px;
+            }
+
+            .section {
+                padding: 55px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+
+        🐟 AQUA DREAM
+
+        <span>
+            Ornamental Fish Farm
+        </span>
+
+    </div>
+
+
+    <nav>
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#categories">
+            Fish
+        </a>
+
+        <a href="#about">
+            About
+        </a>
+
+        <a href="#contact">
+            Contact
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <h1>
+            AQUA DREAM
+        </h1>
+
+        <h2>
+            Ornamental Fish Farm
+        </h2>
+
+        <p>
+            Discover beautiful ornamental fish,
+            carefully bred and selected for aquarium
+            hobbyists and breeders.
+        </p>
+
+
+        <div class="buttons">
+
+            <a
+                href="#categories"
+                class="button primary"
+            >
+                VIEW OUR FISH
+            </a>
+
+
+            <a
+                href="#contact"
+                class="button secondary"
+            >
+                CONTACT US
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section class="section" id="categories">
+
+    <h2 class="section-title">
+        Our Fish & Products
+    </h2>
+
+    <p class="section-description">
+
+        Explore our collection of ornamental fish
+        and live cultures available from Aqua Dream.
+
+    </p>
+
+
+    <div class="category-grid">
+
+
+        <div class="category">
+
+            <div class="category-icon">
+                🐠
+            </div>
+
+            <h3>
+                Guppies
+            </h3>
+
+            <p>
+                Beautiful and colourful guppy
+                varieties for aquarium hobbyists
+                and breeders.
+            </p>
+
+        </div>
+
+
+
+        <div class="category">
+
+            <div class="category-icon">
+                🐟
+            </div>
+
+            <h3>
+                Bettas
+            </h3>
+
+            <p>
+                Attractive betta varieties with
+                vibrant colours and patterns.
+            </p>
+
+        </div>
+
+
+
+        <div class="category">
+
+            <div class="category-icon">
+                🦐
+            </div>
+
+            <h3>
+                Shrimp
+            </h3>
+
+            <p>
+                Ornamental freshwater shrimp for
+                planted and nano aquariums.
+            </p>
+
+        </div>
+
+
+
+        <div class="category">
+
+            <div class="category-icon">
+                🌱
+            </div>
+
+            <h3>
+                Live Foods
+            </h3>
+
+            <p>
+                Live cultures and feeds for
+                ornamental fish.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= WHY AQUA DREAM ================= -->
+
+<section class="section" id="about">
+
+    <h2 class="section-title">
+        Why Aqua Dream?
+    </h2>
+
+    <p class="section-description">
+
+        Our goal is to provide quality ornamental
+        fish while helping aquarium hobbyists
+        enjoy healthy and beautiful fish.
+
+    </p>
+
+
+    <div class="why-grid">
+
+
+        <div class="why-card">
+
+            <div class="why-icon">
+                🐟
+            </div>
+
+            <h3>
+                Quality Fish
+            </h3>
+
+            <p>
+                We focus on maintaining healthy
+                and attractive ornamental fish.
+            </p>
+
+        </div>
+
+
+
+        <div class="why-card">
+
+            <div class="why-icon">
+                🏡
+            </div>
+
+            <h3>
+                Farm Direct
+            </h3>
+
+            <p>
+                Get ornamental fish directly
+                from Aqua Dream.
+            </p>
+
+        </div>
+
+
+
+        <div class="why-card">
+
+            <div class="why-icon">
+                📦
+            </div>
+
+            <h3>
+                Careful Packing
+            </h3>
+
+            <p>
+                Fish are carefully prepared
+                for transportation.
+            </p>
+
+        </div>
+
+
+
+        <div class="why-card">
+
+            <div class="why-icon">
+                ❤️
+            </div>
+
+            <h3>
+                Hobbyist Friendly
+            </h3>
+
+            <p>
+                We support aquarium hobbyists
+                and breeders.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CONTACT CTA ================= -->
+
+<section class="cta" id="contact">
+
+    <h2>
+        Looking for Ornamental Fish?
+    </h2>
+
+    <p>
+        Contact Aqua Dream to check
+        availability and prices.
+    </p>
+
+
+    <div class="buttons">
+
+        <a
+            href="https://wa.me/"
+            class="button secondary"
+        >
+            ORDER ON WHATSAPP
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        <strong>
+            AQUA DREAM ORNAMENTAL FISH FARM
+        </strong>
+    </p>
+
+    <p>
+        Kanyakumari District, Tamil Nadu
+    </p>
+
+    <p>
+        © 2026 Aqua Dream. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
