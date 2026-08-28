@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Aqua Dream | Ornamental Fish Farm Kanyakumari</title>
+
+<meta name="description"
+    content="Learn about Aqua Dream Ornamental Fish Farm in Kanyakumari, Tamil Nadu. We provide quality guppies, bettas and live food cultures for aquarium hobbyists and breeders.">
+
+<meta name="keywords"
+    content="Aqua Dream Ornamental Fish Farm, guppy fish Kanyakumari, ornamental fish Kanyakumari, guppy fish Tamil Nadu, betta fish Kanyakumari">
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5fbff;
+        color: #123;
+        line-height: 1.7;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    header {
+
+        background-image: url("aqua-dream-logo.%20jpg.jpeg");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        min-height: 220px;
+
+        padding: 20px 6%;
+
+        display: flex;
+
+        justify-content: flex-end;
+
+        align-items: flex-end;
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 1000;
+    }
+
+
+    header nav {
+
+        background: rgba(0, 0, 0, 0.55);
+
+        padding: 10px 18px;
+
+        border-radius: 10px;
+    }
+
+
+    nav a {
+
+        color: white;
+
+        text-decoration: none;
+
+        margin-left: 25px;
+
+        font-size: 15px;
+
+        font-weight: bold;
+    }
+
+
+    nav a:hover {
+
+        text-decoration: underline;
+    }
+
+
+    /* ================= HERO ================= */
+
+    .about-hero {
+
+        min-height: 360px;
+
+        background:
+
+            linear-gradient(
+                rgba(0, 40, 60, 0.78),
+                rgba(0, 40, 60, 0.78)
+            ),
+
+            url("https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&fit=crop&w=1600&q=80");
+
+        background-size: cover;
+
+        background-position: center;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        text-align: center;
+
+        color: white;
+
+        padding: 60px 20px;
+    }
+
+
+    .about-hero h1 {
+
+        font-size: clamp(42px, 7vw, 70px);
+
+        margin-bottom: 15px;
+    }
+
+
+    .about-hero p {
+
+        max-width: 750px;
+
+        margin: auto;
+
+        font-size: 19px;
+
+        line-height: 1.7;
+    }
+
+
+    /* ================= MAIN CONTENT ================= */
+
+    .section {
+
+        padding: 75px 7%;
+    }
+
+
+    .content {
+
+        max-width: 1000px;
+
+        margin: auto;
+    }
+
+
+    .section-title {
+
+        text-align: center;
+
+        color: #063b4c;
+
+        font-size: 34px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .section-text {
+
+        color: #555;
+
+        font-size: 17px;
+
+        line-height: 1.9;
+
+        margin-bottom: 20px;
+
+        text-align: center;
+    }
+
+
+    /* ================= WELCOME ================= */
+
+    .welcome-box {
+
+        background: white;
+
+        padding: 40px;
+
+        border-radius: 15px;
+
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+        margin-bottom: 35px;
+    }
+
+
+    .welcome-box h2 {
+
+        color: #063b4c;
+
+        margin-bottom: 18px;
+
+        font-size: 28px;
+    }
+
+
+    .welcome-box p {
+
+        color: #555;
+
+        line-height: 1.9;
+
+        margin-bottom: 15px;
+    }
+
+
+    /* ================= OUR STORY ================= */
+
+    .story {
+
+        background: #eaf8fc;
+
+        padding: 70px 7%;
+    }
+
+
+    .story-container {
+
+        max-width: 1000px;
+
+        margin: auto;
+    }
+
+
+    .story h2 {
+
+        color: #063b4c;
+
+        text-align: center;
+
+        font-size: 34px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .story p {
+
+        color: #555;
+
+        line-height: 1.9;
+
+        font-size: 17px;
+
+        margin-bottom: 18px;
+
+        text-align: center;
+    }
+
+
+    /* ================= WHAT WE OFFER ================= */
+
+    .offer-grid {
+
+        max-width: 1100px;
+
+        margin: 40px auto 0;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(220px, 1fr));
+
+        gap: 25px;
+    }
+
+
+    .offer-card {
+
+        background: white;
+
+        padding: 30px;
+
+        border-radius: 15px;
+
+        text-align: center;
+
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+        transition: 0.3s;
+    }
+
+
+    .offer-card:hover {
+
+        transform: translateY(-5px);
+
+        box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+
+    .offer-icon {
+
+        font-size: 45px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .offer-card h3 {
+
+        color: #063b4c;
+
+        margin-bottom: 10px;
+    }
+
+
+    .offer-card p {
+
+        color: #666;
+
+        line-height: 1.6;
+    }
+
+
+    /* ================= OUR APPROACH ================= */
+
+    .approach {
+
+        background: white;
+    }
+
+
+    .approach-grid {
+
+        max-width: 1100px;
+
+        margin: 40px auto 0;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(220px, 1fr));
+
+        gap: 25px;
+    }
+
+
+    .approach-card {
+
+        padding: 30px;
+
+        text-align: center;
+
+        border-radius: 15px;
+
+        background: #f5fbff;
+
+        border: 1px solid #e0edf1;
+    }
+
+
+    .approach-card h3 {
+
+        color: #063b4c;
+
+        margin: 15px 0 10px;
+    }
+
+
+    .approach-card p {
+
+        color: #666;
+
+        line-height: 1.6;
+    }
+
+
+    /* ================= FARM INFO ================= */
+
+    .farm-section {
+
+        padding: 70px 7%;
+
+        background: #063b4c;
+
+        color: white;
+
+        text-align: center;
+    }
+
+
+    .farm-section h2 {
+
+        font-size: 34px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .farm-section p {
+
+        max-width: 750px;
+
+        margin: 0 auto 12px;
+
+        line-height: 1.8;
+
+        color: #d6e5ea;
+    }
+
+
+    /* ================= SOCIAL ================= */
+
+    .social-section {
+
+        padding: 70px 7%;
+
+        text-align: center;
+    }
+
+
+    .social-grid {
+
+        max-width: 900px;
+
+        margin: 40px auto 0;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 25px;
+    }
+
+
+    .social-card {
+
+        background: white;
+
+        padding: 30px;
+
+        border-radius: 15px;
+
+        box-shadow:
+            0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+
+    .social-card .icon {
+
+        font-size: 45px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .social-card h3 {
+
+        color: #063b4c;
+
+        margin-bottom: 12px;
+    }
+
+
+    .social-card p {
+
+        color: #666;
+
+        margin-bottom: 18px;
+    }
+
+
+    .social-button {
+
+        display: inline-block;
+
+        color: white;
+
+        padding: 11px 18px;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: bold;
+    }
+
+
+    .youtube {
+
+        background: #ff0000;
+    }
+
+
+    .instagram {
+
+        background: #c13584;
+    }
+
+
+    .whatsapp {
+
+        background: #19a974;
+    }
+
+
+    /* ================= CTA ================= */
+
+    .cta {
+
+        background: #eaf8fc;
+
+        text-align: center;
+
+        padding: 70px 20px;
+    }
+
+
+    .cta h2 {
+
+        color: #063b4c;
+
+        font-size: 35px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .cta p {
+
+        color: #555;
+
+        margin-bottom: 25px;
+    }
+
+
+    .cta-button {
+
+        display: inline-block;
+
+        background: #19a974;
+
+        color: white;
+
+        padding: 14px 25px;
+
+        border-radius: 8px;
+
+        text-decoration: none;
+
+        font-weight: bold;
+    }
+
+
+    /* ================= FOOTER ================= */
+
+    footer {
+
+        background: #022833;
+
+        color: white;
+
+        padding: 40px 20px;
+
+        text-align: center;
+    }
+
+
+    footer p {
+
+        margin: 7px;
+
+        color: #d6e5ea;
+    }
+
+
+    footer a {
+
+        color: #d6e5ea;
+
+        text-decoration: none;
+
+        margin: 0 8px;
+    }
+
+
+    footer a:hover {
+
+        text-decoration: underline;
+    }
+
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 700px) {
+
+        header {
+
+            min-height: 160px;
+
+            padding: 15px 10px;
+
+            flex-direction: column;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        nav a {
+
+            margin: 0 8px;
+
+            font-size: 13px;
+        }
+
+
+        .section {
+
+            padding: 55px 20px;
+        }
+
+
+        .welcome-box {
+
+            padding: 25px;
+        }
+
+
+        .social-grid {
+
+            grid-template-columns: 1fr;
+        }
+
+
+        .about-hero {
+
+            min-height: 300px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="index.html#categories">Fish</a>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="about-hero">
+
+    <div>
+
+        <h1>About Aqua Dream</h1>
+
+        <p>
+            Bringing beautiful ornamental fish and
+            aquarium life to hobbyists and breeders.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= WELCOME ================= -->
+
+<section class="section">
+
+    <div class="content">
+
+        <div class="welcome-box">
+
+            <h2>
+                Welcome to Aqua Dream Ornamental Fish Farm
+            </h2>
+
+            <p>
+                Aqua Dream Ornamental Fish Farm is an
+                ornamental fish farm based in Kanyakumari
+                District, Tamil Nadu, India.
+            </p>
+
+            <p>
+                We focus on providing healthy and attractive
+                ornamental fish for aquarium hobbyists,
+                breeders and fish lovers.
+            </p>
+
+            <p>
+                Our current collection includes different
+                varieties of guppies, bettas and live food
+                cultures for aquarium fish.
+            </p>
+
+            <p>
+                We aim to make quality ornamental fish
+                accessible to hobbyists while providing
+                friendly support before and after purchase.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= OUR STORY ================= -->
+
+<section class="story">
+
+    <div class="story-container">
+
+        <h2>Our Story</h2>
+
+        <p>
+            Aqua Dream started with a passion for ornamental
+            fish keeping and aquarium culture.
+        </p>
+
+        <p>
+            What began as an interest in keeping and breeding
+            beautiful aquarium fish has grown into Aqua Dream
+            Ornamental Fish Farm.
+        </p>
+
+        <p>
+            We continue to expand our collection of ornamental
+            fish varieties while improving our breeding,
+            maintenance and fish-care practices.
+        </p>
+
+        <p>
+            Our goal is to build a trusted connection between
+            our farm and aquarium hobbyists who love keeping
+            and breeding ornamental fish.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= WHAT WE OFFER ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        What We Offer
+    </h2>
+
+    <p class="section-text">
+        Explore the products and aquarium resources available
+        from Aqua Dream.
+    </p>
+
+
+    <div class="offer-grid">
+
+
+        <div class="offer-card">
+
+            <div class="offer-icon">
+                🐠
+            </div>
+
+            <h3>Guppies</h3>
+
+            <p>
+                A variety of colourful guppies suitable for
+                aquarium hobbyists and breeders.
+            </p>
+
+        </div>
+
+
+        <div class="offer-card">
+
+            <div class="offer-icon">
+                🐟
+            </div>
+
+            <h3>Bettas</h3>
+
+            <p>
+                Beautiful betta fish for aquarium enthusiasts
+                and fish keepers.
+            </p>
+
+        </div>
+
+
+        <div class="offer-card">
+
+            <div class="offer-icon">
+                🌱
+            </div>
+
+            <h3>Live Foods</h3>
+
+            <p>
+                Live food cultures such as vinegar eel and
+                microworm for aquarium fish.
+            </p>
+
+        </div>
+
+
+        <div class="offer-card">
+
+            <div class="offer-icon">
+                🦐
+            </div>
+
+            <h3>Shrimp</h3>
+
+            <p>
+                Shrimp varieties are being planned for our
+                future collection.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= OUR APPROACH ================= -->
+
+<section class="section approach">
+
+    <h2 class="section-title">
+        Our Approach
+    </h2>
+
+    <p class="section-text">
+        We focus on responsible fish keeping and providing
+        a better experience for aquarium hobbyists.
+    </p>
+
+
+    <div class="approach-grid">
+
+
+        <div class="approach-card">
+
+            <div class="offer-icon">
+                ❤️
+            </div>
+
+            <h3>Fish Care</h3>
+
+            <p>
+                We focus on maintaining healthy and attractive
+                ornamental fish.
+            </p>
+
+        </div>
+
+
+        <div class="approach-card">
+
+            <div class="offer-icon">
+                🧬
+            </div>
+
+            <h3>Breeding</h3>
+
+            <p>
+                We work with different ornamental fish varieties
+                and continuously develop our collection.
+            </p>
+
+        </div>
+
+
+        <div class="approach-card">
+
+            <div class="offer-icon">
+                📦
+            </div>
+
+            <h3>Careful Packing</h3>
+
+            <p>
+                Fish are prepared carefully for transportation
+                to help ensure a safe journey.
+            </p>
+
+        </div>
+
+
+        <div class="approach-card">
+
+            <div class="offer-icon">
+                🤝
+            </div>
+
+            <h3>Hobbyist Support</h3>
+
+            <p>
+                We are happy to communicate with hobbyists
+                regarding fish availability and orders.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FARM ================= -->
+
+<section class="farm-section">
+
+    <h2>Visit Aqua Dream</h2>
+
+    <p>
+        Aqua Dream Ornamental Fish Farm
+    </p>
+
+    <p>
+        Cheavilai, Palappallam,<br>
+        Kanyakumari District,<br>
+        Tamil Nadu, India
+    </p>
+
+    <p>
+        WhatsApp: +91 75388 67155
+    </p>
+
+</section>
+
+
+
+<!-- ================= SOCIAL MEDIA ================= -->
+
+<section class="social-section">
+
+    <h2 class="section-title">
+        Follow Aqua Dream
+    </h2>
+
+    <p class="section-text">
+        Follow us for fish updates, new varieties,
+        farm activities, offers and aquarium content.
+    </p>
+
+
+    <div class="social-grid">
+
+
+        <!-- YOUTUBE -->
+
+        <div class="social-card">
+
+            <div class="icon">
+                ▶️
+            </div>
+
+            <h3>YouTube</h3>
+
+            <p>
+                Watch our ornamental fish and Aqua Dream
+                videos.
+            </p>
+
+            <a
+                href="https://youtube.com/@aswinaquadream?si=IC3O_iC87qeSj_ja"
+                class="social-button youtube"
+                target="_blank">
+
+                VISIT YOUTUBE
+
+            </a>
+
+        </div>
+
+
+
+        <!-- INSTAGRAM -->
+
+        <div class="social-card">
+
+            <div class="icon">
+                📸
+            </div>
+
+            <h3>Instagram</h3>
+
+            <p>
+                Follow our latest fish, reels and
+                farm updates.
+            </p>
+
+            <a
+                href="https://www.instagram.com/aquadream_ornamental_fish_farm?utm_source=qr&igsi=b3B2Zmw0b25xZG9y"
+                class="social-button instagram"
+                target="_blank">
+
+                FOLLOW INSTAGRAM
+
+            </a>
+
+        </div>
+
+
+
+        <!-- WHATSAPP -->
+
+        <div class="social-card">
+
+            <div class="icon">
+                💬
+            </div>
+
+            <h3>WhatsApp</h3>
+
+            <p>
+                Contact us for current fish availability,
+                prices and orders.
+            </p>
+
+            <a
+                href="https://wa.me/917538867155?text=Hello%20Aqua%20Dream,%20I%20would%20like%20to%20know%20about%20your%20available%20ornamental%20fish."
+                class="social-button whatsapp"
+                target="_blank">
+
+                CHAT ON WHATSAPP
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <h2>
+        Want to Know More?
+    </h2>
+
+    <p>
+        Explore our available ornamental fish or contact
+        Aqua Dream for current availability.
+    </p>
+
+    <a
+        href="index.html#categories"
+        class="cta-button">
+
+        VIEW OUR FISH
+
+    </a>
+
+    <a
+        href="contact.html"
+        class="cta-button"
+        style="margin-left:10px;">
+
+        CONTACT US
+
+    </a>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        <strong>AQUA DREAM ORNAMENTAL FISH FARM</strong>
+    </p>
+
+    <p>
+        Cheavilai, Palappallam,
+        Kanyakumari District, Tamil Nadu
+    </p>
+
+    <p>
+        WhatsApp: +91 75388 67155
+    </p>
+
+    <p>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        |
+
+        <a href="index.html#categories">
+            Fish
+        </a>
+
+        |
+
+        <a href="about.html">
+            About
+        </a>
+
+        |
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+    </p>
+
+    <p>
+        © 2026 Aqua Dream. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+
+</html>
