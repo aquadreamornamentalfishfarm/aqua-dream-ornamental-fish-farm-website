@@ -158,7 +158,46 @@ header nav a {
             line-height: 1.7;
             color: #555;
         }
+/* ================= PRODUCT CATEGORIES ================= */
 
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 35px auto 60px;
+}
+
+.category-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #063b4c;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+    display: block;
+}
+
+.category-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.category-card h3 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.category-card p {
+    color: #666;
+    font-size: 14px;
+}
         /* ================= PRODUCT CATALOGUE ================= */
 
         .product-heading {
@@ -440,12 +479,40 @@ nav a {
             from Aqua Dream Ornamental Fish Farm.
         </p>
 
+<!-- ================= PRODUCT CATEGORIES ================= -->
 
+<div class="category-grid">
+
+    <a href="#fishes" class="category-card">
+        <div class="category-icon">🐠</div>
+        <h3>Fishes</h3>
+        <p>Guppies, Bettas & more</p>
+    </a>
+
+    <a href="#plants" class="category-card">
+        <div class="category-icon">🌿</div>
+        <h3>Plants</h3>
+        <p>Healthy aquarium plants</p>
+    </a>
+
+    <a href="#fish-food" class="category-card">
+        <div class="category-icon">🥣</div>
+        <h3>Fish Food</h3>
+        <p>Quality food for aquarium fish</p>
+    </a>
+
+    <a href="#live-cultures" class="category-card">
+        <div class="category-icon">🦠</div>
+        <h3>Live Cultures</h3>
+        <p>Live foods for fish breeding</p>
+    </a>
+
+</div>
         <!-- ================= GUPPIES ================= -->
 
-        <h2 class="product-heading">
-            🐠 Guppies
-        </h2>
+       <h2 class="product-heading" id="fishes">
+    🐠 Fishes
+</h2>
 
         <div class="product-grid">
 
@@ -838,9 +905,9 @@ nav a {
 
         <!-- ================= LIVE FOODS ================= -->
 
-        <h2 class="product-heading">
-            🌱 Live Foods
-        </h2>
+        <h2 class="product-heading" id="live-cultures">
+    🦠 Live Cultures
+</h2>
 
         <div class="product-grid">
 
