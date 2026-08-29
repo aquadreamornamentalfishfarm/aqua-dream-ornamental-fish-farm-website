@@ -27,12 +27,15 @@
             color: #123;
         }
 
-        /* ================= HEADER ================= */
+    
 
-      header {
+    /* ================= HEADER ================= */
+
+header {
+    height: 80px;
     background: #000;
-    min-height: 220px;
-    padding: 15px 5%;
+
+    padding: 0 5%;
 
     display: flex;
     justify-content: space-between;
@@ -43,101 +46,170 @@
     z-index: 1000;
 }
 
-/* FULL AQUA DREAM LOGO */
+/* SMALL LOGO IN HEADER */
 
 .header-logo {
-    width: 330px;
-    height: 190px;
+    width: 280px;
+    height: 65px;
     object-fit: contain;
     display: block;
 }
-      nav a {
+
+/* NAVIGATION */
+
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 55px;
+}
+
+nav a {
     color: white;
     text-decoration: none;
-    margin-left: 25px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 19px;
+    font-weight: 500;
 }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
-header nav {
-    background: rgba(0, 0, 0, 0.55);
-    padding: 10px 18px;
-    border-radius: 10px;
-}
-
-header nav a {
-    font-weight: bold;
+nav a:hover {
+    color: #9b30ff;
+    text-decoration: underline;
 }
         /* ================= HERO ================= */
 
         .hero {
-            min-height: 600px;
-            padding: 80px 7%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+    min-height: calc(100vh - 80px);
 
-            background:
-                linear-gradient(
-                    rgba(0, 40, 60, 0.75),
-                    rgba(0, 40, 60, 0.75)
-                ),
-                url("https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&fit=crop&w=1600&q=80");
+    padding: 60px 7%;
 
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        .hero-content {
-            max-width: 800px;
-        }
+    text-align: center;
 
-        .hero h1 {
-            font-size: clamp(40px, 7vw, 72px);
-            margin-bottom: 20px;
-        }
+    background:
+        linear-gradient(
+            rgba(0, 20, 40, 0.55),
+            rgba(0, 20, 40, 0.70)
+        ),
+        url("https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&fit=crop&w=1600&q=80");
 
-        .hero h2 {
-            font-size: clamp(20px, 3vw, 32px);
-            font-weight: normal;
-            margin-bottom: 20px;
-        }
+    background-size: cover;
+    background-position: center;
 
-        .hero p {
-            font-size: 18px;
-            line-height: 1.7;
-            margin-bottom: 35px;
-        }
+    color: white;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+.hero-content {
+    max-width: 950px;
+}
 
-        .button {
-            padding: 15px 28px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-        }
+/* LARGE LOGO IN HERO */
 
-        .primary {
-            background: white;
-            color: #063b4c;
-        }
+.hero-logo {
+    width: 320px;
+    max-width: 70vw;
+    height: auto;
 
-        .secondary {
-            background: #19a974;
-            color: white;
-        }
+    display: block;
+    margin: 0 auto 10px;
+}
+
+/* AQUA DREAM TEXT */
+
+.hero h1 {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(55px, 7vw, 90px);
+
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 5px;
+
+    color: white;
+
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* TAGLINE */
+
+.tagline {
+    font-size: clamp(11px, 1.5vw, 19px);
+
+    letter-spacing: 9px;
+
+    margin-bottom: 25px;
+
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ORNAMENTAL FISH FARM */
+
+.hero h2 {
+    font-size: clamp(26px, 3vw, 38px);
+
+    font-weight: 400;
+
+    margin-bottom: 12px;
+}
+
+/* DESCRIPTION */
+
+.hero p {
+    max-width: 750px;
+
+    margin: 0 auto 35px;
+
+    font-size: clamp(17px, 2vw, 22px);
+
+    line-height: 1.6;
+}
+
+/* BUTTONS */
+
+.buttons {
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+}
+
+.button {
+    min-width: 190px;
+
+    padding: 17px 28px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    font-size: 17px;
+
+    display: inline-block;
+
+    transition: 0.3s;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+}
+
+.primary {
+    background: white;
+    color: #063b4c;
+}
+
+.secondary {
+    background: #19a974;
+    color: white;
+}
 
         /* ================= SECTIONS ================= */
 
@@ -359,28 +431,64 @@ header nav a {
 
         @media (max-width: 700px) {
 
-        header {
-    min-height: 180px;
-    padding: 10px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+       header {
+    height: 70px;
+    min-height: 70px;
+
+    padding: 0 15px;
+
+    flex-direction: row;
 }
 
 .header-logo {
-    width: 280px;
-    height: 130px;
+    width: 170px;
+    height: 55px;
 }
 
 header nav {
-    padding: 8px 12px;
+    gap: 12px;
 }
 
 nav a {
-    margin: 0 7px;
+    margin: 0;
     font-size: 13px;
-}    
+}
+
+.hero {
+    min-height: calc(100vh - 70px);
+    padding: 50px 20px;
+}
+
+.hero-logo {
+    width: 230px;
+}
+
+.hero h1 {
+    font-size: 48px;
+}
+
+.tagline {
+    font-size: 10px;
+    letter-spacing: 4px;
+    margin-bottom: 22px;
+}
+
+.hero h2 {
+    font-size: 27px;
+}
+
+.hero p {
+    font-size: 16px;
+}
+
+.buttons {
+    gap: 12px;
+}
+
+.button {
+    min-width: 180px;
+    font-size: 15px;
+}
 
     
             .hero {
@@ -418,17 +526,27 @@ nav a {
 
     <!-- ================= HEADER ================= -->
 <header>
-    <img
-        src="aqua-dream-logo.%20jpg.jpeg"
-        alt="Aqua Dream Ornamental Fish Farm Logo"
-        class="header-logo"
-    >
+
+    <a href="index.html">
+
+        <img
+            src="aqua-dream-logo.%20jpg.jpeg"
+            alt="Aqua Dream Ornamental Fish Farm Logo"
+            class="header-logo"
+        >
+
+    </a>
 
     <nav>
-        <a href="index.html">Home</a>
+
+        <a href="#home">Home</a>
+
         <a href="#categories">Fish</a>
+
         <a href="about.html">About</a>
+
         <a href="contact.html">Contact</a>
+
     </nav>
 
 </header>
@@ -436,34 +554,46 @@ nav a {
 
     <!-- ================= HERO ================= -->
 
-    <section class="hero" id="home">
+  <section class="hero" id="home">
 
-        <div class="hero-content">
+    <div class="hero-content">
 
-            <h1>AQUA DREAM</h1>
+        <!-- LARGE AQUA DREAM LOGO -->
 
-            <h2>Ornamental Fish Farm</h2>
+        <img
+            src="aqua-dream-logo.%20jpg.jpeg"
+            alt="Aqua Dream Logo"
+            class="hero-logo"
+        >
 
-            <p>
-                Discover beautiful ornamental fish, carefully bred and
-                selected for aquarium hobbyists and breeders.
-            </p>
+        <h1>AQUA DREAM</h1>
 
-            <div class="buttons">
+        <div class="tagline">
+            BRINGING COLOR TO YOUR TANK
+        </div>
 
-                <a href="#categories" class="button primary">
-                    VIEW OUR FISH
-                </a>
+        <h2>Ornamental Fish Farm</h2>
 
-                <a href="#contact" class="button secondary">
-                    CONTACT US
-                </a>
+        <p>
+            Discover beautiful ornamental fish, carefully bred and
+            selected for aquarium hobbyists and breeders.
+        </p>
 
-            </div>
+        <div class="buttons">
+
+            <a href="#categories" class="button primary">
+                VIEW OUR FISH
+            </a>
+
+            <a href="#contact" class="button secondary">
+                CONTACT US
+            </a>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
     <!-- ================= FISH & PRODUCTS ================= -->
