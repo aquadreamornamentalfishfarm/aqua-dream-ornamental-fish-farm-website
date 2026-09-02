@@ -86,36 +86,56 @@
 
     /* ================= CONTACT HERO ================= */
 
-    .contact-hero {
+.contact-hero {
 
-        min-height: 330px;
+    min-height: 560px;
 
-        background:
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.30),
+            rgba(0, 0, 0, 0.30)
+        ),
+        url("guppy-banner.jpg");
 
-            linear-gradient(
-                rgba(0, 40, 60, 0.78),
-                rgba(0, 40, 60, 0.78)
-            ),
+    background-size: cover;
 
-            url("https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&fit=crop&w=1600&q=80");
+    background-position: center;
 
-        background-size: cover;
+    background-repeat: no-repeat;
 
-        background-position: center;
+    display: flex;
 
-        display: flex;
+    align-items: center;
 
-        align-items: center;
+    justify-content: center;
 
-        justify-content: center;
+    text-align: center;
 
-        text-align: center;
+    color: white;
 
-        color: white;
+    padding: 50px 20px;
 
-        padding: 50px 20px;
-    }
+    border-radius: 15px;
+}
 
+.contact-hero h1 {
+
+    font-size: clamp(40px, 7vw, 65px);
+
+    margin-bottom: 15px;
+
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.contact-hero p {
+
+    font-size: 19px;
+
+    line-height: 1.6;
+
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+
+}
 
     .contact-hero h1 {
 
@@ -534,12 +554,7 @@
 
 </header>
 
-<section class="guppy-banner">
 
-    <img src="guppy-banner.jpg"
-         alt="Beautiful Ornamental Guppy Fish - Aqua Dream Ornamental Fish Farm">
-
-</section>
 
 <!-- ================= CONTACT HERO ================= -->
 
