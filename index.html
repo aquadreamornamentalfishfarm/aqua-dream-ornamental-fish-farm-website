@@ -760,7 +760,206 @@ nav a {
                 height: 240px;
             }
         }
-    </style>
+/* =========================================================
+   FISH CARE SECTION
+   ========================================================= */
+
+.fish-care-section {
+    padding: 80px 6%;
+    background: #f4faf8;
+}
+
+.section-heading {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 45px;
+}
+
+.section-tag {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #198754;
+    margin-bottom: 10px;
+}
+
+.section-heading h2 {
+    font-size: 38px;
+    margin: 0 0 15px;
+    color: #123c32;
+}
+
+.section-heading p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #666;
+}
+
+
+/* CARE GRID */
+
+.care-grid {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+
+/* CARE CARD */
+
+.care-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px 24px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: 0.3s ease;
+    border: 1px solid #e4efeb;
+}
+
+.care-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.care-icon {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.care-card h3 {
+    color: #123c32;
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.care-card p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 95px;
+}
+
+.care-card button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background: #198754;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.care-card button:hover {
+    background: #123c32;
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   CARE ARTICLE POPUP
+   ========================================================= */
+
+.care-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 30px 15px;
+    overflow-y: auto;
+}
+
+.care-modal-content {
+    position: relative;
+    max-width: 800px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 20px;
+    padding: 45px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.care-close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    border: none;
+    background: transparent;
+    font-size: 35px;
+    color: #555;
+    cursor: pointer;
+}
+
+.care-modal-content h2 {
+    color: #123c32;
+    margin-bottom: 20px;
+}
+
+.care-modal-content h3 {
+    color: #198754;
+    margin-top: 25px;
+}
+
+.care-modal-content p {
+    color: #555;
+    line-height: 1.8;
+}
+
+.care-modal-content ul {
+    padding-left: 22px;
+    line-height: 1.9;
+    color: #555;
+}
+
+.care-highlight {
+    background: #eef8f4;
+    border-left: 4px solid #198754;
+    padding: 15px 18px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .care-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .fish-care-section {
+        padding: 60px 20px;
+    }
+
+    .section-heading h2 {
+        font-size: 30px;
+    }
+
+    .care-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .care-modal-content {
+        padding: 35px 22px;
+        margin: 25px auto;
+    }
+
+}
+        </style>
 </head>
 
 <body>
@@ -784,7 +983,8 @@ nav a {
 
     <a href="#categories">Fish</a>
 
-    <a href="about.html">About</a>
+ <a href="#fish-care">Fish Care</a>
+       <a href="about.html">About</a>
 
     <a href="contact.html">Contact</a>
 
@@ -1406,7 +1606,152 @@ nav a {
         </div>
 
     </section>
+<!-- ==================== FISH CARE SECTION ==================== -->
+<section class="fish-care-section" id="fish-care">
 
+    <div class="section-heading">
+        <span class="section-tag">AQUARIUM KNOWLEDGE</span>
+        <h2>Fish Care & Aquarium Guide</h2>
+        <p>
+            Simple and practical aquarium care tips to help you keep
+            your ornamental fish healthy, active and stress-free.
+        </p>
+    </div>
+
+    <div class="care-grid">
+
+        <!-- Tank Cycling -->
+        <div class="care-card">
+            <div class="care-icon">🔄</div>
+            <h3>Fish Tank Cycling</h3>
+            <p>
+                Learn how to establish beneficial bacteria in a new
+                aquarium and safely prepare your tank for fish.
+            </p>
+
+            <button onclick="openCareArticle('cycling')">
+                Learn More
+            </button>
+        </div>
+
+        <!-- Water Quality -->
+        <div class="care-card">
+            <div class="care-icon">💧</div>
+            <h3>Water Quality</h3>
+            <p>
+                Understand ammonia, nitrite, nitrate, pH, GH and KH
+                and why they are important for aquarium fish.
+            </p>
+
+            <button onclick="openCareArticle('water')">
+                Learn More
+            </button>
+        </div>
+
+        <!-- Feeding -->
+        <div class="care-card">
+            <div class="care-icon">🐟</div>
+            <h3>Fish Feeding</h3>
+            <p>
+                Learn how much to feed your fish, feeding frequency
+                and how overfeeding can affect aquarium water.
+            </p>
+
+            <button onclick="openCareArticle('feeding')">
+                Learn More
+            </button>
+        </div>
+
+        <!-- Water Change -->
+        <div class="care-card">
+            <div class="care-icon">🚿</div>
+            <h3>Water Changes</h3>
+            <p>
+                Understand when to change aquarium water and how to
+                perform a water change safely.
+            </p>
+
+            <button onclick="openCareArticle('waterchange')">
+                Learn More
+            </button>
+        </div>
+
+        <!-- Guppy Care -->
+        <div class="care-card">
+            <div class="care-icon">🫧</div>
+            <h3>Guppy Care</h3>
+            <p>
+                Basic care requirements for guppies including water
+                parameters, feeding, tank setup and maintenance.
+            </p>
+
+            <button onclick="openCareArticle('guppy')">
+                Learn More
+            </button>
+        </div>
+
+        <!-- Disease Prevention -->
+        <div class="care-card">
+            <div class="care-icon">🛡️</div>
+            <h3>Disease Prevention</h3>
+            <p>
+                Learn simple aquarium management practices that can
+                reduce stress and help prevent common fish problems.
+            </p>
+
+            <button onclick="openCareArticle('disease')">
+                Learn More
+            </button>
+        </div>
+
+        <!-- Quarantine -->
+        <div class="care-card">
+            <div class="care-icon">🔬</div>
+            <h3>Fish Quarantine</h3>
+            <p>
+                Learn why new fish should be quarantined before
+                introducing them into your main aquarium.
+            </p>
+
+            <button onclick="openCareArticle('quarantine')">
+                Learn More
+            </button>
+        </div>
+
+        <!-- Fish Transport -->
+        <div class="care-card">
+            <div class="care-icon">📦</div>
+            <h3>Fish Transport</h3>
+            <p>
+                Practical tips for reducing stress and mortality
+                when transporting ornamental fish.
+            </p>
+
+            <button onclick="openCareArticle('transport')">
+                Learn More
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================== CARE ARTICLE POPUP ==================== -->
+
+<div class="care-modal" id="careModal">
+
+    <div class="care-modal-content">
+
+        <button class="care-close" onclick="closeCareArticle()">
+            ×
+        </button>
+
+        <div id="careArticleContent"></div>
+
+    </div>
+
+</div>
 
     <!-- ================= WHY AQUA DREAM ================= -->
 
@@ -1578,6 +1923,290 @@ nav a {
     </div>
 
 </div>
+/* =========================================================
+   FISH CARE ARTICLES
+   ========================================================= */
+
+function openCareArticle(type) {
+
+    const modal = document.getElementById("careModal");
+    const content = document.getElementById("careArticleContent");
+
+    let article = "";
+
+    if (type === "cycling") {
+
+        article = `
+            <h2>🔄 Fish Tank Cycling</h2>
+
+            <p>
+                Before adding fish to a new aquarium, it is important
+                to establish beneficial bacteria. This process is known
+                as aquarium cycling.
+            </p>
+
+            <div class="care-highlight">
+                <strong>Why is cycling important?</strong><br>
+                Fish waste can produce ammonia, which is toxic to fish.
+                Beneficial bacteria help convert ammonia into nitrite
+                and then nitrate.
+            </div>
+
+            <h3>The Nitrogen Cycle</h3>
+
+            <p>
+                Fish waste → Ammonia → Nitrite → Nitrate
+            </p>
+
+            <h3>Basic Cycling Steps</h3>
+
+            <ul>
+                <li>Set up the aquarium with filter and substrate.</li>
+                <li>Add dechlorinated water.</li>
+                <li>Start the filtration system.</li>
+                <li>Allow beneficial bacteria to establish.</li>
+                <li>Test ammonia, nitrite and nitrate regularly.</li>
+                <li>Add fish only when the aquarium is properly cycled.</li>
+            </ul>
+
+            <h3>Important</h3>
+
+            <p>
+                Never assume that a new aquarium is safe simply because
+                the water looks clear. Clear water does not necessarily
+                mean that ammonia and nitrite are safe.
+            </p>
+        `;
+
+    }
+
+    else if (type === "water") {
+
+        article = `
+            <h2>💧 Aquarium Water Quality</h2>
+
+            <p>
+                Good water quality is one of the most important factors
+                in maintaining healthy ornamental fish.
+            </p>
+
+            <h3>Important Parameters</h3>
+
+            <ul>
+                <li><strong>Ammonia:</strong> Toxic to fish.</li>
+                <li><strong>Nitrite:</strong> Toxic and should be controlled.</li>
+                <li><strong>Nitrate:</strong> Should be kept under control.</li>
+                <li><strong>pH:</strong> Measures acidity or alkalinity.</li>
+                <li><strong>GH:</strong> Represents general hardness.</li>
+                <li><strong>KH:</strong> Helps buffer pH changes.</li>
+                <li><strong>Temperature:</strong> Influences fish metabolism.</li>
+            </ul>
+
+            <div class="care-highlight">
+                Test your aquarium water regularly instead of relying
+                only on the appearance of the water.
+            </div>
+        `;
+
+    }
+
+    else if (type === "feeding") {
+
+        article = `
+            <h2>🐟 Fish Feeding Guide</h2>
+
+            <p>
+                Feeding correctly is essential for fish growth, colour,
+                health and water quality.
+            </p>
+
+            <h3>Basic Feeding Tips</h3>
+
+            <ul>
+                <li>Feed only what fish can consume quickly.</li>
+                <li>Avoid excessive feeding.</li>
+                <li>Remove uneaten food when necessary.</li>
+                <li>Provide a varied and suitable diet.</li>
+                <li>Observe fish behaviour during feeding.</li>
+            </ul>
+
+            <div class="care-highlight">
+                Overfeeding is one of the common causes of poor aquarium
+                water quality.
+            </div>
+        `;
+
+    }
+
+    else if (type === "waterchange") {
+
+        article = `
+            <h2>🚿 Aquarium Water Changes</h2>
+
+            <p>
+                Regular water changes help control accumulated waste
+                and maintain better water quality.
+            </p>
+
+            <h3>Basic Procedure</h3>
+
+            <ul>
+                <li>Prepare clean replacement water.</li>
+                <li>Use a suitable water conditioner if required.</li>
+                <li>Remove the required amount of old aquarium water.</li>
+                <li>Add replacement water gradually.</li>
+                <li>Avoid sudden major changes in water parameters.</li>
+            </ul>
+
+            <p>
+                The frequency and amount of water change should depend
+                on stocking, filtration, feeding and water-test results.
+            </p>
+        `;
+
+    }
+
+    else if (type === "guppy") {
+
+        article = `
+            <h2>🫧 Guppy Care Guide</h2>
+
+            <p>
+                Guppies are popular ornamental fish, but good water
+                quality and proper stocking are still important for
+                maintaining healthy fish.
+            </p>
+
+            <h3>Basic Guppy Care</h3>
+
+            <ul>
+                <li>Provide adequate swimming space.</li>
+                <li>Maintain stable water conditions.</li>
+                <li>Avoid overcrowding.</li>
+                <li>Provide a balanced diet.</li>
+                <li>Perform regular maintenance.</li>
+                <li>Quarantine newly purchased fish.</li>
+            </ul>
+
+            <div class="care-highlight">
+                Stable water conditions are generally more important
+                than constantly trying to change individual parameters.
+            </div>
+        `;
+
+    }
+
+    else if (type === "disease") {
+
+        article = `
+            <h2>🛡️ Disease Prevention</h2>
+
+            <p>
+                Prevention is usually easier than treating an established
+                fish disease.
+            </p>
+
+            <h3>Reduce Disease Risk</h3>
+
+            <ul>
+                <li>Maintain good water quality.</li>
+                <li>Avoid overcrowding.</li>
+                <li>Quarantine new fish.</li>
+                <li>Do not introduce visibly sick fish.</li>
+                <li>Clean aquarium equipment properly.</li>
+                <li>Reduce unnecessary handling and stress.</li>
+            </ul>
+
+            <div class="care-highlight">
+                Poor water quality and chronic stress can make fish more
+                vulnerable to disease.
+            </div>
+        `;
+
+    }
+
+    else if (type === "quarantine") {
+
+        article = `
+            <h2>🔬 Fish Quarantine</h2>
+
+            <p>
+                Quarantine means keeping newly acquired fish separately
+                before introducing them into the main aquarium system.
+            </p>
+
+            <h3>Why Quarantine?</h3>
+
+            <ul>
+                <li>Observe new fish for signs of disease.</li>
+                <li>Reduce the risk of introducing pathogens.</li>
+                <li>Monitor feeding and behaviour.</li>
+                <li>Allow stressed fish time to recover.</li>
+            </ul>
+
+            <div class="care-highlight">
+                A separate quarantine tank is one of the simplest
+                preventive measures for an aquarium hobbyist.
+            </div>
+        `;
+
+    }
+
+    else if (type === "transport") {
+
+        article = `
+            <h2>📦 Ornamental Fish Transport</h2>
+
+            <p>
+                Transport can be stressful for ornamental fish because
+                of changes in temperature, oxygen, water chemistry and
+                handling.
+            </p>
+
+            <h3>Before Transport</h3>
+
+            <ul>
+                <li>Use healthy fish for shipment.</li>
+                <li>Avoid excessive feeding immediately before transport.</li>
+                <li>Use clean transport water.</li>
+                <li>Maintain suitable temperature.</li>
+                <li>Avoid excessive stocking density.</li>
+                <li>Provide adequate oxygen for the journey.</li>
+            </ul>
+
+            <div class="care-highlight">
+                Good packaging and temperature control are critical
+                during long-distance ornamental fish transport.
+            </div>
+        `;
+    }
+
+    content.innerHTML = article;
+    modal.style.display = "block";
+
+    document.body.style.overflow = "hidden";
+}
+
+
+function closeCareArticle() {
+
+    document.getElementById("careModal").style.display = "none";
+
+    document.body.style.overflow = "auto";
+}
+
+
+/* Close popup when clicking outside */
+
+window.addEventListener("click", function(event) {
+
+    const modal = document.getElementById("careModal");
+
+    if (event.target === modal) {
+        closeCareArticle();
+    }
+
+});  
     <script>
 
 /* ================= SHOPPING CART ================= */
