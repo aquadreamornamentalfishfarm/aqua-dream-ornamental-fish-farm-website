@@ -891,6 +891,83 @@ nav a {
 
 
 }
+            /* =====================================================
+   DELIVERY DETAILS
+   ===================================================== */
+
+.delivery-details {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f5f9fc;
+}
+
+.delivery-details h3 {
+    margin-bottom: 15px;
+}
+
+.delivery-details label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.delivery-details input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.pincode-row {
+    display: flex;
+    gap: 10px;
+}
+
+.pincode-row input {
+    flex: 1;
+}
+
+.pincode-row button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#pincodeStatus {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+#locationInfo {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.delivery-summary {
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.delivery-summary > div {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+
+.grand-total {
+    font-size: 20px;
+    font-weight: 700;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
         </style>
 </head>
 
@@ -1684,7 +1761,78 @@ nav a {
             </div>
 
         </div>
+<!-- DELIVERY DETAILS -->
+<div class="delivery-details">
 
+    <h3>📦 Delivery Details</h3>
+
+    <label for="customerName">Name</label>
+    <input
+        type="text"
+        id="customerName"
+        placeholder="Enter your name"
+    >
+
+    <label for="customerPhone">Mobile Number</label>
+    <input
+        type="tel"
+        id="customerPhone"
+        placeholder="Enter your mobile number"
+        maxlength="10"
+    >
+
+    <label for="customerPincode">PIN Code</label>
+
+    <div class="pincode-row">
+        <input
+            type="text"
+            id="customerPincode"
+            placeholder="Enter 6-digit PIN code"
+            maxlength="6"
+            inputmode="numeric"
+        >
+
+        <button
+            type="button"
+            onclick="checkPincode()"
+        >
+            Check PIN
+        </button>
+    </div>
+
+    <div id="pincodeStatus"></div>
+
+    <div id="locationInfo" style="display:none;">
+        <p>
+            <strong>City:</strong>
+            <span id="customerCity"></span>
+        </p>
+
+        <p>
+            <strong>State:</strong>
+            <span id="customerState"></span>
+        </p>
+    </div>
+
+</div>
+        <div class="delivery-summary">
+
+    <div>
+        Fish Total:
+        ₹<span id="fishTotal">0</span>
+    </div>
+
+    <div>
+        Delivery Charge:
+        ₹<span id="deliveryCharge">0</span>
+    </div>
+
+    <div class="grand-total">
+        Total:
+        ₹<span id="grandTotal">0</span>
+    </div>
+
+</div>
         <div class="cart-total">
 
             Total:
@@ -2944,8 +3092,293 @@ window.addEventListener("click", function(event) {
 /* ================= SHOPPING CART ================= */
 
 let cart = [];
+// =====================================================
+// AQUA DREAM - DELIVERY CALCULATION
+// =====================================================
 
+let deliveryLocation = null;
+let deliveryCharge = 0;
 
+const TN_PUDUCHERRY = [
+    "Tamil Nadu",
+    "Puducherry",
+    "Pondicherry"
+];
+
+const OTHER_SERVICEABLE = [
+    "Kerala",
+    "Karnataka",
+    "Andhra Pradesh"
+];
+
+function calculateDeliveryCharge(totalPairs, state, city = "") {
+
+    if (totalPairs <= 0) {
+        return 0;
+    }
+
+    // ==========================================
+    // TAMIL NADU / PUDUCHERRY
+    // ==========================================
+
+    if (TN_PUDUCHERRY.includes(state)) {
+
+        if (totalPairs <= 5) {
+            return 100;
+        }
+
+        if (totalPairs <= 10) {
+            return 180;
+        }
+
+        return 180 + (Math.ceil((totalPairs - 10) / 5) * 90);
+    }
+
+    // ==========================================
+    // KERALA / KARNATAKA / ANDHRA PRADESH
+    // ==========================================
+
+    if (OTHER_SERVICEABLE.includes(state)) {
+
+        if (totalPairs <= 5) {
+            return 130;
+        }
+
+        if (totalPairs <= 10) {
+            return 210;
+        }
+
+        return 210 + (Math.ceil((totalPairs - 10) / 5) * 110);
+    }
+
+    // ==========================================
+    // MUMBAI ONLY
+    // ==========================================
+
+    if (
+        state === "Maharashtra" &&
+        city.toLowerCase().includes("mumbai")
+    ) {
+
+        if (totalPairs <= 5) {
+            return 130;
+        }
+
+        if (totalPairs <= 10) {
+            return 210;
+        }
+
+        return 210 + (Math.ceil((totalPairs - 10) / 5) * 110);
+    }
+
+    // ==========================================
+    // NOT SERVICEABLE
+    // ==========================================
+
+    return null;
+}
+// =====================================================
+// PIN CODE CHECK
+// =====================================================
+
+async function checkPincode() {
+
+    const pincodeInput =
+        document.getElementById("customerPincode");
+
+    const status =
+        document.getElementById("pincodeStatus");
+
+    const locationInfo =
+        document.getElementById("locationInfo");
+
+    const cityElement =
+        document.getElementById("customerCity");
+
+    const stateElement =
+        document.getElementById("customerState");
+
+    const pincode =
+        pincodeInput.value.trim();
+
+    // Clear previous result
+    status.innerHTML = "";
+    locationInfo.style.display = "none";
+
+    // Check 6 digit PIN
+    if (!/^[0-9]{6}$/.test(pincode)) {
+
+        status.innerHTML =
+            "❌ Please enter a valid 6-digit PIN code.";
+
+        return;
+    }
+
+    status.innerHTML =
+        "🔄 Checking PIN code...";
+
+    try {
+
+        const response = await fetch(
+            `https://api.postalpincode.in/pincode/${pincode}`
+        );
+
+        const data = await response.json();
+
+        if (
+            !data ||
+            !data[0] ||
+            data[0].Status !== "Success" ||
+            !data[0].PostOffice
+        ) {
+
+            status.innerHTML =
+                "❌ PIN code not found.";
+
+            return;
+        }
+
+        const postOffice =
+            data[0].PostOffice[0];
+
+        const state =
+            postOffice.State;
+
+        const district =
+            postOffice.District;
+
+        const city =
+            postOffice.Name;
+
+        // Show location
+        cityElement.textContent = city;
+        stateElement.textContent = state;
+
+        locationInfo.style.display = "block";
+
+        // ==========================================
+        // CHECK SERVICEABILITY
+        // ==========================================
+
+        let serviceable = false;
+
+        if (
+            state === "Tamil Nadu" ||
+            state === "Puducherry"
+        ) {
+
+            serviceable = true;
+
+        } else if (
+            state === "Kerala" ||
+            state === "Karnataka" ||
+            state === "Andhra Pradesh"
+        ) {
+
+            serviceable = true;
+
+        } else if (
+            state === "Maharashtra" &&
+            (
+                district.toLowerCase().includes("mumbai") ||
+                city.toLowerCase().includes("mumbai")
+            )
+        ) {
+
+            serviceable = true;
+        }
+
+        // ==========================================
+        // NOT SERVICEABLE
+        // ==========================================
+
+        if (!serviceable) {
+
+            deliveryLocation = null;
+            deliveryCharge = 0;
+
+            status.innerHTML =
+                "❌ Sorry, Aqua Dream currently does not deliver to this location.";
+
+            updateDeliveryDisplay();
+
+            return;
+        }
+
+        // ==========================================
+        // SERVICEABLE
+        // ==========================================
+
+        deliveryLocation = {
+            pincode: pincode,
+            city: city,
+            district: district,
+            state: state
+        };
+
+        status.innerHTML =
+            "✅ Delivery available to this location.";
+
+        updateDeliveryDisplay();
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.innerHTML =
+            "❌ Unable to check PIN code. Please try again.";
+    }
+}
+// =====================================================
+// UPDATE DELIVERY + TOTAL
+// =====================================================
+
+function updateDeliveryDisplay() {
+
+    let fishTotal = 0;
+    let totalPairs = 0;
+
+    cart.forEach(item => {
+
+        fishTotal +=
+            item.price * item.quantity;
+
+        totalPairs +=
+            item.quantity;
+
+    });
+
+    // No valid location yet
+    if (!deliveryLocation) {
+
+        deliveryCharge = 0;
+
+    } else {
+
+        deliveryCharge =
+            calculateDeliveryCharge(
+                totalPairs,
+                deliveryLocation.state,
+                deliveryLocation.city
+            );
+
+        if (deliveryCharge === null) {
+            deliveryCharge = 0;
+        }
+    }
+
+    const grandTotal =
+        fishTotal + deliveryCharge;
+
+    document.getElementById("fishTotal").textContent =
+        fishTotal;
+
+    document.getElementById("deliveryCharge").textContent =
+        deliveryCharge;
+
+    document.getElementById("grandTotal").textContent =
+        grandTotal;
+}        
 /* ADD PRODUCT TO CART */
 
 function addToCart(name, price, image) {
