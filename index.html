@@ -1984,9 +1984,10 @@ function updateCart() {
 
         cartCount.innerText = "0";
 
-        cartTotal.innerText = "0";
+       cartTotal.innerText = "0";
+updateDeliveryDisplay();
 
-        return;
+return;
     }
 
 
@@ -2067,7 +2068,7 @@ function updateCart() {
     cartCount.innerText = itemCount;
 
     cartTotal.innerText = total;
-
+updateDeliveryDisplay();
 }
 
 
@@ -2196,10 +2197,17 @@ function orderCartOnWhatsApp() {
     });
 
 
-    message +=
-        "%0A*Total Amount: ₹" +
-        total +
-        "*";
+    if (!deliveryLocation) {
+    alert("Please check the delivery PIN code before placing your order.");
+    return;
+}
+
+const grandTotal = total + deliveryCharge;
+
+message +=
+    "%0A*Fish Total: ₹" + total + "*" +
+    "%0ADelivery Charge: ₹" + deliveryCharge +
+    "%0A*Grand Total: ₹" + grandTotal + "*";
 
 
     const whatsappURL =
