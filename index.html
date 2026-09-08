@@ -1591,8 +1591,8 @@ nav a:hover {
     </div>
 
 </div>
-        <div class="delivery-summary">
-
+        
+       <div class="delivery-summary">
     <div>
         Fish Total:
         ₹<span id="fishTotal">0</span>
@@ -1604,39 +1604,28 @@ nav a:hover {
     </div>
 
     <div class="grand-total">
-        Total:
+        Grand Total:
         ₹<span id="grandTotal">0</span>
     </div>
-
 </div>
-        <div class="cart-total">
-
-            Total:
-            ₹<span id="cart-total">0</span>
-
-        </div>
 
         <button
-            class="whatsapp-cart-button"
-            onclick="orderCartOnWhatsApp()">
+    class="whatsapp-cart-button"
+    onclick="orderCartOnWhatsApp()">
+    📱 ORDER CART ON WHATSAPP
+</button>
 
-            📱 ORDER CART ON WHATSAPP
-
-        </button>
-
-        <button
-            class="clear-cart-button"
-            onclick="clearCart()">
-
-            Clear Cart
-
-        </button>
-
-    </div>
+<button
+    class="clear-cart-button"
+    onclick="clearCart()">
+    Clear Cart
+</button>
 
 </div>
-    <script>
+</div>
 
+<script>
+    
 
 /* ================= SHOPPING CART ================= */
 
@@ -1968,7 +1957,7 @@ function updateCart() {
 
     const cartCount = document.getElementById("cart-count");
 
-    const cartTotal = document.getElementById("cart-total");
+   
 
 
     cartItems.innerHTML = "";
@@ -1984,7 +1973,7 @@ function updateCart() {
 
         cartCount.innerText = "0";
 
-       cartTotal.innerText = "0";
+       
 updateDeliveryDisplay();
 
 return;
@@ -2067,7 +2056,7 @@ return;
 
     cartCount.innerText = itemCount;
 
-    cartTotal.innerText = total;
+   
 updateDeliveryDisplay();
 }
 
@@ -2156,71 +2145,57 @@ document.getElementById(
 /* ================= WHATSAPP ORDER ================= */
 
 function orderCartOnWhatsApp() {
-
     if (cart.length === 0) {
-
-        alert(
-            "Your cart is empty. Please add some products first."
-        );
-
+        alert("Your cart is empty. Please add some products first.");
         return;
-
     }
-
 
     let message =
         "Hello Aqua Dream!%0A%0A" +
         "I would like to order the following:%0A%0A";
 
-
     let total = 0;
 
-
     cart.forEach(item => {
-
-        const subtotal =
-            item.price * item.quantity;
-
+        const subtotal = item.price * item.quantity;
 
         total += subtotal;
 
-
         message +=
-            "• " +
-            item.name +
-            " × " +
-            item.quantity +
-            " = ₹" +
-            subtotal +
+            "• " + item.name +
+            " × " + item.quantity +
+            " = ₹" + subtotal +
             "%0A";
-
     });
 
+    const pincode =
+        document.getElementById("customerPincode").value.trim();
 
-    if (!deliveryLocation) {
-    alert("Please check the delivery PIN code before placing your order.");
-    return;
-}
+    if (!/^[0-9]{6}$/.test(pincode)) {
+        alert("Please enter your 6-digit PIN code and click Check PIN.");
+        return;
+    }
 
-const grandTotal = total + deliveryCharge;
+    if (!deliveryLocation || deliveryLocation.pincode !== pincode) {
+        alert("Please click Check PIN and wait for delivery confirmation before ordering.");
+        return;
+    }
 
-message +=
-    "%0A*Fish Total: ₹" + total + "*" +
-    "%0ADelivery Charge: ₹" + deliveryCharge +
-    "%0A*Grand Total: ₹" + grandTotal + "*";
+    updateDeliveryDisplay();
 
+    const grandTotal = total + Number(deliveryCharge);
+
+    message +=
+        "%0A*Fish Total: ₹" + total + "*" +
+        "%0ADelivery Charge: ₹" + deliveryCharge +
+        "%0A*Grand Total: ₹" + grandTotal + "*";
 
     const whatsappURL =
-    "https://wa.me/917538867155?text=" +
-    message;
+        "https://wa.me/917538867155?text=" + message;
 
-
-    window.open(
-        whatsappURL,
-        "_blank"
-    );
-
+    window.open(whatsappURL, "_blank");
 }
+
 
 </script>
     <script>
@@ -2235,3 +2210,4 @@ document.querySelectorAll('.product-card > img').forEach((img) => {
 });
 </script>
 </body>
+</html>
