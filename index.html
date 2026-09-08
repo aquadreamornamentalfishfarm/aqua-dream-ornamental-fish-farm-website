@@ -310,10 +310,16 @@ nav a:hover {
     display: block;
     width: 100%;
     height: 220px;
-    object-fit: cover;
+    object-fit: contain;      /* shows the entire fish—no cropping */
     object-position: center;
+    background: #f7f7f7;      /* fills empty space around narrow images */
     border-radius: 10px;
     margin-bottom: 15px;
+}
+.product-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
 }
 
 .product-card h3 {
@@ -327,7 +333,6 @@ nav a:hover {
 .product-card .order-button {
     margin-top: auto;
 }
-
         /* ================= PRODUCT IMAGES ================= */
 
        
