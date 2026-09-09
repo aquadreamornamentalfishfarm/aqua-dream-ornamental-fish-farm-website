@@ -647,7 +647,34 @@ nav a:hover {
 .whatsapp-cart-button:hover {
     background: #12865b;
 }
+/* ================= BIG PAY NOW BUTTON ================= */
 
+.pay-now-btn {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 18px 20px;
+
+    background: #063b4c;
+    color: white;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 21px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+
+    transition: 0.3s;
+}
+
+.pay-now-btn:hover {
+    background: #085b70;
+    transform: translateY(-2px);
+}
 .clear-cart-button {
     display: block;
 
@@ -1608,13 +1635,10 @@ nav a:hover {
         ₹<span id="grandTotal">0</span>
     </div>
 </div>
-<button onclick="startRazorpayPayment()" class="pay-now-btn">
+<button
+    onclick="startRazorpayPayment()"
+    class="pay-now-btn">
     💳 PAY NOW
-</button>
-        <button
-    class="whatsapp-cart-button"
-    onclick="orderCartOnWhatsApp()">
-    📱 ORDER CART ON WHATSAPP
 </button>
 
 <button
