@@ -2318,7 +2318,7 @@ async function startRazorpayPayment() {
            ================================ */
 
         const response = await fetch(
-            "YOUR_BACKEND_URL/create-order",
+    "https://aqua-dream-razorpay-backend-production.up.railway.app/create-order",
             {
                 method: "POST",
 
@@ -2432,9 +2432,9 @@ async function startRazorpayPayment() {
 
                 try {
 
-                    const verifyResponse =
-                        await fetch(
-                            "YOUR_BACKEND_URL/verify-payment",
+                   const verifyResponse =
+    await fetch(
+        "https://aqua-dream-razorpay-backend-production.up.railway.app/verify-payment",
                             {
                                 method: "POST",
 
