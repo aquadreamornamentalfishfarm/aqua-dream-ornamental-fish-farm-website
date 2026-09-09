@@ -1608,7 +1608,9 @@ nav a:hover {
         ₹<span id="grandTotal">0</span>
     </div>
 </div>
-
+<button onclick="startRazorpayPayment()" class="pay-now-btn">
+    💳 PAY NOW
+</button>
         <button
     class="whatsapp-cart-button"
     onclick="orderCartOnWhatsApp()">
@@ -2195,19 +2197,207 @@ function orderCartOnWhatsApp() {
 
     window.open(whatsappURL, "_blank");
 }
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+const RAZORPAY_KEY_ID = "rzp_live_TZoAH87dY4sPwW";
+
+/* ================================
+   RAZORPAY PAYMENT
+   ================================ */
+
+async function startRazorpayPayment() {
+
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+
+    const name =
+        document.getElementById("customerName").value.trim();
+
+    const phone =
+        document.getElementById("customerPhone").value.trim();
+
+    const pincode =
+        document.getElementById("customerPincode").value.trim();
+
+    if (!name) {
+        alert("Please enter your name.");
+        return;
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return;
+    }
+
+    if (!/^[0-9]{6}$/.test(pincode)) {
+        alert("Please enter your 6-digit PIN code.");
+        return;
+    }
+
+    if (!deliveryLocation ||
+        deliveryLocation.pincode !== pincode) {
+
+        alert("Please click Check PIN and confirm delivery availability.");
+        return;
+    }
+
+    updateDeliveryDisplay();
+
+    const grandTotal =
+        Number(document.getElementById("grandTotal").textContent);
+
+    if (grandTotal <= 0) {
+        alert("Invalid payment amount.");
+        return;
+    }
+
+    try {
+
+        /*
+         * IMPORTANT:
+         * Your backend will create the Razorpay order.
+         */
+
+        const response = await fetch(
+            "YOUR_BACKEND_URL/create-order",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    amount: grandTotal * 100,
+                    currency: "INR"
+                })
+            }
+        );
+
+        const order = await response.json();
+
+        if (!order.id) {
+            alert("Unable to create payment order.");
+            return;
+        }
+
+        const options = {
+
+            key: RAZORPAY_KEY_ID,
+
+            amount: order.amount,
+
+            currency: "INR",
+
+            name: "Aqua Dream Ornamental Fish Farm",
+
+            description: "Ornamental Fish Order",
+
+            order_id: order.id,
+
+            prefill: {
+
+                name: name,
+
+                contact: phone
+
+            },
+
+            notes: {
+
+                pincode: pincode,
+
+                city: deliveryLocation.city,
+
+                state: deliveryLocation.state
+
+            },
+
+            theme: {
+
+                color: "#063b4c"
+
+            },
+
+            handler: function (response) {
+
+                alert(
+                    "Payment successful!\n\n" +
+                    "Payment ID: " +
+                    response.razorpay_payment_id
+                );
+
+                /*
+                 * Later we will send this payment information
+                 * to your backend for verification.
+                 */
+
+            },
+
+            modal: {
+
+                ondismiss: function () {
+
+                    console.log(
+                        "Razorpay checkout closed."
+                    );
+
+                }
+
+            }
+
+        };
+
+        const razorpay =
+            new Razorpay(options);
+
+        razorpay.open();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to start payment. Please try again."
+        );
+
+    }
+
+}
 
 
-</script>
-    <script>
-document.querySelectorAll('.product-card > img').forEach((img) => {
-    const frame = document.createElement('div');
-    frame.className = 'image-frame';
+/* ================================
+   IMAGE FRAME
+   ================================ */
 
-    img.parentNode.insertBefore(frame, img);
-    frame.appendChild(img);
+document
+    .querySelectorAll('.product-card > img')
+    .forEach((img) => {
 
-    frame.style.setProperty('--fish-image', `url("${img.src}")`);
-});
+        const frame =
+            document.createElement('div');
+
+        frame.className =
+            'image-frame';
+
+        img.parentNode.insertBefore(
+            frame,
+            img
+        );
+
+        frame.appendChild(img);
+
+        frame.style.setProperty(
+            '--fish-image',
+            `url("${img.src}")`
+        );
+
+    });
+
 </script>
 </body>
 </html>
