@@ -2147,6 +2147,7 @@ document.getElementById(
 /* ================= WHATSAPP ORDER ================= */
 
 function orderCartOnWhatsApp() {
+
     if (cart.length === 0) {
         alert("Your cart is empty. Please add some products first.");
         return;
@@ -2159,7 +2160,9 @@ function orderCartOnWhatsApp() {
     let total = 0;
 
     cart.forEach(item => {
-        const subtotal = item.price * item.quantity;
+
+        const subtotal =
+            item.price * item.quantity;
 
         total += subtotal;
 
@@ -2171,21 +2174,34 @@ function orderCartOnWhatsApp() {
     });
 
     const pincode =
-        document.getElementById("customerPincode").value.trim();
+        document.getElementById("customerPincode")
+        .value.trim();
 
     if (!/^[0-9]{6}$/.test(pincode)) {
-        alert("Please enter your 6-digit PIN code and click Check PIN.");
+
+        alert(
+            "Please enter your 6-digit PIN code and click Check PIN."
+        );
+
         return;
     }
 
-    if (!deliveryLocation || deliveryLocation.pincode !== pincode) {
-        alert("Please click Check PIN and wait for delivery confirmation before ordering.");
+    if (
+        !deliveryLocation ||
+        deliveryLocation.pincode !== pincode
+    ) {
+
+        alert(
+            "Please click Check PIN and wait for delivery confirmation before ordering."
+        );
+
         return;
     }
 
     updateDeliveryDisplay();
 
-    const grandTotal = total + Number(deliveryCharge);
+    const grandTotal =
+        total + Number(deliveryCharge);
 
     message +=
         "%0A*Fish Total: ₹" + total + "*" +
@@ -2197,70 +2213,109 @@ function orderCartOnWhatsApp() {
 
     window.open(whatsappURL, "_blank");
 }
+
+</script>
+
+
+<!-- ================= RAZORPAY CHECKOUT LIBRARY ================= -->
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 
 <script>
 
+/* ================================
+   RAZORPAY
+   ================================ */
+
 const RAZORPAY_KEY_ID = "rzp_live_TZoAH87dY4sPwW";
 
-/* ================================
-   RAZORPAY PAYMENT
-   ================================ */
 
 async function startRazorpayPayment() {
 
     if (cart.length === 0) {
+
         alert("Your cart is empty.");
+
         return;
     }
+
 
     const name =
-        document.getElementById("customerName").value.trim();
+        document.getElementById("customerName")
+        .value.trim();
+
 
     const phone =
-        document.getElementById("customerPhone").value.trim();
+        document.getElementById("customerPhone")
+        .value.trim();
+
 
     const pincode =
-        document.getElementById("customerPincode").value.trim();
+        document.getElementById("customerPincode")
+        .value.trim();
+
 
     if (!name) {
+
         alert("Please enter your name.");
+
         return;
     }
+
 
     if (!/^[0-9]{10}$/.test(phone)) {
+
         alert("Please enter a valid 10-digit mobile number.");
+
         return;
     }
+
 
     if (!/^[0-9]{6}$/.test(pincode)) {
+
         alert("Please enter your 6-digit PIN code.");
+
         return;
     }
 
-    if (!deliveryLocation ||
-        deliveryLocation.pincode !== pincode) {
 
-        alert("Please click Check PIN and confirm delivery availability.");
+    if (
+        !deliveryLocation ||
+        deliveryLocation.pincode !== pincode
+    ) {
+
+        alert(
+            "Please click Check PIN and confirm delivery availability."
+        );
+
         return;
     }
+
 
     updateDeliveryDisplay();
 
-    const grandTotal =
-        Number(document.getElementById("grandTotal").textContent);
 
-    if (grandTotal <= 0) {
+    const grandTotal =
+        Number(
+            document.getElementById("grandTotal")
+            .textContent
+        );
+
+
+    if (!grandTotal || grandTotal <= 0) {
+
         alert("Invalid payment amount.");
+
         return;
     }
 
+
     try {
 
-        /*
-         * IMPORTANT:
-         * Your backend will create the Razorpay order.
-         */
+        /* ================================
+           CREATE RAZORPAY ORDER
+           ================================ */
 
         const response = await fetch(
             "YOUR_BACKEND_URL/create-order",
@@ -2272,18 +2327,54 @@ async function startRazorpayPayment() {
                 },
 
                 body: JSON.stringify({
-                    amount: grandTotal * 100,
-                    currency: "INR"
+
+                    amount:
+                        Math.round(grandTotal * 100),
+
+                    currency: "INR",
+
+                    customer: {
+
+                        name: name,
+
+                        phone: phone,
+
+                        pincode: pincode
+
+                    },
+
+                    cart: cart
+
                 })
             }
         );
 
-        const order = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to create payment order."
+            );
+        }
+
+
+        const order =
+            await response.json();
+
 
         if (!order.id) {
-            alert("Unable to create payment order.");
+
+            alert(
+                "Unable to create payment order."
+            );
+
             return;
         }
+
+
+        /* ================================
+           RAZORPAY CHECKOUT
+           ================================ */
 
         const options = {
 
@@ -2291,31 +2382,39 @@ async function startRazorpayPayment() {
 
             amount: order.amount,
 
-            currency: "INR",
+            currency: order.currency,
 
-            name: "Aqua Dream Ornamental Fish Farm",
+            name:
+                "Aqua Dream Ornamental Fish Farm",
 
-            description: "Ornamental Fish Order",
+            description:
+                "Ornamental Fish Order",
 
-            order_id: order.id,
+            order_id:
+                order.id,
+
 
             prefill: {
 
                 name: name,
 
-                contact: phone
+                contact: "+91" + phone
 
             },
+
 
             notes: {
 
                 pincode: pincode,
 
-                city: deliveryLocation.city,
+                city:
+                    deliveryLocation.city,
 
-                state: deliveryLocation.state
+                state:
+                    deliveryLocation.state
 
             },
+
 
             theme: {
 
@@ -2323,24 +2422,86 @@ async function startRazorpayPayment() {
 
             },
 
-            handler: function (response) {
 
-                alert(
-                    "Payment successful!\n\n" +
-                    "Payment ID: " +
-                    response.razorpay_payment_id
-                );
+            /* ================================
+               PAYMENT SUCCESS
+               ================================ */
 
-                /*
-                 * Later we will send this payment information
-                 * to your backend for verification.
-                 */
+            handler:
+                async function (paymentResponse) {
+
+                try {
+
+                    const verifyResponse =
+                        await fetch(
+                            "YOUR_BACKEND_URL/verify-payment",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    razorpay_payment_id:
+                                        paymentResponse
+                                            .razorpay_payment_id,
+
+                                    razorpay_order_id:
+                                        paymentResponse
+                                            .razorpay_order_id,
+
+                                    razorpay_signature:
+                                        paymentResponse
+                                            .razorpay_signature
+
+                                })
+                            }
+                        );
+
+
+                    const result =
+                        await verifyResponse.json();
+
+
+                    if (result.success) {
+
+                        alert(
+                            "Payment successful!\n\n" +
+                            "Payment ID: " +
+                            paymentResponse
+                                .razorpay_payment_id
+                        );
+
+                    } else {
+
+                        alert(
+                            "Payment verification failed.\n" +
+                            "Please contact Aqua Dream."
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    alert(
+                        "Payment verification could not be completed.\n\n" +
+                        "Please contact Aqua Dream."
+                    );
+
+                }
 
             },
 
+
             modal: {
 
-                ondismiss: function () {
+                ondismiss:
+                    function () {
 
                     console.log(
                         "Razorpay checkout closed."
@@ -2352,10 +2513,13 @@ async function startRazorpayPayment() {
 
         };
 
+
         const razorpay =
             new Razorpay(options);
 
+
         razorpay.open();
+
 
     } catch (error) {
 
@@ -2369,10 +2533,14 @@ async function startRazorpayPayment() {
 
 }
 
+</script>
 
-/* ================================
-   IMAGE FRAME
-   ================================ */
+
+<!-- ================================
+     IMAGE FRAME
+     ================================ -->
+
+<script>
 
 document
     .querySelectorAll('.product-card > img')
@@ -2384,12 +2552,15 @@ document
         frame.className =
             'image-frame';
 
+
         img.parentNode.insertBefore(
             frame,
             img
         );
 
+
         frame.appendChild(img);
+
 
         frame.style.setProperty(
             '--fish-image',
@@ -2399,5 +2570,7 @@ document
     });
 
 </script>
+
+
 </body>
 </html>
