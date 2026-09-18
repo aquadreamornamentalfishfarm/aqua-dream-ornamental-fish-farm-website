@@ -2299,16 +2299,18 @@ const pincode =
 
     if (!/^[0-9]{10}$/.test(phone)) {
 
-        alert("Please enter a valid 10-digit mobile number.");
+    alert("Please enter a valid 10-digit mobile number.");
+
+    return;
+}
+
+
 if (!address) {
 
     alert("Please enter your complete delivery address.");
 
     return;
 }
-        return;
-    }
-
 
     if (!/^[0-9]{6}$/.test(pincode)) {
 
