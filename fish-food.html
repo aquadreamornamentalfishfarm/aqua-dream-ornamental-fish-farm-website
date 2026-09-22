@@ -309,11 +309,11 @@
                     ₹70
                 </p>
 
-                <button
-                    class="order-button"
-                    onclick="orderWhatsApp('Optimum 100 gram', 70)">
-                    🛒 ORDER
-                </button>
+               <button
+    class="order-button"
+    onclick="addFishFoodToCart('Optimum', '100 gram', 70, 'optimum-100g.jpg.jpg')">
+    🛒 ADD TO CART
+</button>
 
             </div>
 
@@ -341,10 +341,10 @@
                 </p>
 
                 <button
-                    class="order-button"
-                    onclick="orderWhatsApp('Farmfeed 40% Protein 100 gram', 45)">
-                    🛒 ORDER
-                </button>
+    class="order-button"
+    onclick="addFishFoodToCart('Farmfeed 40% Protein', '100 gram', 45, 'farmfeed-100g.jpg')">
+    🛒 ADD TO CART
+</button>
 
             </div>
 
@@ -372,10 +372,10 @@
                 </p>
 
                 <button
-                    class="order-button"
-                    onclick="orderWhatsApp('Farmfeed 40% Protein 250 gram', 100)">
-                    🛒 ORDER
-                </button>
+    class="order-button"
+    onclick="addFishFoodToCart('Farmfeed 40% Protein', '250 gram', 100, 'farmfeed-250g.jpg')">
+    🛒 ADD TO CART
+</button>
 
             </div>
 
@@ -402,12 +402,11 @@
                     ₹12
                 </p>
 
-                <button
-                    class="order-button"
-                    onclick="orderWhatsApp('Taiyo 20 gram', 12)">
-                    🛒 ORDER
-                </button>
-
+               <button
+    class="order-button"
+    onclick="addFishFoodToCart('Taiyo', '20 gram', 12, 'taiyo-20g.jpg.png')">
+    🛒 ADD TO CART
+</button>
             </div>
 
 
@@ -450,28 +449,7 @@
 
     <!-- ================= WHATSAPP ================= -->
 
-    <script>
-
-        function orderWhatsApp(product, price) {
-
-            const message =
-                "Hello Aqua Dream!%0A%0A" +
-                "I would like to order:%0A" +
-                product +
-                " - ₹" +
-                price;
-
-            const whatsappURL =
-                "https://wa.me/917538867155?text=" + message;
-
-            window.open(
-                whatsappURL,
-                "_blank"
-            );
-
-        }
-
-    </script>
+  
 
 </body>
 
