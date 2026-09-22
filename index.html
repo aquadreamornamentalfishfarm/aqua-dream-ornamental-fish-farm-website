@@ -1661,7 +1661,11 @@ SOLD OUT
 
 /* ================= SHOPPING CART ================= */
 
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
+
+function saveCart() {
+    localStorage.setItem("aquaDreamCart", JSON.stringify(cart));
+}
 // =====================================================
 // AQUA DREAM - DELIVERY CALCULATION
 // =====================================================
@@ -1971,11 +1975,10 @@ function addToCart(name, price, image) {
             quantity: 1
 
         });
-
     }
 
+    saveCart();
     updateCart();
-
     openCart();
 
 }
@@ -2106,7 +2109,7 @@ function changeQuantity(index, change) {
 
     }
 
-
+ saveCart();
     updateCart();
 
 }
@@ -2117,7 +2120,7 @@ function changeQuantity(index, change) {
 function removeFromCart(index) {
 
     cart.splice(index, 1);
-
+saveCart();
     updateCart();
 
 }
@@ -2128,7 +2131,7 @@ function removeFromCart(index) {
 function clearCart() {
 
     cart = [];
-
+saveCart();
     updateCart();
 
 }
@@ -2243,7 +2246,7 @@ function orderCartOnWhatsApp() {
 
     window.open(whatsappURL, "_blank");
 }
-
+updateCart();
 </script>
 
 
