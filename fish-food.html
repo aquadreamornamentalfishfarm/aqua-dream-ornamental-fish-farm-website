@@ -447,24 +447,19 @@
     </footer>
 
 
-    <!-- ================= SHARED CART ================= -->
+   <!-- ================= SHARED CART ================= -->
 
 <script>
 
-let cart = JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
-
 function addToCart(name, price, image) {
 
-    const existingProduct = cart.find(
-        item => item.name === name
-    );
+    let cart = JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
+
+    const existingProduct = cart.find(item => item.name === name);
 
     if (existingProduct) {
-
         existingProduct.quantity++;
-
     } else {
-
         cart.push({
             name: name,
             price: price,
@@ -473,16 +468,14 @@ function addToCart(name, price, image) {
         });
     }
 
-    localStorage.setItem(
-        "aquaDreamCart",
-        JSON.stringify(cart)
-    );
+    localStorage.setItem("aquaDreamCart", JSON.stringify(cart));
 
     alert(name + " added to cart!");
 
 }
 
 </script>
+
 </body>
 
 </html>
