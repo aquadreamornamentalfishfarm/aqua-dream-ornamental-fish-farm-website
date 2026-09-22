@@ -309,9 +309,9 @@
                     ₹70
                 </p>
 
-               <button
+             <button
     class="order-button"
-    onclick="addFishFoodToCart('Optimum', '100 gram', 70, 'optimum-100g.jpg.jpg')">
+    onclick="addToCart('Optimum 100 gram', 70, 'optimum-100g.jpg.jpg')">
     🛒 ADD TO CART
 </button>
 
@@ -340,9 +340,9 @@
                     ₹45
                 </p>
 
-                <button
+               <button
     class="order-button"
-    onclick="addFishFoodToCart('Farmfeed 40% Protein', '100 gram', 45, 'farmfeed-100g.jpg')">
+    onclick="addToCart('Farmfeed 40% Protein 100 gram', 45, 'farmfeed-100g.jpg')">
     🛒 ADD TO CART
 </button>
 
@@ -371,9 +371,9 @@
                     ₹100
                 </p>
 
-                <button
+               <button
     class="order-button"
-    onclick="addFishFoodToCart('Farmfeed 40% Protein', '250 gram', 100, 'farmfeed-250g.jpg')">
+    onclick="addToCart('Farmfeed 40% Protein 250 gram', 100, 'farmfeed-250g.jpg')">
     🛒 ADD TO CART
 </button>
 
@@ -402,9 +402,9 @@
                     ₹12
                 </p>
 
-               <button
+              <button
     class="order-button"
-    onclick="addFishFoodToCart('Taiyo', '20 gram', 12, 'taiyo-20g.jpg.png')">
+    onclick="addToCart('Taiyo 20 gram', 12, 'taiyo-20g.jpg.png')">
     🛒 ADD TO CART
 </button>
             </div>
@@ -449,7 +449,26 @@
 
     <!-- ================= WHATSAPP ================= -->
 
-  
+    existingProduct.quantity++;
+
+    } else {
+
+        cart.push({
+            name: name,
+            price: price,
+            image: image,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem(
+        "aquaDreamCart",
+        JSON.stringify(cart)
+    );
+
+    alert(name + " added to cart!");
+}
+</script>
 
 </body>
 
