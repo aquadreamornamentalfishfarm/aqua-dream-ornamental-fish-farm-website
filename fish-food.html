@@ -447,9 +447,21 @@
     </footer>
 
 
-    <!-- ================= WHATSAPP ================= -->
+    <!-- ================= SHARED CART ================= -->
 
-    existingProduct.quantity++;
+<script>
+
+let cart = JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
+
+function addToCart(name, price, image) {
+
+    const existingProduct = cart.find(
+        item => item.name === name
+    );
+
+    if (existingProduct) {
+
+        existingProduct.quantity++;
 
     } else {
 
@@ -467,9 +479,10 @@
     );
 
     alert(name + " added to cart!");
-}
-</script>
 
+}
+
+</script>
 </body>
 
 </html>
