@@ -1627,10 +1627,9 @@ SOLD OUT
         
        <div class="delivery-summary">
     <div>
-        Fish Total:
-        ₹<span id="fishTotal">0</span>
-    </div>
-
+    Order Total:
+    ₹<span id="fishTotal">0</span>
+</div>
     <div>
         Delivery Charge:
         ₹<span id="deliveryCharge">0</span>
@@ -1673,6 +1672,11 @@ function saveCart() {
 let deliveryLocation = null;
 let deliveryCharge = 0;
 
+
+/* ================================
+   SERVICEABLE STATES
+================================ */
+
 const TN_PUDUCHERRY = [
     "Tamil Nadu",
     "Puducherry",
@@ -1684,53 +1688,294 @@ const OTHER_SERVICEABLE = [
     "Karnataka"
 ];
 
-function calculateDeliveryCharge(totalPairs, state, city = "") {
 
-    if (totalPairs <= 0) {
+/* ================================
+   FOOD WEIGHT
+================================ */
+
+/*
+   Weight is in GRAMS per packet.
+
+   Change these numbers if your actual
+   product packet weights are different.
+*/
+
+function getFoodWeight(item) {
+
+    const name = item.name.toLowerCase();
+
+    if (name.includes("optimum")) {
+        return 100;
+    }
+
+    if (name.includes("farmfeed")) {
+        return 100;
+    }
+
+    if (name.includes("taiyo")) {
+        return 20;
+    }
+
+    return 0;
+}
+
+
+/* ================================
+   TOTAL FOOD WEIGHT
+================================ */
+
+function calculateFoodWeight() {
+
+    let totalFoodWeight = 0;
+
+    cart.forEach(item => {
+
+        const weightPerPacket =
+            getFoodWeight(item);
+
+        if (weightPerPacket > 0) {
+
+            totalFoodWeight +=
+                weightPerPacket * item.quantity;
+        }
+
+    });
+
+    return totalFoodWeight;
+}
+
+
+/* ================================
+   IDENTIFY FISH
+================================ */
+
+function calculateFishPairs() {
+
+    let totalFishPairs = 0;
+
+    cart.forEach(item => {
+
+        const name =
+            item.name.toLowerCase();
+
+        const isFood =
+            name.includes("optimum") ||
+            name.includes("farmfeed") ||
+            name.includes("taiyo");
+
+        const isPlant =
+            name.includes("fox tail") ||
+            name.includes("guppy grass");
+
+        const isCulture =
+            name.includes("vinegar eel") ||
+            name.includes("microworm");
+
+        const isBetta =
+            name.includes("betta");
+
+        /*
+           Everything except food,
+           plants, cultures and bettas
+           is treated as a fish pair.
+        */
+
+        if (
+            !isFood &&
+            !isPlant &&
+            !isCulture &&
+            !isBetta
+        ) {
+
+            totalFishPairs +=
+                item.quantity;
+        }
+
+    });
+
+    return totalFishPairs;
+}
+
+
+/* ================================
+   DELIVERY CALCULATION
+================================ */
+
+function calculateDeliveryCharge(
+    totalFishPairs,
+    totalFoodWeight,
+    state,
+    city = ""
+) {
+
+    /*
+       Nothing in cart
+    */
+
+    if (
+        totalFishPairs <= 0 &&
+        totalFoodWeight <= 0
+    ) {
+
         return 0;
     }
 
-    // ==========================================
-    // TAMIL NADU / PUDUCHERRY
-    // ==========================================
+
+    /* =========================================
+       TAMIL NADU / PUDUCHERRY
+       ========================================= */
 
     if (TN_PUDUCHERRY.includes(state)) {
 
-        if (totalPairs <= 5) {
-            return 100;
+        /*
+           FOOD ONLY
+
+           Up to 10 KG = ₹80
+        */
+
+        if (
+            totalFishPairs === 0 &&
+            totalFoodWeight > 0 &&
+            totalFoodWeight <= 10000
+        ) {
+
+            return 80;
         }
 
-        if (totalPairs <= 10) {
-            return 180;
+
+        /*
+           FOOD ABOVE 10 KG
+
+           10 KG = ₹80
+
+           Every additional 1 KG = ₹90
+
+           Example:
+
+           10 KG = ₹80
+           11 KG = ₹170
+           12 KG = ₹260
+        */
+
+        if (
+            totalFishPairs === 0 &&
+            totalFoodWeight > 10000
+        ) {
+
+            const extraKg =
+                Math.ceil(
+                    (totalFoodWeight - 10000) / 1000
+                );
+
+            return 80 + (extraKg * 90);
         }
 
-        return 180 + (Math.ceil((totalPairs - 10) / 5) * 90);
+
+        /*
+           FISH
+
+           Up to 5 pairs = ₹100
+           6–10 pairs = ₹180
+           Above 10 pairs:
+           +₹90 for every additional 5 pairs
+        */
+
+        if (totalFishPairs > 0) {
+
+            if (totalFishPairs <= 5) {
+                return 100;
+            }
+
+            if (totalFishPairs <= 10) {
+                return 180;
+            }
+
+            return (
+                180 +
+                (
+                    Math.ceil(
+                        (totalFishPairs - 10) / 5
+                    ) * 90
+                )
+            );
+        }
     }
 
-    // ==========================================
-    // KERALA / KARNATAKA 
-    // ==========================================
+
+    /* =========================================
+       KERALA / KARNATAKA
+       ========================================= */
 
     if (OTHER_SERVICEABLE.includes(state)) {
 
-        if (totalPairs <= 5) {
-            return 130;
+        /*
+           FOOD ONLY
+        */
+
+        if (
+            totalFishPairs === 0 &&
+            totalFoodWeight > 0
+        ) {
+
+            /* Up to 1 KG */
+
+            if (totalFoodWeight <= 1000) {
+
+                return state === "Kerala"
+                    ? 100
+                    : 110;
+            }
+
+
+            /* 1–2 KG */
+
+            if (totalFoodWeight <= 2000) {
+
+                return state === "Kerala"
+                    ? 200
+                    : 180;
+            }
         }
 
-        if (totalPairs <= 10) {
-            return 210;
-        }
 
-        return 210 + (Math.ceil((totalPairs - 10) / 5) * 110);
+        /*
+           FISH
+
+           Up to 5 pairs = ₹130
+           6–10 pairs = ₹210
+           Above 10 pairs:
+           +₹110 for every additional 5 pairs
+        */
+
+        if (totalFishPairs > 0) {
+
+            if (totalFishPairs <= 5) {
+                return 130;
+            }
+
+            if (totalFishPairs <= 10) {
+                return 210;
+            }
+
+            return (
+                210 +
+                (
+                    Math.ceil(
+                        (totalFishPairs - 10) / 5
+                    ) * 110
+                )
+            );
+        }
     }
 
-   
-    // ==========================================
-    // NOT SERVICEABLE
-    // ==========================================
+
+    /*
+       NOT SERVICEABLE
+    */
 
     return null;
 }
+  
 // =====================================================
 // PIN CODE CHECK
 // =====================================================
@@ -1878,20 +2123,40 @@ async function checkPincode() {
 
 function updateDeliveryDisplay() {
 
-    let fishTotal = 0;
-    let totalPairs = 0;
+    /* ================================
+       ORDER TOTAL
+    ================================= */
+
+    let orderTotal = 0;
 
     cart.forEach(item => {
 
-        fishTotal +=
+        orderTotal +=
             item.price * item.quantity;
-
-        totalPairs +=
-            item.quantity;
 
     });
 
-    // No valid location yet
+
+    /* ================================
+       FISH PAIRS
+    ================================= */
+
+    const totalFishPairs =
+        calculateFishPairs();
+
+
+    /* ================================
+       FOOD WEIGHT
+    ================================= */
+
+    const totalFoodWeight =
+        calculateFoodWeight();
+
+
+    /* ================================
+       DELIVERY
+    ================================= */
+
     if (!deliveryLocation) {
 
         deliveryCharge = 0;
@@ -1900,28 +2165,31 @@ function updateDeliveryDisplay() {
 
         deliveryCharge =
             calculateDeliveryCharge(
-                totalPairs,
+                totalFishPairs,
+                totalFoodWeight,
                 deliveryLocation.state,
                 deliveryLocation.city
             );
 
         if (deliveryCharge === null) {
+
             deliveryCharge = 0;
+
         }
     }
 
-    const grandTotal =
-        fishTotal + deliveryCharge;
+const grandTotal =
+        orderTotal + deliveryCharge;
 
     document.getElementById("fishTotal").textContent =
-        fishTotal;
+        orderTotal;
 
     document.getElementById("deliveryCharge").textContent =
         deliveryCharge;
 
     document.getElementById("grandTotal").textContent =
         grandTotal;
-}        
+}
 /* ADD PRODUCT TO CART */
 
 function addToCart(name, price, image) {
