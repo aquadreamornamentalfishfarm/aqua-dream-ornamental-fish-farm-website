@@ -1730,18 +1730,28 @@ function calculateFoodWeight() {
 
     cart.forEach(item => {
 
-        const weightPerPacket =
-            getFoodWeight(item);
+        const name =
+            item.name.toLowerCase();
 
-        if (weightPerPacket > 0) {
+        const isFood =
+            name.includes("optimum") ||
+            name.includes("farmfeed") ||
+            name.includes("taiyo");
+
+        if (
+            isFood &&
+            item.weight
+        ) {
 
             totalFoodWeight +=
-                weightPerPacket * item.quantity;
+                Number(item.weight) *
+                item.quantity;
         }
 
     });
 
     return totalFoodWeight;
+}
 }
 
 
