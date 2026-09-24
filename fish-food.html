@@ -311,7 +311,7 @@
 
              <button
     class="order-button"
-    onclick="addToCart('Optimum 100 gram', 70, 'optimum-100g.jpg.jpg')">
+    onclick="addToCart('Optimum 100 gram', 70, 'optimum-100g.jpg.jpg', 100)"
     🛒 ADD TO CART
 </button>
 
@@ -342,7 +342,7 @@
 
                <button
     class="order-button"
-    onclick="addToCart('Farmfeed 40% Protein 100 gram', 45, 'farmfeed-100g.jpg')">
+    onclick="addToCart('Farmfeed 40% Protein 100 gram', 45, 'farmfeed-100g.jpg', 100)"
     🛒 ADD TO CART
 </button>
 
@@ -373,7 +373,7 @@
 
                <button
     class="order-button"
-    onclick="addToCart('Farmfeed 40% Protein 250 gram', 100, 'farmfeed-250g.jpg')">
+    onclick="addToCart('Farmfeed 40% Protein 250 gram', 100, 'farmfeed-250g.jpg', 250)"
     🛒 ADD TO CART
 </button>
 
@@ -404,7 +404,7 @@
 
               <button
     class="order-button"
-    onclick="addToCart('Taiyo 20 gram', 12, 'taiyo-20g.jpg.png')">
+    onclick="addToCart('Taiyo 20 gram', 12, 'taiyo-20g.jpg.png', 20)"
     🛒 ADD TO CART
 </button>
             </div>
@@ -451,26 +451,39 @@
 
 <script>
 
-function addToCart(name, price, image) {
+function addToCart(name, price, image, weight) {
 
-    let cart = JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
+    let cart =
+        JSON.parse(
+            localStorage.getItem("aquaDreamCart")
+        ) || [];
 
-    const existingProduct = cart.find(item => item.name === name);
+    const existingProduct =
+        cart.find(item => item.name === name);
 
     if (existingProduct) {
+
         existingProduct.quantity++;
+
     } else {
+
         cart.push({
             name: name,
             price: price,
             image: image,
-            quantity: 1
+            quantity: 1,
+            weight: weight
         });
     }
 
-    localStorage.setItem("aquaDreamCart", JSON.stringify(cart));
+    localStorage.setItem(
+        "aquaDreamCart",
+        JSON.stringify(cart)
+    );
 
     alert(name + " added to cart!");
+
+}
 
 }
 
