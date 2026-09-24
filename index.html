@@ -1681,8 +1681,7 @@ const TN_PUDUCHERRY = [
 
 const OTHER_SERVICEABLE = [
     "Kerala",
-    "Karnataka",
-    "Andhra Pradesh"
+    "Karnataka"
 ];
 
 function calculateDeliveryCharge(totalPairs, state, city = "") {
@@ -1709,7 +1708,7 @@ function calculateDeliveryCharge(totalPairs, state, city = "") {
     }
 
     // ==========================================
-    // KERALA / KARNATAKA / ANDHRA PRADESH
+    // KERALA / KARNATAKA 
     // ==========================================
 
     if (OTHER_SERVICEABLE.includes(state)) {
@@ -1725,26 +1724,7 @@ function calculateDeliveryCharge(totalPairs, state, city = "") {
         return 210 + (Math.ceil((totalPairs - 10) / 5) * 110);
     }
 
-    // ==========================================
-    // MUMBAI ONLY
-    // ==========================================
-
-    if (
-        state === "Maharashtra" &&
-        city.toLowerCase().includes("mumbai")
-    ) {
-
-        if (totalPairs <= 5) {
-            return 130;
-        }
-
-        if (totalPairs <= 10) {
-            return 210;
-        }
-
-        return 210 + (Math.ceil((totalPairs - 10) / 5) * 110);
-    }
-
+   
     // ==========================================
     // NOT SERVICEABLE
     // ==========================================
@@ -1843,24 +1823,13 @@ async function checkPincode() {
 
             serviceable = true;
 
-        } else if (
-            state === "Kerala" ||
-            state === "Karnataka" ||
-            state === "Andhra Pradesh"
-        ) {
+       } else if (
+    state === "Kerala" ||
+    state === "Karnataka"
+) {
 
-            serviceable = true;
-
-        } else if (
-            state === "Maharashtra" &&
-            (
-                district.toLowerCase().includes("mumbai") ||
-                city.toLowerCase().includes("mumbai")
-            )
-        ) {
-
-            serviceable = true;
-        }
+    serviceable = true;
+}
 
         // ==========================================
         // NOT SERVICEABLE
