@@ -1720,37 +1720,64 @@ function getFoodWeight(item) {
 }
 
 
-/* ================================
-   TOTAL FOOD WEIGHT
-================================ */
+/* =========================================
+   CALCULATE WEIGHT OF OTHER PRODUCTS
+   Food, plants, live feed and other materials
+========================================= */
 
 function calculateFoodWeight() {
 
-    let totalFoodWeight = 0;
+    let totalWeight = 0;
 
     cart.forEach(item => {
 
-        const name =
-            item.name.toLowerCase();
+        const name = item.name.toLowerCase();
 
-        const isFood =
-            name.includes("optimum") ||
-            name.includes("farmfeed") ||
-            name.includes("taiyo");
+        let weightPerItem = 0;
 
+        // Aquarium plants: 250 g per packet
         if (
-            isFood &&
-            item.weight
+            name.includes("fox tail") ||
+            name.includes("guppy grass")
         ) {
-
-            totalFoodWeight +=
-                Number(item.weight) *
-                item.quantity;
+            weightPerItem = 250;
         }
+
+        // Live feed: 250 g per packet
+        else if (
+            name.includes("vinegar eel") ||
+            name.includes("microworm")
+        ) {
+            weightPerItem = 250;
+        }
+
+        // Fish food
+        else if (name.includes("optimum")) {
+            weightPerItem = 100;
+        }
+
+        else if (name.includes("farmfeed")) {
+            weightPerItem = 100;
+        }
+
+        else if (name.includes("taiyo")) {
+            weightPerItem = 20;
+        }
+
+        // Other materials: use the product's weight
+        // if a weight property is assigned to it.
+        else if (
+            item.weight !== undefined &&
+            Number(item.weight) > 0
+        ) {
+            weightPerItem = Number(item.weight);
+        }
+
+        totalWeight += weightPerItem * item.quantity;
 
     });
 
-    return totalFoodWeight;
+    return totalWeight;
 }
 
 
@@ -1830,86 +1857,45 @@ function calculateDeliveryCharge(
     }
 
 
-    /* =========================================
-       TAMIL NADU / PUDUCHERRY
-       ========================================= */
+   /* =========================================
+   TAMIL NADU / PUDUCHERRY
+   TOTAL PARCEL WEIGHT CALCULATION
+========================================= */
 
-    if (TN_PUDUCHERRY.includes(state)) {
+if (TN_PUDUCHERRY.includes(state)) {
 
-        /*
-           FOOD ONLY
+    // Estimate fish weight:
+    // Every 5 pairs = 1 kg
+    const fishWeightGrams =
+        totalFishPairs > 0
+            ? Math.ceil(totalFishPairs / 5) * 1000
+            : 0;
 
-           Up to 10 KG = ₹80
-        */
+    // Add fish weight and all other product weights
+    const totalParcelWeight =
+        fishWeightGrams + totalFoodWeight;
 
-        if (
-            totalFishPairs === 0 &&
-            totalFoodWeight > 0 &&
-            totalFoodWeight <= 10000
-        ) {
+    // Convert total parcel weight into kg slabs
+    const shippingKg =
+        Math.max(1, Math.ceil(totalParcelWeight / 1000));
 
-            return 80;
-        }
+    // Delivery charge slabs
+    const deliveryRates = {
+        1: 90,
+        2: 160,
+        3: 250,
+        4: 320,
+        5: 400
+    };
 
-
-        /*
-           FOOD ABOVE 10 KG
-
-           10 KG = ₹80
-
-           Every additional 1 KG = ₹90
-
-           Example:
-
-           10 KG = ₹80
-           11 KG = ₹170
-           12 KG = ₹260
-        */
-
-        if (
-            totalFishPairs === 0 &&
-            totalFoodWeight > 10000
-        ) {
-
-            const extraKg =
-                Math.ceil(
-                    (totalFoodWeight - 10000) / 1000
-                );
-
-            return 80 + (extraKg * 90);
-        }
-
-
-        /*
-           FISH
-
-           Up to 5 pairs = ₹100
-           6–10 pairs = ₹180
-           Above 10 pairs:
-           +₹90 for every additional 5 pairs
-        */
-
-        if (totalFishPairs > 0) {
-
-            if (totalFishPairs <= 5) {
-                return 100;
-            }
-
-            if (totalFishPairs <= 10) {
-                return 180;
-            }
-
-            return (
-                180 +
-                (
-                    Math.ceil(
-                        (totalFishPairs - 10) / 5
-                    ) * 90
-                )
-            );
-        }
+    // Return the specified rate for the first 5 kg
+    if (shippingKg <= 5) {
+        return deliveryRates[shippingKg];
     }
 
+    // Above 5 kg: add ₹80 per additional kg
+    return 400 + ((shippingKg - 5) * 80);
+}
 
     /* =========================================
        KERALA / KARNATAKA
