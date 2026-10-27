@@ -1726,24 +1726,42 @@ function getFoodWeight(item) {
 ========================================= */
 
 function calculateFoodWeight() {
-
     let totalWeight = 0;
 
     cart.forEach(item => {
-
         const name = item.name.toLowerCase();
-
         let weightPerItem = 0;
 
-        // Aquarium plants: 250 g per packet
-        if (
-            name.includes("fox tail") ||
-            name.includes("guppy grass")
-        ) {
-            weightPerItem = 250;
+        // Farmfeed: identify the actual packet size
+        if (name.includes("farmfeed")) {
+            if (
+                name.includes("250g") ||
+                name.includes("250 g") ||
+                name.includes("250-gram") ||
+                name.includes("250 gram")
+            ) {
+                weightPerItem = 250;
+            } else if (
+                name.includes("100g") ||
+                name.includes("100 g") ||
+                name.includes("100-gram") ||
+                name.includes("100 gram")
+            ) {
+                weightPerItem = 100;
+            }
         }
 
-        // Live feed: 250 g per packet
+        // Optimum: 100 g per packet
+        else if (name.includes("optimum")) {
+            weightPerItem = 100;
+        }
+
+        // Taiyo: 20 g per packet
+        else if (name.includes("taiyo")) {
+            weightPerItem = 20;
+        }
+
+        // Live cultures: 250 g per packet
         else if (
             name.includes("vinegar eel") ||
             name.includes("microworm")
@@ -1751,53 +1769,29 @@ function calculateFoodWeight() {
             weightPerItem = 250;
         }
 
-        // Fish food
-else if (name.includes("optimum")) {
-    weightPerItem = 100;
-}
-
-else if (name.includes("farmfeed")) {
-    if (
-        name.includes("250g") ||
-        name.includes("250 g") ||
-        name.includes("250-gram") ||
-        name.includes("250 gram")
-    ) {
-        weightPerItem = 250;
-    } else if (
-        name.includes("100g") ||
-        name.includes("100 g") ||
-        name.includes("100-gram") ||
-        name.includes("100 gram")
-    ) {
-        weightPerItem = 100;
-    }
-}
-
-else if (name.includes("taiyo")) {
-    weightPerItem = 20;
-}
+        // Aquarium plants: 250 g per packet
+        else if (
+            name.includes("fox tail") ||
+            name.includes("guppy grass")
+        ) {
+            weightPerItem = 250;
+        }
 
         totalWeight += weightPerItem * item.quantity;
-
     });
 
     return totalWeight;
 }
-
 
 /* ================================
    IDENTIFY FISH
 ================================ */
 
 function calculateFishPairs() {
-
     let totalFishPairs = 0;
 
     cart.forEach(item => {
-
-        const name =
-            item.name.toLowerCase();
+        const name = item.name.toLowerCase();
 
         const isFood =
             name.includes("optimum") ||
@@ -1812,26 +1806,11 @@ function calculateFishPairs() {
             name.includes("vinegar eel") ||
             name.includes("microworm");
 
-        const isBetta =
-            name.includes("betta");
+        const isBetta = name.includes("betta");
 
-        /*
-           Everything except food,
-           plants, cultures and bettas
-           is treated as a fish pair.
-        */
-
-        if (
-            !isFood &&
-            !isPlant &&
-            !isCulture &&
-            !isBetta
-        ) {
-
-            totalFishPairs +=
-                item.quantity;
+        if (!isFood && !isPlant && !isCulture && !isBetta) {
+            totalFishPairs += item.quantity;
         }
-
     });
 
     return totalFishPairs;
@@ -1848,124 +1827,80 @@ function calculateDeliveryCharge(
     state,
     city = ""
 ) {
-
-    /*
-       Nothing in cart
-    */
-
-    if (
-        totalFishPairs <= 0 &&
-        totalFoodWeight <= 0
-    ) {
-
+    if (totalFishPairs <= 0 && totalFoodWeight <= 0) {
         return 0;
     }
 
+    // Estimate fish weight:
+    // 200 g per guppy/zebra fish pair
+    // 200 g per betta fish
+    let fishWeightGrams = 0;
 
-   /* =========================================
-   TAMIL NADU / PUDUCHERRY
-   TOTAL PARCEL WEIGHT CALCULATION
-========================================= */
+    cart.forEach(item => {
+        const name = item.name.toLowerCase();
 
-if (TN_PUDUCHERRY.includes(state)) {
+        const isFood =
+            name.includes("optimum") ||
+            name.includes("farmfeed") ||
+            name.includes("taiyo");
 
-    // Estimate fish weight: 200 grams per pair
-    const fishWeightGrams = totalFishPairs * 200;
+        const isPlant =
+            name.includes("fox tail") ||
+            name.includes("guppy grass");
 
-    // Add fish weight and other product weights
+        const isCulture =
+            name.includes("vinegar eel") ||
+            name.includes("microworm");
+
+        if (!isFood && !isPlant && !isCulture) {
+            fishWeightGrams += 200 * item.quantity;
+        }
+    });
+
+    // Total parcel weight includes fish and other products
     const totalParcelWeight =
         fishWeightGrams + totalFoodWeight;
 
-    // Calculate the delivery weight slab
-    const shippingKg =
-        Math.max(1, Math.ceil(totalParcelWeight / 1000));
+    // Round up to the next whole kilogram
+    const shippingKg = Math.max(
+        1,
+        Math.ceil(totalParcelWeight / 1000)
+    );
 
-    const deliveryRates = {
-        1: 90,
-        2: 160,
-        3: 250,
-        4: 320,
-        5: 400
-    };
+    // Tamil Nadu and Puducherry rates
+    if (TN_PUDUCHERRY.includes(state)) {
+        const deliveryRates = {
+            1: 90,
+            2: 160,
+            3: 250,
+            4: 320,
+            5: 400
+        };
 
-    if (shippingKg <= 5) {
-        return deliveryRates[shippingKg];
-    }
-
-    return 400 + ((shippingKg - 5) * 80);
-}
-
-    /* =========================================
-       KERALA / KARNATAKA
-       ========================================= */
-
-    if (OTHER_SERVICEABLE.includes(state)) {
-
-        /*
-           FOOD ONLY
-        */
-
-        if (
-            totalFishPairs === 0 &&
-            totalFoodWeight > 0
-        ) {
-
-            /* Up to 1 KG */
-
-            if (totalFoodWeight <= 1000) {
-
-                return state === "Kerala"
-                    ? 100
-                    : 110;
-            }
-
-
-            /* 1–2 KG */
-
-            if (totalFoodWeight <= 2000) {
-
-                return state === "Kerala"
-                    ? 200
-                    : 180;
-            }
+        if (shippingKg <= 5) {
+            return deliveryRates[shippingKg];
         }
 
-
-        /*
-           FISH
-
-           Up to 5 pairs = ₹130
-           6–10 pairs = ₹210
-           Above 10 pairs:
-           +₹110 for every additional 5 pairs
-        */
-
-        if (totalFishPairs > 0) {
-
-            if (totalFishPairs <= 5) {
-                return 130;
-            }
-
-            if (totalFishPairs <= 10) {
-                return 210;
-            }
-
-            return (
-                210 +
-                (
-                    Math.ceil(
-                        (totalFishPairs - 10) / 5
-                    ) * 110
-                )
-            );
-        }
+        return 400 + ((shippingKg - 5) * 80);
     }
 
+    // Kerala rates
+    if (state === "Kerala") {
+        if (shippingKg === 1) return 100;
+        if (shippingKg === 2) return 200;
 
-    /*
-       NOT SERVICEABLE
-    */
+        return 200 + ((shippingKg - 2) * 100);
+    }
 
+    // Karnataka rates
+    if (state === "Karnataka") {
+        if (shippingKg === 1) return 110;
+        if (shippingKg === 2) return 180;
+
+        return 180 + ((shippingKg - 2) * 100);
+    }
+
+    // Unsupported state
     return null;
 }
   
