@@ -1752,26 +1752,31 @@ function calculateFoodWeight() {
         }
 
         // Fish food
-        else if (name.includes("optimum")) {
-            weightPerItem = 100;
-        }
+else if (name.includes("optimum")) {
+    weightPerItem = 100;
+}
 
-        else if (name.includes("farmfeed")) {
-            weightPerItem = 100;
-        }
+else if (name.includes("farmfeed")) {
 
-        else if (name.includes("taiyo")) {
-            weightPerItem = 20;
-        }
+    // Farmfeed 250 g packet
+    if (
+        name.includes("250g") ||
+        name.includes("250 g") ||
+        name.includes("250-gram") ||
+        name.includes("250 gram")
+    ) {
+        weightPerItem = 250;
+    }
 
-        // Other materials: use the product's weight
-        // if a weight property is assigned to it.
-        else if (
-            item.weight !== undefined &&
-            Number(item.weight) > 0
-        ) {
-            weightPerItem = Number(item.weight);
-        }
+    // Farmfeed 100 g packet
+    else {
+        weightPerItem = 100;
+    }
+}
+
+else if (name.includes("taiyo")) {
+    weightPerItem = 20;
+}
 
         totalWeight += weightPerItem * item.quantity;
 
