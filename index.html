@@ -1757,8 +1757,6 @@ else if (name.includes("optimum")) {
 }
 
 else if (name.includes("farmfeed")) {
-
-    // Farmfeed 250 g packet
     if (
         name.includes("250g") ||
         name.includes("250 g") ||
@@ -1766,10 +1764,12 @@ else if (name.includes("farmfeed")) {
         name.includes("250 gram")
     ) {
         weightPerItem = 250;
-    }
-
-    // Farmfeed 100 g packet
-    else {
+    } else if (
+        name.includes("100g") ||
+        name.includes("100 g") ||
+        name.includes("100-gram") ||
+        name.includes("100 gram")
+    ) {
         weightPerItem = 100;
     }
 }
