@@ -1640,9 +1640,10 @@ SOLD OUT
     </div>
 </div>
 <button
-    onclick="startRazorpayPayment()"
+    type="button"
+    onclick="orderCartOnWhatsApp()"
     class="pay-now-btn">
-    💳 PAY NOW
+    📲 ORDER ON WHATSAPP
 </button>
 
 <button
@@ -2425,427 +2426,76 @@ document.getElementById(
 /* ================= WHATSAPP ORDER ================= */
 
 function orderCartOnWhatsApp() {
-
     if (cart.length === 0) {
         alert("Your cart is empty. Please add some products first.");
         return;
     }
 
-    let message =
-        "Hello Aqua Dream!%0A%0A" +
-        "I would like to order the following:%0A%0A";
-
-    let total = 0;
-
-    cart.forEach(item => {
-
-        const subtotal =
-            item.price * item.quantity;
-
-        total += subtotal;
-
-        message +=
-            "• " + item.name +
-            " × " + item.quantity +
-            " = ₹" + subtotal +
-            "%0A";
-    });
-
-    const pincode =
-        document.getElementById("customerPincode")
-        .value.trim();
-
-    if (!/^[0-9]{6}$/.test(pincode)) {
-
-        alert(
-            "Please enter your 6-digit PIN code and click Check PIN."
-        );
-
-        return;
-    }
-
-    if (
-        !deliveryLocation ||
-        deliveryLocation.pincode !== pincode
-    ) {
-
-        alert(
-            "Please click Check PIN and wait for delivery confirmation before ordering."
-        );
-
-        return;
-    }
-
-    updateDeliveryDisplay();
-
-    const grandTotal =
-        total + Number(deliveryCharge);
-
-    message +=
-        "%0A*Fish Total: ₹" + total + "*" +
-        "%0ADelivery Charge: ₹" + deliveryCharge +
-        "%0A*Grand Total: ₹" + grandTotal + "*";
-
-    const whatsappURL =
-        "https://wa.me/917538867155?text=" + message;
-
-    window.open(whatsappURL, "_blank");
-}
-updateCart();
-</script>
-
-
-<!-- ================= RAZORPAY CHECKOUT LIBRARY ================= -->
-
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-
-<script>
-
-/* ================================
-   RAZORPAY
-   ================================ */
-
-const RAZORPAY_KEY_ID = "rzp_live_TZoAH87dY4sPwW";
-
-
-async function startRazorpayPayment() {
-
-    if (cart.length === 0) {
-
-        alert("Your cart is empty.");
-
-        return;
-    }
-
-
-    const name =
-        document.getElementById("customerName")
-        .value.trim();
-
-
-    const phone =
-    document.getElementById("customerPhone")
-    .value.trim();
-
-const address =
-    document.getElementById("customerAddress")
-    .value.trim();
-
-const pincode =
-    document.getElementById("customerPincode")
-    .value.trim();
-
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    const address = document.getElementById("customerAddress").value.trim();
+    const pincode = document.getElementById("customerPincode").value.trim();
 
     if (!name) {
-
         alert("Please enter your name.");
-
+        document.getElementById("customerName").focus();
         return;
     }
-
 
     if (!/^[0-9]{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        document.getElementById("customerPhone").focus();
+        return;
+    }
 
-    alert("Please enter a valid 10-digit mobile number.");
-
-    return;
-}
-
-
-if (!address) {
-
-    alert("Please enter your complete delivery address.");
-
-    return;
-}
+    if (!address) {
+        alert("Please enter your complete delivery address.");
+        document.getElementById("customerAddress").focus();
+        return;
+    }
 
     if (!/^[0-9]{6}$/.test(pincode)) {
-
-        alert("Please enter your 6-digit PIN code.");
-
+        alert("Please enter your 6-digit PIN code and click Check PIN.");
+        document.getElementById("customerPincode").focus();
         return;
     }
 
-
-    if (
-        !deliveryLocation ||
-        deliveryLocation.pincode !== pincode
-    ) {
-
-        alert(
-            "Please click Check PIN and confirm delivery availability."
-        );
-
+    if (!deliveryLocation || deliveryLocation.pincode !== pincode) {
+        alert("Please click Check PIN and wait for delivery confirmation before ordering.");
         return;
     }
-
 
     updateDeliveryDisplay();
 
-
-    const grandTotal =
-        Number(
-            document.getElementById("grandTotal")
-            .textContent
-        );
-
-
-    if (!grandTotal || grandTotal <= 0) {
-
-        alert("Invalid payment amount.");
-
-        return;
-    }
-
-
-    try {
-
-        /* ================================
-           CREATE RAZORPAY ORDER
-           ================================ */
-
-        const response = await fetch(
-    "https://aqua-dream-razorpay-backend-production.up.railway.app/create-order",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    amount:
-                        Math.round(grandTotal * 100),
-
-                    currency: "INR",
-
-                    customer: {
-
-                        name: name,
-
-                        phone: phone,
-
-                        pincode: pincode
-
-                    },
-
-                    cart: cart
-
-                })
-            }
-        );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to create payment order."
-            );
-        }
-
-
-        const order =
-            await response.json();
-
-
-        if (!order.id) {
-
-            alert(
-                "Unable to create payment order."
-            );
-
-            return;
-        }
-
-
-        /* ================================
-           RAZORPAY CHECKOUT
-           ================================ */
-
-        const options = {
-
-            key: RAZORPAY_KEY_ID,
-
-            amount: order.amount,
-
-            currency: order.currency,
-
-            name:
-                "Aqua Dream Ornamental Fish Farm",
-
-            description:
-                "Ornamental Fish Order",
-
-            order_id:
-                order.id,
-
-
-            prefill: {
-
-                name: name,
-
-                contact: "+91" + phone
-
-            },
-
-
-            notes: {
-
-                pincode: pincode,
-
-                city:
-                    deliveryLocation.city,
-
-                state:
-                    deliveryLocation.state
-
-            },
-
-
-            theme: {
-
-                color: "#063b4c"
-
-            },
-
-
-            /* ================================
-               PAYMENT SUCCESS
-               ================================ */
-
-            handler:
-                async function (paymentResponse) {
-
-                try {
-
-                   const verifyResponse =
-    await fetch(
-        "https://aqua-dream-razorpay-backend-production.up.railway.app/verify-payment",
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-body: JSON.stringify({
-
-    razorpay_payment_id:
-        paymentResponse.razorpay_payment_id,
-
-    razorpay_order_id:
-        paymentResponse.razorpay_order_id,
-
-    razorpay_signature:
-        paymentResponse.razorpay_signature,
-
-    customer: {
-
-        name: name,
-
-        phone: phone,
-
-        address: address,
-
-        pincode: pincode,
-
-        city: deliveryLocation.city,
-
-        district: deliveryLocation.district,
-
-        state: deliveryLocation.state
-
-    },
-
-    cart: cart,
-
-    fish_total:
-        Number(document.getElementById("fishTotal").textContent),
-
-    delivery_charge:
-        Number(document.getElementById("deliveryCharge").textContent),
-
-    grand_total:
-        Number(document.getElementById("grandTotal").textContent)
-
-})
-                            }
-                        );
-
-
-                    const result =
-                        await verifyResponse.json();
-
-
-                    if (result.success) {
-
-                        alert(
-                            "Payment successful!\n\n" +
-                            "Payment ID: " +
-                            paymentResponse
-                                .razorpay_payment_id
-                        );
-
-                    } else {
-
-                        alert(
-                            "Payment verification failed.\n" +
-                            "Please contact Aqua Dream."
-                        );
-
-                    }
-
-                } catch (error) {
-
-                    console.error(error);
-
-                    alert(
-                        "Payment verification could not be completed.\n\n" +
-                        "Please contact Aqua Dream."
-                    );
-
-                }
-
-            },
-
-
-            modal: {
-
-                ondismiss:
-                    function () {
-
-                    console.log(
-                        "Razorpay checkout closed."
-                    );
-
-                }
-
-            }
-
-        };
-
-
-        const razorpay =
-            new Razorpay(options);
-
-
-        razorpay.open();
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to start payment. Please try again."
-        );
-
-    }
-
+    let fishTotal = 0;
+    let message = "Hello Aqua Dream Ornamental Fish Farm!\n\nI would like to place an order.\n\n";
+    message += "CUSTOMER DETAILS\n";
+    message += "Name: " + name + "\n";
+    message += "Mobile: " + phone + "\n";
+    message += "Address: " + address + "\n";
+    message += "PIN Code: " + pincode + "\n";
+    message += "City: " + (deliveryLocation.city || "") + "\n";
+    message += "State: " + (deliveryLocation.state || "") + "\n\n";
+    message += "ORDER ITEMS\n";
+
+    cart.forEach(item => {
+        const subtotal = Number(item.price) * Number(item.quantity);
+        fishTotal += subtotal;
+        message += "- " + item.name + " x " + item.quantity + " = Rs. " + subtotal + "\n";
+    });
+
+    const delivery = Number(deliveryCharge) || 0;
+    const grandTotal = fishTotal + delivery;
+
+    message += "\nFish Total: Rs. " + fishTotal;
+    message += "\nDelivery Charge: Rs. " + delivery;
+    message += "\nGRAND TOTAL: Rs. " + grandTotal;
+    message += "\n\nPlease confirm availability and delivery details. I understand payment will be arranged separately after confirmation.";
+
+    const whatsappURL = "https://wa.me/917538867155?text=" + encodeURIComponent(message);
+    window.open(whatsappURL, "_blank", "noopener,noreferrer");
 }
-
+updateCart();
 </script>
 
 
