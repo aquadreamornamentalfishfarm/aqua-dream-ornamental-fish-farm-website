@@ -1864,22 +1864,17 @@ function calculateDeliveryCharge(
 
 if (TN_PUDUCHERRY.includes(state)) {
 
-    // Estimate fish weight:
-    // Every 5 pairs = 1 kg
-    const fishWeightGrams =
-        totalFishPairs > 0
-           const fishWeightGrams = totalFishPairs * 200;
-            : 0;
+    // Estimate fish weight: 200 grams per pair
+    const fishWeightGrams = totalFishPairs * 200;
 
-    // Add fish weight and all other product weights
+    // Add fish weight and other product weights
     const totalParcelWeight =
         fishWeightGrams + totalFoodWeight;
 
-    // Convert total parcel weight into kg slabs
+    // Calculate the delivery weight slab
     const shippingKg =
         Math.max(1, Math.ceil(totalParcelWeight / 1000));
 
-    // Delivery charge slabs
     const deliveryRates = {
         1: 90,
         2: 160,
@@ -1888,12 +1883,10 @@ if (TN_PUDUCHERRY.includes(state)) {
         5: 400
     };
 
-    // Return the specified rate for the first 5 kg
     if (shippingKg <= 5) {
         return deliveryRates[shippingKg];
     }
 
-    // Above 5 kg: add ₹80 per additional kg
     return 400 + ((shippingKg - 5) * 80);
 }
 
