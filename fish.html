@@ -1,38 +1,583 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Ornamental Fish for Sale | Aqua Dream</title>
 
 <meta name="description" content="Explore guppies, bettas and zebra fish available at Aqua Dream Ornamental Fish Farm, Kanyakumari, Tamil Nadu.">
 
-<style> * { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: Arial, Helvetica, sans-serif; background: linear-gradient(135deg, #e0f7fa, #f3e5f5); color: #123; } header { min-height: 80px; background: linear-gradient(100deg, #063b4c, #00897b, #4527a0); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; } .logo { width: 230px; max-width: 100%; height: auto; } nav { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; } nav a { color: white; text-decoration: none; font-size: 16px; } nav a:hover { color: #80deea; } .page-heading { text-align: center; padding: 45px 15px 25px; } .page-heading h1 { color: #063b4c; font-size: 36px; margin-bottom: 12px; } .page-heading p { color: #555; line-height: 1.6; } .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; max-width: 1200px; margin: 20px auto 60px; padding: 0 20px; } .product-card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; display: flex; flex-direction: column; } .product-card img { width: 100%; height: 220px; object-fit: contain; background: #f5f9fc; border-radius: 10px; margin-bottom: 15px; } .product-card h3 { color: #063b4c; font-size: 19px; margin-bottom: 12px; } .price { color: #19a974; font-size: 18px; font-weight: bold; margin-bottom: 10px; } .stock { color: #16803c; font-size: 14px; margin-bottom: 15px; } .order-button { display: block; width: 100%; margin-top: auto; background: #19a974; color: white; padding: 12px; border: none; border-radius: 7px; font-size: 14px; font-weight: bold; cursor: pointer; } .order-button:hover { background: #12865b; } .sold-out { background: #888; cursor: not-allowed; } .cart-link { background: white; color: #063b4c; padding: 9px 13px; border-radius: 7px; font-weight: bold; } footer { background: #022833; color: white; text-align: center; padding: 30px 15px; line-height: 1.8; } @media (max-width: 600px) { header { justify-content: center; } nav { justify-content: center; } .page-heading h1 { font-size: 28px; } .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0 10px; } .product-card { padding: 10px; } .product-card img { height: 140px; } .product-card h3 { font-size: 15px; } .price { font-size: 15px; } } </style>
+<meta name="theme-color" content="#063b4c">
 
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #f3e5f5, #fff3e0);
+    color: #123;
+}
+
+/* HEADER */
+
+header {
+    height: 80px;
+    background: linear-gradient(100deg, #063b4c, #00897b, #4527a0);
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    gap: 20px;
+}
+
+.header-logo {
+    width: 280px;
+    height: 65px;
+    object-fit: contain;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+nav a,
+.shop-menu summary {
+    color: white;
+    text-decoration: none;
+    font-size: 19px;
+    cursor: pointer;
+    list-style: none;
+}
+
+nav a:hover,
+.shop-menu summary:hover {
+    color: #80deea;
+}
+
+/* SHOP DROPDOWN */
+
+.shop-menu {
+    position: relative;
+}
+
+.shop-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.shop-dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    min-width: 210px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.shop-menu[open] .shop-dropdown {
+    display: block;
+}
+
+.shop-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: #063b4c;
+    font-size: 15px;
+}
+
+.shop-dropdown a:hover {
+    background: #e0f7fa;
+    color: #00897b;
+}
+
+/* PAGE HEADING */
+
+.page-heading {
+    text-align: center;
+    padding: 55px 15px 25px;
+}
+
+.page-heading h1 {
+    color: #063b4c;
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.page-heading p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* PRODUCT GRID */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 25px auto 60px;
+    padding: 0 20px;
+}
+
+/* PRODUCT CARD */
+
+.product-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 470px;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+/* IMAGE FRAME */
+
+.image-frame {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #f5f9fc;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-frame::before {
+    content: "";
+    position: absolute;
+    inset: -15px;
+    background-image: var(--fish-image);
+    background-size: cover;
+    background-position: center;
+    filter: blur(18px);
+    opacity: 0.25;
+}
+
+.image-frame img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+}
+
+.product-card h3 {
+    color: #063b4c;
+    font-size: 19px;
+    margin-bottom: 12px;
+}
+
+.price {
+    color: #19a974;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.stock {
+    color: #16803c;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.order-button {
+    display: block;
+    width: 100%;
+    margin-top: auto;
+    background: #19a974;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.order-button:hover {
+    background: #12865b;
+}
+
+.sold-out {
+    background: #888;
+    cursor: not-allowed;
+}
+
+/* MAIN SHOP BUTTON */
+
+.main-shop-button {
+    display: inline-block;
+    background: #063b4c;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.main-shop-button:hover {
+    background: #00897b;
+}
+
+/* FOOTER */
+
+footer {
+    background: #022833;
+    color: white;
+    text-align: center;
+    padding: 30px 15px;
+    line-height: 1.8;
+}
+
+/* MOBILE DESIGN */
+
+@media (max-width: 900px) {
+
+    header {
+        height: auto;
+        min-height: 80px;
+        padding: 10px 3%;
+        flex-direction: column;
+    }
+
+    .header-logo {
+        width: 230px;
+        height: 55px;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        padding: 8px 0;
+    }
+
+    nav a,
+    .shop-menu summary {
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .page-heading h1 {
+        font-size: 28px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding: 0 10px;
+    }
+
+    .product-card {
+        padding: 10px;
+        min-height: 350px;
+    }
+
+    .product-card h3 {
+        font-size: 15px;
+    }
+
+    .price {
+        font-size: 15px;
+    }
+
+    .image-frame {
+        aspect-ratio: 1 / 1;
+    }
+
+    .order-button {
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
-<header> <a href="index.html"> <img src="aqua-dream-logo.%20jpg.jpeg" alt="Aqua Dream Logo" class="logo" > </a>
+<!-- HEADER -->
 
-<nav>
-    <a href="index.html">Home</a>
-    <a href="fish.html">Fish</a>
-    <a href="fish-food.html">Fish Food</a>
-    <a href="live-cultures.html">Live Cultures</a>
-    <a href="plants.html">Plants</a>
-    <a href="aquarium-products.html">Products</a>
-    <a href="index.html#contact">Contact</a>
-    <a href="index.html#categories" class="cart-link">Main Shop</a>
-</nav>
+<header>
+
+    <a href="index.html">
+        <img src="aqua-dream-logo.%20jpg.jpeg"
+             alt="Aqua Dream Logo"
+             class="header-logo">
+    </a>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <details class="shop-menu">
+            <summary>Shop ▾</summary>
+
+            <div class="shop-dropdown">
+                <a href="fish.html">Fish</a>
+                <a href="fish-food.html">Fish Food</a>
+                <a href="live-cultures.html">Live Cultures</a>
+                <a href="plants.html">Aquarium Plants</a>
+                <a href="aquarium-products.html">Aquarium Products</a>
+            </div>
+        </details>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+    </nav>
 
 </header>
 
-<section class="page-heading"> <h1>🐠 Ornamental Fish</h1> <p> Explore our available guppies, bettas and zebra fish.<br> Please check availability before placing your order. </p> </section>
+
+<!-- PAGE HEADING -->
+
+<section class="page-heading">
+
+    <h1>🐠 Ornamental Fish</h1>
+
+    <p>
+        Explore our available guppies, bettas and zebra fish.<br>
+        Choose your favourite varieties and add them to your cart.<br>
+        Please check availability before placing your order.
+    </p>
+
+</section>
+
+
+<!-- FISH PRODUCTS -->
 
 <div class="product-grid" id="fish-products"></div>
 
-<footer> <strong>AQUA DREAM ORNAMENTAL FISH FARM</strong> <p>Kanyakumari District, Tamil Nadu</p> <p>WhatsApp: +91 75388 67155</p> <p>© 2026 Aqua Dream. All Rights Reserved.</p> </footer>
 
-<script> const products = [ { name: "Lazuli Blue Tail", price: 100, unit: "pair", image: "LAZULI-BLUE-TAIL.%20jpg", available: true }, { name: "Jet Black", price: 80, unit: "pair", image: "jet-black.%20jpg", available: true }, { name: "Albino Full Red", price: 120, unit: "pair", image: "Albino-full-red.%20jpg", available: true }, { name: "White Tuxedo", price: 80, unit: "pair", image: "white-tuexedo.%20jpg.webp", available: true }, { name: "Albino Yellow Snakeskin", price: 100, unit: "pair", image: "Albino-yellow-snake-skin.%20jpg", available: true }, { name: "Purple Berry Dragon Dumbo Ear", price: 120, unit: "pair", image: "Purple-berry-dragon-dumbo-ear.%20jpg.webp", available: true }, { name: "Topaz Blue", price: 100, unit: "pair", image: "Topaz-Blue.%20jpg", available: false }, { name: "HB Blue", price: 100, unit: "pair", image: "hb-blue.%20jpg", available: true }, { name: "Japanese Blue Tail", price: 100, unit: "pair", image: "japanese-blue-tail.%20jpg.jpeg", available: false }, { name: "Albino Milky Pink", price: 100, unit: "pair", image: "albino-milky-pink.%20jpg", available: false }, { name: "Albino Platinum White", price: 120, unit: "pair", image: "Albino-platinum-white.%20jpg", available: true }, { name: "Red Lace", price: 100, unit: "pair", image: "red-lace.%20jpg", available: true }, { name: "Siamese Green Tiger", price: 100, unit: "pair", image: "siamese-green-tiger.%20jpg.png", available: true }, { name: "Red Garnet", price: 100, unit: "pair", image: "Red-garnet.%20jpg.jpg", available: true }, { name: "Albino Red Tuxedo Dumbo Ear", price: 120, unit: "pair", image: "red-tuexedo.%20jpg", available: true }, { name: "Dark Green Veil Tail Zebra", price: 150, unit: "pair", image: "Darkgreen-veyil-tail-zebra.%20jpg.webp", available: true }, { name: "Light Green Veil Tail Zebra", price: 150, unit: "pair", image: "veyiltail-light-green-zebra.%20jpg.webp", available: true }, { name: "Blue Veil Tail Zebra", price: 80, unit: "pair", image: "Blue-veyiltail-zebra.%20jpg.jpg", available: false }, { name: "Brown Veil Tail Zebra", price: 80, unit: "pair", image: "Brown-veyil-tail-zebra.%20jpg.webp", available: false }, { name: "Full Red Betta", price: 100, unit: "fish", image: "images/full-red-betta.jpg", available: true }, { name: "Blue Betta", price: 100, unit: "fish", image: "images/blue-betta.jpg", available: true } ]; const container = document.getElementById("fish-products"); products.forEach(product => { const card = document.createElement("div"); card.className = "product-card"; const img = document.createElement("img"); img.src = product.image; img.alt = product.name; img.loading = "lazy"; img.onerror = function() { this.alt = product.name + " image unavailable"; }; const title = document.createElement("h3"); title.textContent = product.name; const price = document.createElement("p"); price.className = "price"; price.textContent = "₹" + product.price + " / " + product.unit; const stock = document.createElement("p"); stock.className = "stock"; stock.textContent = product.available ? "🟢 Available" : "🔴 Sold Out"; const button = document.createElement("button"); button.className = "order-button"; button.textContent = product.available ? "🛒 ADD TO CART" : "SOLD OUT"; if (product.available) { button.onclick = function() { let cart = JSON.parse(localStorage.getItem("aquaDreamCart")) || []; const existing = cart.find(item => item.name === product.name); if (existing) { existing.quantity++; } else { cart.push({ name: product.name, price: product.price, image: product.image, quantity: 1 }); } localStorage.setItem("aquaDreamCart", JSON.stringify(cart)); alert(product.name + " added to your cart. Return to the home page and open Cart to continue."); }; } else { button.disabled = true; button.classList.add("sold-out"); } card.append(img, title, price, stock, button); container.appendChild(card); }); </script>
+<!-- MAIN SHOP BUTTON -->
 
-</body> </html>
+<div style="text-align:center;">
+    <a href="index.html" class="main-shop-button">
+        ← Back to Main Shop
+    </a>
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <strong>AQUA DREAM ORNAMENTAL FISH FARM</strong>
+
+    <p>Kanyakumari District, Tamil Nadu</p>
+
+    <p>WhatsApp: +91 75388 67155</p>
+
+    <p>© 2026 Aqua Dream. All Rights Reserved.</p>
+
+</footer>
+
+
+<!-- FISH PRODUCT SCRIPT -->
+
+<script>
+
+const products = [
+
+{ name: "Lazuli Blue Tail", price: 100, unit: "pair", image: "LAZULI-BLUE-TAIL.%20jpg", available: true },
+
+{ name: "Jet Black", price: 80, unit: "pair", image: "jet-black.%20jpg", available: true },
+
+{ name: "Albino Full Red", price: 120, unit: "pair", image: "Albino-full-red.%20jpg", available: true },
+
+{ name: "White Tuxedo", price: 80, unit: "pair", image: "white-tuexedo.%20jpg.webp", available: true },
+
+{ name: "Albino Yellow Snakeskin", price: 100, unit: "pair", image: "Albino-yellow-snake-skin.%20jpg", available: true },
+
+{ name: "Purple Berry Dragon Dumbo Ear", price: 120, unit: "pair", image: "Purple-berry-dragon-dumbo-ear.%20jpg.webp", available: true },
+
+{ name: "Topaz Blue", price: 100, unit: "pair", image: "Topaz-Blue.%20jpg", available: false },
+
+{ name: "HB Blue", price: 100, unit: "pair", image: "hb-blue.%20jpg", available: true },
+
+{ name: "Japanese Blue Tail", price: 100, unit: "pair", image: "japanese-blue-tail.%20jpg.jpeg", available: false },
+
+{ name: "Albino Milky Pink", price: 100, unit: "pair", image: "albino-milky-pink.%20jpg", available: false },
+
+{ name: "Albino Platinum White", price: 120, unit: "pair", image: "Albino-platinum-white.%20jpg", available: true },
+
+{ name: "Red Lace", price: 100, unit: "pair", image: "red-lace.%20jpg", available: true },
+
+{ name: "Siamese Green Tiger", price: 100, unit: "pair", image: "siamese-green-tiger.%20jpg.png", available: true },
+
+{ name: "Red Garnet", price: 100, unit: "pair", image: "Red-garnet.%20jpg.jpg", available: true },
+
+{ name: "Albino Red Tuxedo Dumbo Ear", price: 120, unit: "pair", image: "red-tuexedo.%20jpg", available: true },
+
+{ name: "Dark Green Veil Tail Zebra", price: 150, unit: "pair", image: "Darkgreen-veyil-tail-zebra.%20jpg.webp", available: true },
+
+{ name: "Light Green Veil Tail Zebra", price: 150, unit: "pair", image: "veyiltail-light-green-zebra.%20jpg.webp", available: true },
+
+{ name: "Blue Veil Tail Zebra", price: 80, unit: "pair", image: "Blue-veyiltail-zebra.%20jpg.jpg", available: false },
+
+{ name: "Brown Veil Tail Zebra", price: 80, unit: "pair", image: "Brown-veyil-tail-zebra.%20jpg.webp", available: false },
+
+{ name: "Full Red Betta", price: 100, unit: "fish", image: "images/full-red-betta.jpg", available: true },
+
+{ name: "Blue Betta", price: 100, unit: "fish", image: "images/blue-betta.jpg", available: true }
+
+];
+
+
+const container = document.getElementById("fish-products");
+
+
+products.forEach(product => {
+
+    const card = document.createElement("div");
+
+    card.className = "product-card";
+
+
+    const frame = document.createElement("div");
+
+    frame.className = "image-frame";
+
+    frame.style.setProperty(
+        "--fish-image",
+        `url("${product.image}")`
+    );
+
+
+    const img = document.createElement("img");
+
+    img.src = product.image;
+
+    img.alt = product.name;
+
+    img.loading = "lazy";
+
+    img.onerror = function() {
+        this.alt = product.name + " image unavailable";
+    };
+
+
+    frame.appendChild(img);
+
+
+    const title = document.createElement("h3");
+
+    title.textContent = product.name;
+
+
+    const price = document.createElement("p");
+
+    price.className = "price";
+
+    price.textContent = "₹" + product.price + " / " + product.unit;
+
+
+    const stock = document.createElement("p");
+
+    stock.className = "stock";
+
+    stock.textContent = product.available
+        ? "🟢 Available"
+        : "🔴 Sold Out";
+
+
+    const button = document.createElement("button");
+
+    button.className = "order-button";
+
+    button.textContent = product.available
+        ? "🛒 ADD TO CART"
+        : "SOLD OUT";
+
+
+    if (product.available) {
+
+        button.onclick = function() {
+
+            let cart = JSON.parse(
+                localStorage.getItem("aquaDreamCart")
+            ) || [];
+
+            const existing = cart.find(
+                item => item.name === product.name
+            );
+
+            if (existing) {
+
+                existing.quantity++;
+
+            } else {
+
+                cart.push({
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+
+            }
+
+            localStorage.setItem(
+                "aquaDreamCart",
+                JSON.stringify(cart)
+            );
+
+            alert(
+                product.name +
+                " added to your cart. Return to the Home page and open Cart to continue."
+            );
+
+        };
+
+    } else {
+
+        button.disabled = true;
+
+        button.classList.add("sold-out");
+
+    }
+
+
+    card.append(
+        frame,
+        title,
+        price,
+        stock,
+        button
+    );
+
+    container.appendChild(card);
+
+});
