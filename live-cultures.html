@@ -12,32 +12,73 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    color: #083344;
-    background: linear-gradient(135deg, #dff7ff, #e8fff3);
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #f3e5f5, #fff3e0);
+    color: #123;
 }
 
 header {
-    background: #063b4c;
-    color: white;
-    padding: 15px;
-    text-align: center;
+    height: 80px;
+    background: linear-gradient(100deg, #063b4c, #00897b, #4527a0);
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    gap: 20px;
 }
 
-header img {
-    width: 75px;
-    height: 75px;
+.header-logo {
+    width: 280px;
+    height: 65px;
     object-fit: contain;
 }
 
-header h1 {
-    margin: 8px 0;
-    font-size: 24px;
+nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
 }
 
-header p {
-    margin: 5px 0;
-    font-size: 13px;
+nav a, .shop-menu summary {
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.shop-menu {
+    position: relative;
+}
+
+.shop-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.shop-dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    min-width: 210px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.shop-menu[open] .shop-dropdown {
+    display: block;
+}
+
+.shop-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: #063b4c;
+    font-size: 15px;
 }
 
 .top-buttons {
@@ -153,22 +194,93 @@ footer {
     padding: 15px;
     margin-top: 35px;
 }
-</style>
+
+    .cart-box {
+    display: none;
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    width: 380px;
+    max-width: calc(100% - 30px);
+    max-height: 80vh;
+    overflow-y: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+    z-index: 2000;
+}
+
+.cart-box.show {
+    display: block;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 10px 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+@media(max-width: 900px) {
+    header {
+        height: auto;
+        min-height: 80px;
+        flex-direction: column;
+        padding: 10px 3%;
+    }
+
+    .header-logo {
+        width: 230px;
+        height: 55px;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+}
+    </style>
 </head>
 
 <body>
 
 <header>
-    <img src="aqua-dream-logo.%20jpg.jpeg" alt="Aqua Dream Logo">
-    <h1>Aqua Dream Ornamental Fish Farm</h1>
-    <p>BRINGING COLOR TO YOUR TANK</p>
-    <p>Live Foods & Starter Cultures</p>
+
+    <a href="index.html">
+        <img src="aqua-dream-logo.%20jpg.jpeg"
+             alt="Aqua Dream Logo"
+             class="header-logo">
+    </a>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <details class="shop-menu">
+            <summary>Shop ▾</summary>
+
+            <div class="shop-dropdown">
+                <a href="fish.html">Fish</a>
+                <a href="fish-food.html">Fish Food</a>
+                <a href="live-cultures.html">Live Cultures</a>
+                <a href="plants.html">Aquarium Plants</a>
+                <a href="aquarium-products.html">Aquarium Products</a>
+            </div>
+        </details>
+
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+
+        <button onclick="showCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+
+    </nav>
+
 </header>
 
-<div class="top-buttons">
-    <a class="button" href="index.html">← Back to Shop</a>
-    <button onclick="showCart()">🛒 View Cart</button>
-</div>
 
 <div class="container">
     <h2>Live Foods & Cultures</h2>
@@ -206,9 +318,16 @@ footer {
 
     </div>
 
-    <div class="cart-box" id="cart-box">
-        <h2>Your Cart</h2>
-        <div id="cart-items">Your cart is empty.</div>
+   
+       <div class="cart-box" id="cart-box">
+
+    <button onclick="showCart()" style="float:right;">✖ Close</button>
+
+    <h2>Your Cart</h2>
+
+    <div id="cart-items">Your cart is empty.</div>
+
+  
         <p class="total">Total: ₹<span id="cart-total">0</span></p>
 
         <h3>Delivery Details</h3>
@@ -260,14 +379,18 @@ function addToCart(name, price, qtyId) {
 }
 
 function updateCart() {
+
+    // Calculate and display total quantity in the cart button
+    
     let cartItems = document.getElementById("cart-items");
     let total = 0;
 
     if (cart.length === 0) {
-        cartItems.innerHTML = "Your cart is empty.";
-        document.getElementById("cart-total").textContent = "0";
-        return;
-    }
+    cartItems.innerHTML = "Your cart is empty.";
+    document.getElementById("cart-total").textContent = "0";
+    document.getElementById("cart-count").textContent = "0";
+    return;
+}
 
     cartItems.innerHTML = "";
 
@@ -285,7 +408,10 @@ function updateCart() {
 
     document.getElementById("cart-total").textContent = total;
 }
+let count = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+document.getElementById("cart-count").textContent = count;
+    
 function removeItem(index) {
     cart.splice(index, 1);
     saveCart();
@@ -293,10 +419,9 @@ function removeItem(index) {
 }
 
 function showCart() {
-    document.getElementById("cart-box").scrollIntoView({
-        behavior: "smooth"
-    });
+    document.getElementById("cart-box").classList.toggle("show");
 }
+
 
 function sendOrder() {
     if (cart.length === 0) {
