@@ -344,7 +344,22 @@ textarea {
 .whatsapp-button:hover {
     background: #128C7E;
 }
+.cart-quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
 
+.cart-quantity button {
+    padding: 5px 11px;
+    font-size: 16px;
+    background: #087f8c;
+}
+
+.cart-quantity span {
+    font-weight: bold;
+}
 /* FOOTER */
 
 footer {
@@ -528,38 +543,46 @@ footer {
 
     </div>
 
-    <p class="total">
+  <h3>Delivery Details</h3>
 
-        Total: ₹<span id="cart-total">0</span>
+<p>Product Total: ₹<span id="cart-total">0</span></p>
 
-    </p>
+<p>Parcel Weight: <span id="parcel-weight">0 kg</span></p>
 
-    <h3>Delivery Details</h3>
+<p>Delivery Charge: ₹<span id="delivery-charge">0</span></p>
 
-    <input
-        type="text"
-        id="customer-name"
-        placeholder="Your Name">
+<p class="total">
+    Grand Total: ₹<span id="grand-total">0</span>
+</p>
 
-    <input
-        type="tel"
-        id="customer-phone"
-        placeholder="Phone Number">
+<h3>Customer Details</h3>
 
-    <textarea
-        id="customer-address"
-        placeholder="Full Delivery Address"></textarea>
+<input type="text" id="customer-name" placeholder="Your Name">
 
-    <input
-        type="text"
-        id="customer-pincode"
-        placeholder="PIN Code">
+<input type="tel" id="customer-phone" placeholder="10-digit Phone Number">
 
-    <button class="whatsapp-button" onclick="sendOrder()">
+<textarea id="customer-address"
+placeholder="Full Delivery Address"></textarea>
 
-        Order through WhatsApp
+<input
+    type="text"
+    id="customer-pincode"
+    placeholder="6-digit PIN Code"
+    maxlength="6"
+    inputmode="numeric"
+>
 
-    </button>
+<button onclick="checkPincode()" style="width:100%">
+    Check PIN Code
+</button>
+
+<p id="pincode-result"></p>
+
+<p id="delivery-location"></p>
+
+<button class="whatsapp-button" onclick="sendOrder()">
+    Order through WhatsApp
+</button>
 
 </div>
 
@@ -903,14 +926,21 @@ let cart = JSON.parse(
     localStorage.getItem("aquaDreamCart")
 ) || [];
 
+let verifiedPincode = "";
+let deliveryState = "";
+let deliveryCity = "";
+let deliveryDistrict = "";
+let deliveryCharge = 0;
+let parcelWeight = 0;
+
+
+/* SAVE CART */
 
 function saveCart() {
-
     localStorage.setItem(
         "aquaDreamCart",
         JSON.stringify(cart)
     );
-
 }
 
 
@@ -921,43 +951,401 @@ function addToCart(product, quantity) {
     quantity = parseInt(quantity);
 
     if (!quantity || quantity < 1) {
-
-        alert("Please enter a valid quantity.");
-
+        alert("Enter a valid quantity.");
         return;
-
     }
-
 
     let existing = cart.find(
         item => item.name === product.name
     );
 
-
     if (existing) {
-
         existing.quantity += quantity;
-
     } else {
-
         cart.push({
-
             name: product.name,
-
             price: product.price,
-
             image: product.image,
-
-            quantity: quantity
-
+            quantity: quantity,
+            weight: 200
         });
+    }
+
+    saveCart();
+    updateCart();
+
+    alert(product.name + " added to cart!");
+}
+
+
+/* PLUS AND MINUS */
+
+function changeQuantity(index, change) {
+
+    cart[index].quantity += change;
+
+    if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+    }
+
+    saveCart();
+    updateCart();
+}
+
+
+/* UPDATE CART */
+
+function updateCart() {
+
+    let cartItems = document.getElementById("cart-items");
+
+    let total = 0;
+    let count = 0;
+    let weight = 0;
+
+    cartItems.innerHTML = "";
+
+    cart.forEach((item, index) => {
+
+        let itemTotal = item.price * item.quantity;
+
+        total += itemTotal;
+
+        count += item.quantity;
+
+        weight += (item.weight || 200) * item.quantity;
+
+        cartItems.innerHTML += `
+
+            <div class="cart-item">
+
+                <div>
+
+                    <strong>${item.name}</strong>
+
+                    <br>
+
+                    ₹${itemTotal}
+
+                    <div class="cart-quantity">
+
+                        <button onclick="changeQuantity(${index}, -1)">−</button>
+
+                        <span>${item.quantity}</span>
+
+                        <button onclick="changeQuantity(${index}, 1)">+</button>
+
+                    </div>
+
+                </div>
+
+                <button onclick="removeItem(${index})">
+                    Remove
+                </button>
+
+            </div>
+
+        `;
+    });
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = "Your cart is empty.";
+    }
+
+    document.getElementById("cart-count").textContent = count;
+
+    document.getElementById("cart-total").textContent = total;
+
+    parcelWeight = Math.max(1, Math.ceil(weight / 1000));
+
+    document.getElementById("parcel-weight").textContent =
+        cart.length ? parcelWeight + " kg" : "0 kg";
+
+    calculateDelivery();
+}
+
+
+/* DELIVERY CHARGE */
+
+function calculateDelivery() {
+
+    let kg = parcelWeight;
+    let charge = 0;
+
+    if (cart.length === 0 || !deliveryState) {
+        charge = 0;
+    }
+
+    else if (
+        deliveryState === "Tamil Nadu" ||
+        deliveryState === "Puducherry"
+    ) {
+
+        let rates = [90, 160, 250, 320, 400];
+
+        charge = kg <= 5
+            ? rates[kg - 1]
+            : 400 + ((kg - 5) * 80);
 
     }
 
+    else if (deliveryState === "Kerala") {
+
+        charge = kg === 1
+            ? 100
+            : 200 + ((kg - 2) * 100);
+
+    }
+
+    else if (deliveryState === "Karnataka") {
+
+        charge = kg === 1
+            ? 110
+            : 180 + ((kg - 2) * 100);
+
+    }
+
+    deliveryCharge = charge;
+
+    let productTotal = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
+
+    document.getElementById("delivery-charge").textContent = charge;
+
+    document.getElementById("grand-total").textContent =
+        productTotal + charge;
+}
+
+
+/* REMOVE ITEM */
+
+function removeItem(index) {
+
+    cart.splice(index, 1);
 
     saveCart();
 
     updateCart();
+}
+
+
+/* SHOW CART */
+
+function showCart() {
+
+    document.getElementById("cart-box")
+        .classList.toggle("show");
+}
+
+
+/* PINCODE CHECK */
+
+async function checkPincode() {
+
+    let pin = document.getElementById("customer-pincode").value.trim();
+
+    let result = document.getElementById("pincode-result");
+
+    let location = document.getElementById("delivery-location");
+
+    verifiedPincode = "";
+    deliveryState = "";
+
+    result.textContent = "Checking PIN Code...";
+
+    location.textContent = "";
+
+    calculateDelivery();
+
+    if (!/^[0-9]{6}$/.test(pin)) {
+
+        result.textContent = "Enter a valid 6-digit PIN Code.";
+
+        return;
+    }
+
+    try {
+
+        let response = await fetch(
+            "https://api.postalpincode.in/pincode/" + pin
+        );
+
+        let data = await response.json();
+
+        if (
+            !data[0] ||
+            data[0].Status !== "Success" ||
+            !data[0].PostOffice
+        ) {
+
+            result.textContent = "Invalid PIN Code.";
+
+            return;
+        }
+
+        let post = data[0].PostOffice[0];
+
+        let state = post.State;
+
+        let allowedStates = [
+            "Tamil Nadu",
+            "Puducherry",
+            "Kerala",
+            "Karnataka"
+        ];
+
+        if (!allowedStates.includes(state)) {
+
+            result.textContent =
+                "Delivery is not currently available in " + state;
+
+            return;
+        }
+
+        if (post.DeliveryStatus === "Non-Delivery") {
+
+            result.textContent =
+                "This PIN Code is a non-delivery post office. Please contact us.";
+
+            return;
+        }
+
+        verifiedPincode = pin;
+
+        deliveryState = state;
+
+        deliveryCity = post.Name;
+
+        deliveryDistrict = post.District;
+
+        result.textContent =
+            "✅ PIN Code verified successfully!";
+
+        location.textContent =
+            "Post Office: " + deliveryCity +
+            " | District: " + deliveryDistrict +
+            " | State: " + deliveryState;
+
+        calculateDelivery();
+
+    }
+
+    catch (error) {
+
+        result.textContent =
+            "Unable to check PIN Code. Please try again.";
+
+    }
+}
+
+
+/* RESET VERIFICATION WHEN PIN CHANGES */
+
+document.getElementById("customer-pincode").addEventListener(
+    "input",
+    function() {
+
+        verifiedPincode = "";
+
+        deliveryState = "";
+
+        document.getElementById("pincode-result").textContent = "";
+
+        document.getElementById("delivery-location").textContent = "";
+
+        calculateDelivery();
+
+    }
+);
+
+
+/* WHATSAPP ORDER */
+
+function sendOrder() {
+
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+
+    let name = document.getElementById("customer-name").value.trim();
+
+    let phone = document.getElementById("customer-phone").value.trim();
+
+    let address = document.getElementById("customer-address").value.trim();
+
+    let pin = document.getElementById("customer-pincode").value.trim();
+
+    if (!name || !phone || !address || !pin) {
+        alert("Please fill in all delivery details.");
+        return;
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+        alert("Enter a valid 10-digit phone number.");
+        return;
+    }
+
+    if (verifiedPincode !== pin || !deliveryState) {
+        alert("Please verify your PIN Code first.");
+        return;
+    }
+
+    let productTotal = 0;
+
+    let message =
+        "Hello Aqua Dream! I would like to order:\n\n";
+
+    cart.forEach(item => {
+
+        let itemTotal = item.price * item.quantity;
+
+        productTotal += itemTotal;
+
+        message +=
+            item.name + " × " + item.quantity +
+            " = ₹" + itemTotal + "\n";
+
+    });
+
+    message += "\nProduct Total: ₹" + productTotal;
+
+    message += "\nParcel Weight: " + parcelWeight + " kg";
+
+    message += "\nDelivery Charge: ₹" + deliveryCharge;
+
+    message += "\nGrand Total: ₹" +
+        (productTotal + deliveryCharge);
+
+    message += "\n\nName: " + name;
+
+    message += "\nPhone: " + phone;
+
+    message += "\nAddress: " + address;
+
+    message += "\nPIN Code: " + pin;
+
+    message += "\nPost Office: " + deliveryCity;
+
+    message += "\nDistrict: " + deliveryDistrict;
+
+    message += "\nState: " + deliveryState;
+
+    message += "\n\nPlease confirm the order.";
+
+    let whatsappURL =
+        "https://wa.me/917538867155?text=" +
+        encodeURIComponent(message);
+
+    window.open(whatsappURL, "_blank");
+}
+
+
+/* INITIALIZE CART */
+
+updateCart();
 
     alert(product.name + " added to your cart!");
 
