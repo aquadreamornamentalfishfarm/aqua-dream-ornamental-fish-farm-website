@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,47 +8,91 @@
 <title>Aquarium Plants | Aqua Dream Ornamental Fish Farm</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    color: #083344;
-    background: linear-gradient(135deg, #dff7ff, #e8fff3);
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #f3e5f5, #fff3e0);
+    color: #123;
 }
+
+/* HEADER */
 
 header {
-    background: #063b4c;
-    color: white;
-    padding: 15px;
-    text-align: center;
+    height: 80px;
+    background: linear-gradient(100deg, #063b4c, #00897b, #4527a0);
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    gap: 20px;
 }
 
-header img {
-    width: 75px;
-    height: 75px;
+.header-logo {
+    width: 280px;
+    height: 65px;
     object-fit: contain;
 }
 
-header h1 {
-    margin: 8px 0;
-    font-size: 24px;
-}
+/* NAVIGATION */
 
-header p {
-    margin: 5px 0;
-    font-size: 13px;
-}
-
-.top-buttons {
+nav {
     display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin: 15px;
+    align-items: center;
+    gap: 25px;
 }
+
+nav a, .shop-menu summary {
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.shop-menu {
+    position: relative;
+}
+
+.shop-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.shop-dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    min-width: 210px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.shop-menu[open] .shop-dropdown {
+    display: block;
+}
+
+.shop-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: #063b4c;
+    font-size: 15px;
+}
+
+.shop-dropdown a:hover {
+    background: #e0f7fa;
+}
+
+/* BUTTONS */
 
 button, .button {
     border: none;
@@ -64,6 +109,8 @@ button:hover, .button:hover {
     background: #055c68;
 }
 
+/* CONTAINER */
+
 .container {
     max-width: 1100px;
     margin: auto;
@@ -74,6 +121,8 @@ h2 {
     text-align: center;
     color: #064e5b;
 }
+
+/* PRODUCTS */
 
 .products {
     display: grid;
@@ -116,12 +165,26 @@ h2 {
     border-radius: 6px;
 }
 
+/* CART */
+
 .cart-box {
+    display: none;
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    width: 380px;
+    max-width: calc(100% - 30px);
+    max-height: 80vh;
+    overflow-y: auto;
     background: white;
-    margin-top: 30px;
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+    z-index: 2000;
+}
+
+.cart-box.show {
+    display: block;
 }
 
 .cart-item {
@@ -147,6 +210,8 @@ input, textarea {
     margin: 6px 0;
 }
 
+/* FOOTER */
+
 footer {
     text-align: center;
     background: #063b4c;
@@ -154,22 +219,87 @@ footer {
     padding: 15px;
     margin-top: 35px;
 }
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width: 900px) {
+
+    header {
+        height: auto;
+        min-height: 80px;
+        flex-direction: column;
+        padding: 10px 3%;
+    }
+
+    .header-logo {
+        width: 230px;
+        height: 55px;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
+<!-- HEADER -->
+
 <header>
-    <img src="aqua-dream-logo.%20jpg.jpeg" alt="Aqua Dream Logo">
-    <h1>Aqua Dream Ornamental Fish Farm</h1>
-    <p>BRINGING COLOR TO YOUR TANK</p>
-    <p>Aquarium Plants</p>
+
+    <a href="index.html">
+
+        <img src="aqua-dream-logo.%20jpg.jpeg"
+             alt="Aqua Dream Logo"
+             class="header-logo">
+
+    </a>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <details class="shop-menu">
+
+            <summary>Shop ▾</summary>
+
+            <div class="shop-dropdown">
+
+                <a href="fish.html">Fish</a>
+
+                <a href="fish-food.html">Fish Food</a>
+
+                <a href="live-cultures.html">Live Cultures</a>
+
+                <a href="plants.html">Aquarium Plants</a>
+
+                <a href="aquarium-products.html">Aquarium Products</a>
+
+            </div>
+
+        </details>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+        <button onclick="showCart()">
+            🛒 Cart (<span id="cart-count">0</span>)
+        </button>
+
+    </nav>
+
 </header>
 
-<div class="top-buttons">
-    <a class="button" href="index.html">← Back to Shop</a>
-    <button onclick="showCart()">🛒 View Cart</button>
-</div>
+
+<!-- MAIN CONTAINER -->
 
 <div class="container">
 
@@ -179,12 +309,16 @@ footer {
         Bring natural greenery to your aquarium!
     </p>
 
+
     <div class="products">
 
-        <!-- Foxtail -->
+
+        <!-- FOXTAIL -->
+
         <div class="product">
 
-            <img src="fox-tail.%20jpg" alt="Foxtail Aquarium Plant">
+            <img src="fox-tail.%20jpg"
+                 alt="Foxtail Aquarium Plant">
 
             <h3>Foxtail</h3>
 
@@ -196,20 +330,28 @@ footer {
 
             <label>Quantity:</label>
 
-            <input type="number" id="qty-foxtail" min="1" value="1">
+            <input type="number"
+                   id="qty-foxtail"
+                   min="1"
+                   value="1">
 
             <br>
 
             <button onclick="addToCart('Foxtail', 50, 'qty-foxtail')">
+
                 Add to Cart
+
             </button>
 
         </div>
 
-        <!-- Guppy Grass -->
+
+        <!-- GUPPY GRASS -->
+
         <div class="product">
 
-            <img src="guppy-grass.%20jpg" alt="Guppy Grass">
+            <img src="guppy-grass.%20jpg"
+                 alt="Guppy Grass">
 
             <h3>Guppy Grass</h3>
 
@@ -221,20 +363,32 @@ footer {
 
             <label>Quantity:</label>
 
-            <input type="number" id="qty-guppygrass" min="1" value="1">
+            <input type="number"
+                   id="qty-guppygrass"
+                   min="1"
+                   value="1">
 
             <br>
 
             <button onclick="addToCart('Guppy Grass', 50, 'qty-guppygrass')">
+
                 Add to Cart
+
             </button>
 
         </div>
 
+
     </div>
 
-    <!-- CART -->
+
+    <!-- CART POPUP -->
+
     <div class="cart-box" id="cart-box">
+
+        <button onclick="showCart()" style="float:right;">
+            ✖ Close
+        </button>
 
         <h2>🛒 Your Cart</h2>
 
@@ -243,43 +397,66 @@ footer {
         </div>
 
         <p class="total">
+
             Total: ₹<span id="cart-total">0</span>
+
         </p>
+
+
+        <!-- DELIVERY DETAILS -->
 
         <h3>Delivery Details</h3>
 
-        <input type="text" id="customer-name"
-        placeholder="Your Name">
+        <input type="text"
+               id="customer-name"
+               placeholder="Your Name">
 
-        <input type="tel" id="customer-phone"
-        placeholder="Phone Number">
+        <input type="tel"
+               id="customer-phone"
+               placeholder="Phone Number">
 
         <textarea id="customer-address"
-        placeholder="Full Delivery Address"></textarea>
+                  placeholder="Full Delivery Address"></textarea>
 
-        <input type="text" id="customer-pincode"
-        placeholder="PIN Code">
+        <input type="text"
+               id="customer-pincode"
+               placeholder="PIN Code">
 
         <button onclick="sendOrder()">
+
             Order through WhatsApp
+
         </button>
 
     </div>
 
 </div>
 
+
+<!-- FOOTER -->
+
 <footer>
+
     <p>Aqua Dream Ornamental Fish Farm</p>
+
     <p>Kanyakumari, Tamil Nadu</p>
+
 </footer>
+
+
+<!-- JAVASCRIPT -->
 
 <script>
 
 let cart = JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
 
+
 function saveCart() {
+
     localStorage.setItem("aquaDreamCart", JSON.stringify(cart));
+
 }
+
 
 function addToCart(name, price, qtyId) {
 
@@ -288,34 +465,58 @@ function addToCart(name, price, qtyId) {
     );
 
     if (!quantity || quantity < 1) {
+
         alert("Please enter a valid quantity.");
+
         return;
+
     }
 
     let existing = cart.find(item => item.name === name);
 
     if (existing) {
+
         existing.quantity += quantity;
+
     } else {
+
         cart.push({
+
             name: name,
+
             price: price,
+
             quantity: quantity,
+
             weight: 250
+
         });
+
     }
 
     saveCart();
+
     updateCart();
 
     alert("Added to cart!");
+
 }
+
 
 function updateCart() {
 
     let cartItems = document.getElementById("cart-items");
 
     let total = 0;
+
+    let count = cart.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+    );
+
+
+    document.getElementById("cart-count").textContent = count;
+
 
     if (cart.length === 0) {
 
@@ -324,9 +525,12 @@ function updateCart() {
         document.getElementById("cart-total").textContent = "0";
 
         return;
+
     }
 
+
     cartItems.innerHTML = "";
+
 
     cart.forEach((item, index) => {
 
@@ -334,24 +538,32 @@ function updateCart() {
 
         total += itemTotal;
 
+
         cartItems.innerHTML += `
+
             <div class="cart-item">
 
                 <span>
-                    ${item.name} × ${item.quantity}
-                    = ₹${itemTotal}
+                    ${item.name} × ${item.quantity} = ₹${itemTotal}
                 </span>
 
                 <button onclick="removeItem(${index})">
+
                     Remove
+
                 </button>
 
             </div>
+
         `;
+
     });
 
+
     document.getElementById("cart-total").textContent = total;
+
 }
+
 
 function removeItem(index) {
 
@@ -360,21 +572,27 @@ function removeItem(index) {
     saveCart();
 
     updateCart();
+
 }
+
 
 function showCart() {
 
-    document.getElementById("cart-box").scrollIntoView({
-        behavior: "smooth"
-    });
+    document.getElementById("cart-box").classList.toggle("show");
+
 }
+
 
 function sendOrder() {
 
     if (cart.length === 0) {
+
         alert("Your cart is empty.");
+
         return;
+
     }
+
 
     let name = document.getElementById("customer-name").value.trim();
 
@@ -384,14 +602,20 @@ function sendOrder() {
 
     let pincode = document.getElementById("customer-pincode").value.trim();
 
+
     if (!name || !phone || !address || !pincode) {
+
         alert("Please fill in all delivery details.");
+
         return;
+
     }
+
 
     let total = 0;
 
     let message = "Hello Aqua Dream! I would like to order:\n\n";
+
 
     cart.forEach(item => {
 
@@ -400,7 +624,9 @@ function sendOrder() {
         total += itemTotal;
 
         message += `${item.name} × ${item.quantity} = ₹${itemTotal}\n`;
+
     });
+
 
     message += `\nProduct Total: ₹${total}`;
 
@@ -414,16 +640,22 @@ function sendOrder() {
 
     message += "\n\nPlease confirm delivery charges and order.";
 
+
     let whatsappURL =
+
         "https://wa.me/917538867155?text=" +
         encodeURIComponent(message);
 
+
     window.open(whatsappURL, "_blank");
+
 }
+
 
 updateCart();
 
 </script>
 
 </body>
+
 </html>
