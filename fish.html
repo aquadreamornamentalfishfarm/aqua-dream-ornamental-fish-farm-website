@@ -269,24 +269,113 @@ button:hover {
     cursor: not-allowed;
 }
 
-/* CART POPUP */
+/* COMMON CART PANEL */
 
-.cart-box {
+.cart-link {
+    background: #19a974;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+#cart-count {
+    background: white;
+    color: #063b4c;
+    padding: 2px 7px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+.cart-overlay {
     display: none;
     position: fixed;
-    top: 90px;
-    right: 20px;
-    width: 380px;
-    max-width: calc(100% - 30px);
-    max-height: 80vh;
-    overflow-y: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+    inset: 0;
+    background: rgba(0,0,0,0.6);
     z-index: 2000;
 }
 
+.cart-overlay.show {
+    display: block;
+}
+
+.cart-panel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    max-width: 450px;
+    height: 100%;
+    background: white;
+    padding: 22px;
+    overflow-y: auto;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cart-header h2 {
+    color: #063b4c;
+}
+
+.close-cart {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    font-size: 14px;
+}
+
+.cart-quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.cart-quantity button {
+    padding: 5px 11px;
+    font-size: 16px;
+}
+
+.cart-total,
+.total {
+    font-size: 20px;
+    font-weight: bold;
+    color: #19a974;
+    margin: 15px 0;
+}
+
+.whatsapp-button {
+    width: 100%;
+    background: #25D366;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 40px 10px;
+    color: #666;
+}
 .cart-box.show {
     display: block;
 }
@@ -488,11 +577,11 @@ footer {
 
         <a href="contact.html">Contact</a>
 
-        <button onclick="showCart()">
+        <button class="cart-link" onclick="openCart()">
 
-            🛒 Cart (<span id="cart-count">0</span>)
+    🛒 Cart <span id="cart-count">0</span>
 
-        </button>
+</button>
 
     </nav>
 
