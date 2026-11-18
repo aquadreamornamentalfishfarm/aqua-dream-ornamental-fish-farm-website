@@ -116,6 +116,9 @@ nav a:hover,
     padding: 10px 15px;
     border-radius: 8px;
     color: white !important;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
 }
 
 .cart-link:hover {
@@ -287,7 +290,104 @@ footer p {
     }
 
 }
+/* COMMON CART PANEL */
 
+.cart-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+}
+
+.cart-overlay.show {
+    display: block;
+}
+
+.cart-panel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    max-width: 450px;
+    height: 100%;
+    background: white;
+    padding: 22px;
+    overflow-y: auto;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cart-header h2 {
+    color: #063b4c;
+}
+
+.close-cart {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cart-product {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-product img {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+}
+
+.cart-product-details {
+    flex: 1;
+}
+
+.cart-product-details h4 {
+    margin-bottom: 7px;
+    color: #063b4c;
+}
+
+.cart-actions button {
+    padding: 5px 10px;
+    margin: 5px 3px;
+    cursor: pointer;
+}
+
+.cart-total {
+    font-size: 23px;
+    font-weight: bold;
+    color: #19a974;
+    margin: 25px 0;
+}
+
+.whatsapp-order {
+    width: 100%;
+    background: #19a974;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 40px 10px;
+    color: #666;
+}
 </style>
 
 </head>
@@ -336,9 +436,9 @@ Shop <span>▼</span>
 
 <a href="contact.html">Contact</a>
 
-<a href="cart.html" class="cart-link">
-🛒 Cart <span id="cart-count">0</span>
-</a>
+<button class="cart-link" onclick="openCart()">
+    🛒 Cart <span id="cart-count">0</span>
+</button>
 
 </nav>
 
@@ -458,11 +558,30 @@ onclick="addToCart('Taiyo 20 gram',12,'taiyo-20g.jpg.png',20)">
 
 </section>
 
+<!-- CART PANEL -->
 
+<div class="cart-overlay" id="cartOverlay" onclick="if(event.target === this) closeCart()">
+
+    <div class="cart-panel">
+
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="closeCart()">✕ Close</button>
+        </div>
+
+        <div id="cartProducts"></div>
+
+        <div id="cartTotal"></div>
+
+    </div>
+
+</div>
 <!-- FOOTER -->
 
 <footer>
 
+
+       
 <p><strong>AQUA DREAM ORNAMENTAL FISH FARM</strong></p>
 
 <p>Kanyakumari District, Tamil Nadu</p>
@@ -539,24 +658,193 @@ function addToCart(name, price, image, weight) {
 }
 
 
+/* SHARED CART SYSTEM */
+
+function getCart() {
+    return JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
+}
+
+function saveCart(cart) {
+    localStorage.setItem("aquaDreamCart", JSON.stringify(cart));
+    updateCartCount();
+}
+
 /* CART COUNT */
 
 function updateCartCount() {
 
-    let cart =
-        JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
+    let cart = getCart();
 
     let totalItems = cart.reduce(
-        (total, item) => total + item.quantity,
+        (total, item) => total + Number(item.quantity || 0),
         0
     );
 
     document.getElementById("cart-count").innerText = totalItems;
-
 }
 
-updateCartCount();
+/* OPEN CART */
 
+function openCart() {
+
+    document.getElementById("cartOverlay").classList.add("show");
+
+    displayCart();
+}
+
+/* CLOSE CART */
+
+function closeCart() {
+
+    document.getElementById("cartOverlay").classList.remove("show");
+}
+
+/* DISPLAY CART */
+
+function displayCart() {
+
+    let cart = getCart();
+
+    let products = document.getElementById("cartProducts");
+    let totalBox = document.getElementById("cartTotal");
+
+    if (cart.length === 0) {
+
+        products.innerHTML = `
+            <div class="empty-cart">
+                <h3>Your cart is empty!</h3>
+                <p>Add products to continue shopping.</p>
+            </div>
+        `;
+
+        totalBox.innerHTML = "";
+        return;
+    }
+
+    let total = 0;
+    let html = "";
+
+    cart.forEach((item, index) => {
+
+        let subtotal = Number(item.price) * Number(item.quantity);
+        total += subtotal;
+
+        html += `
+            <div class="cart-product">
+
+                <img src="${item.image}" alt="${item.name}">
+
+                <div class="cart-product-details">
+
+                    <h4>${item.name}</h4>
+
+                    <p>Price: ₹${item.price}</p>
+
+                    <div class="cart-actions">
+
+                        <button onclick="changeCartQuantity(${index},-1)">−</button>
+
+                        ${item.quantity}
+
+                        <button onclick="changeCartQuantity(${index},1)">+</button>
+
+                        <button onclick="removeCartProduct(${index})">
+                            Remove
+                        </button>
+
+                    </div>
+
+                    <strong>Subtotal: ₹${subtotal}</strong>
+
+                </div>
+
+            </div>
+        `;
+    });
+
+    products.innerHTML = html;
+
+    totalBox.innerHTML = `
+        <div class="cart-total">
+            Total: ₹${total}
+        </div>
+
+        <button class="whatsapp-order" onclick="placeWhatsAppOrder()">
+            ORDER THROUGH WHATSAPP
+        </button>
+    `;
+}
+
+/* CHANGE QUANTITY */
+
+function changeCartQuantity(index, change) {
+
+    let cart = getCart();
+
+    cart[index].quantity += change;
+
+    if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+    }
+
+    saveCart(cart);
+
+    displayCart();
+}
+
+/* REMOVE PRODUCT */
+
+function removeCartProduct(index) {
+
+    let cart = getCart();
+
+    cart.splice(index, 1);
+
+    saveCart(cart);
+
+    displayCart();
+}
+
+/* WHATSAPP ORDER */
+
+function placeWhatsAppOrder() {
+
+    let cart = getCart();
+
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    let message = "Hello Aqua Dream! I want to order:\n\n";
+
+    let total = 0;
+
+    cart.forEach(item => {
+
+        let subtotal = Number(item.price) * Number(item.quantity);
+
+        total += subtotal;
+
+        message += item.name +
+            "\nQuantity: " + item.quantity +
+            "\nPrice: ₹" + subtotal +
+            "\n\n";
+    });
+
+    message += "Total Amount: ₹" + total;
+
+    message += "\n\nPlease confirm my order.";
+
+    let url = "https://wa.me/917538867155?text=" +
+        encodeURIComponent(message);
+
+    window.open(url, "_blank");
+}
+
+/* INITIALIZE */
+
+updateCartCount();
 </script>
 
 </body>
