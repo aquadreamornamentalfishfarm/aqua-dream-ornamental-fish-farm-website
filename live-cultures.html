@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Live Foods | Aqua Dream Ornamental Fish Farm</title>
 
+<meta name="description"
+content="Buy live food starter cultures for ornamental fish fry from Aqua Dream Ornamental Fish Farm.">
+
 <style>
+
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     background: linear-gradient(135deg, #e0f7fa, #f3e5f5, #fff3e0);
     color: #123;
 }
 
+/* HEADER */
+
 header {
-    height: 80px;
+    min-height: 80px;
     background: linear-gradient(100deg, #063b4c, #00897b, #4527a0);
-    padding: 0 5%;
+    padding: 10px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,19 +45,30 @@ header {
     object-fit: contain;
 }
 
+/* NAVIGATION */
+
 nav {
     display: flex;
     align-items: center;
     gap: 25px;
+    flex-wrap: wrap;
 }
 
-nav a, .shop-menu summary {
+nav a,
+.shop-menu summary {
     color: white;
     text-decoration: none;
     font-size: 17px;
     cursor: pointer;
     list-style: none;
 }
+
+nav a:hover,
+.shop-menu summary:hover {
+    color: #80deea;
+}
+
+/* DROPDOWN */
 
 .shop-menu {
     position: relative;
@@ -81,15 +101,9 @@ nav a, .shop-menu summary {
     font-size: 15px;
 }
 
-.top-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin: 15px;
-}
+/* BUTTONS */
 
-button, .button {
+button {
     border: none;
     border-radius: 8px;
     padding: 10px 15px;
@@ -97,23 +111,41 @@ button, .button {
     color: white;
     font-weight: bold;
     cursor: pointer;
-    text-decoration: none;
 }
 
-button:hover, .button:hover {
+button:hover {
     background: #055c68;
 }
+
+/* CART BUTTON */
+
+.cart-link {
+    background: #19a974;
+    font-size: 17px;
+}
+
+#cart-count {
+    background: white;
+    color: #063b4c;
+    padding: 2px 7px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+/* PAGE */
 
 .container {
     max-width: 1100px;
     margin: auto;
-    padding: 15px;
+    padding: 25px 15px;
 }
 
 h2 {
     text-align: center;
     color: #064e5b;
 }
+
+/* PRODUCTS */
 
 .products {
     display: grid;
@@ -128,6 +160,8 @@ h2 {
     padding: 15px;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
 }
 
 .product img {
@@ -139,6 +173,10 @@ h2 {
 
 .product h3 {
     margin: 12px 0 6px;
+}
+
+.product p {
+    margin: 8px 0;
 }
 
 .price {
@@ -156,30 +194,99 @@ h2 {
     border-radius: 6px;
 }
 
-.cart-box {
-    background: white;
-    margin-top: 30px;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.order-button {
+    width: 100%;
+    margin-top: auto;
+    background: #19a974;
 }
+
+/* CART OVERLAY */
+
+.cart-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+}
+
+.cart-overlay.show {
+    display: block;
+}
+
+.cart-panel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    max-width: 450px;
+    height: 100%;
+    background: white;
+    padding: 22px;
+    overflow-y: auto;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cart-header h2 {
+    color: #063b4c;
+}
+
+.close-cart {
+    background: #dc3545;
+}
+
+/* CART ITEMS */
 
 .cart-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 10px;
     margin: 10px 0;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
+    padding-bottom: 10px;
+    font-size: 14px;
+}
+
+.cart-quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.cart-quantity button {
+    padding: 5px 11px;
+    font-size: 16px;
+}
+
+.remove-button {
+    background: #e53935;
 }
 
 .total {
     font-size: 20px;
     font-weight: bold;
-    color: #087f23;
+    color: #19a974;
+    margin: 15px 0;
 }
 
-input, textarea {
+.empty-cart {
+    text-align: center;
+    padding: 30px 10px;
+    color: #666;
+}
+
+/* CUSTOMER INPUTS */
+
+input,
+textarea {
     padding: 10px;
     border: 1px solid #aaa;
     border-radius: 6px;
@@ -187,47 +294,35 @@ input, textarea {
     margin: 6px 0;
 }
 
+/* WHATSAPP */
+
+.whatsapp-button {
+    width: 100%;
+    background: #25D366;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.whatsapp-button:hover {
+    background: #128C7E;
+}
+
+/* FOOTER */
+
 footer {
     text-align: center;
     background: #063b4c;
     color: white;
-    padding: 15px;
+    padding: 25px 15px;
     margin-top: 35px;
+    line-height: 1.8;
 }
 
-    .cart-box {
-    display: none;
-    position: fixed;
-    top: 90px;
-    right: 20px;
-    width: 380px;
-    max-width: calc(100% - 30px);
-    max-height: 80vh;
-    overflow-y: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.25);
-    z-index: 2000;
-}
-
-.cart-box.show {
-    display: block;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin: 10px 0;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
-}
+/* MOBILE */
 
 @media(max-width: 900px) {
+
     header {
-        height: auto;
-        min-height: 80px;
         flex-direction: column;
         padding: 10px 3%;
     }
@@ -240,13 +335,41 @@ footer {
     nav {
         justify-content: center;
         gap: 15px;
-        flex-wrap: wrap;
     }
+
 }
-    </style>
+
+@media(max-width: 600px) {
+
+    .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .product {
+        padding: 10px;
+    }
+
+    .product h3 {
+        font-size: 14px;
+    }
+
+    .product img {
+        height: 140px;
+    }
+
+    .cart-panel {
+        padding: 15px;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
+
+<!-- HEADER -->
 
 <header>
 
@@ -261,218 +384,713 @@ footer {
         <a href="index.html">Home</a>
 
         <details class="shop-menu">
+
             <summary>Shop ▾</summary>
 
             <div class="shop-dropdown">
+
                 <a href="fish.html">Fish</a>
                 <a href="fish-food.html">Fish Food</a>
                 <a href="live-cultures.html">Live Cultures</a>
                 <a href="plants.html">Aquarium Plants</a>
                 <a href="aquarium-products.html">Aquarium Products</a>
+
             </div>
+
         </details>
 
         <a href="about.html">About</a>
+
         <a href="contact.html">Contact</a>
 
-        <button onclick="showCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+        <button class="cart-link" onclick="openCart()">
+            🛒 Cart <span id="cart-count">0</span>
+        </button>
 
     </nav>
 
 </header>
 
 
+<!-- PAGE CONTENT -->
+
 <div class="container">
+
     <h2>Live Foods & Cultures</h2>
-    <p style="text-align:center;">
+
+    <p style="text-align:center; margin-top:12px;">
         Starter cultures for feeding your ornamental fish fry.
     </p>
 
     <div class="products">
 
         <div class="product">
-            <img src="vinegar-eel.%20jpg.webp" alt="Vinegar Eel Starter Culture">
+
+            <img src="vinegar-eel.%20jpg.webp"
+                 alt="Vinegar Eel Starter Culture">
+
             <h3>Vinegar Eel Starter Culture</h3>
+
             <p>Starter culture for small fish fry.</p>
+
             <div class="price">₹60</div>
+
             <label>Quantity:</label>
-            <input type="number" id="qty-vinegar" min="1" value="1">
-            <br>
-            <button onclick="addToCart('Vinegar Eel Starter Culture', 60, 'qty-vinegar')">
-                Add to Cart
+
+            <input type="number" id="qty-vinegar"
+                   min="1" value="1">
+
+            <button class="order-button"
+                    onclick="addToCart('Vinegar Eel Starter Culture', 60, 'qty-vinegar', 'vinegar-eel.%20jpg.webp')">
+                🛒 ADD TO CART
             </button>
+
         </div>
+
 
         <div class="product">
-            <img src="micro-worm.%20jpg" alt="Microworm Starter Culture">
+
+            <img src="micro-worm.%20jpg"
+                 alt="Microworm Starter Culture">
+
             <h3>Microworm Starter Culture</h3>
+
             <p>Starter culture for feeding fish fry.</p>
+
             <div class="price">₹60</div>
+
             <label>Quantity:</label>
-            <input type="number" id="qty-microworm" min="1" value="1">
-            <br>
-            <button onclick="addToCart('Microworm Starter Culture', 60, 'qty-microworm')">
-                Add to Cart
+
+            <input type="number" id="qty-microworm"
+                   min="1" value="1">
+
+            <button class="order-button"
+                    onclick="addToCart('Microworm Starter Culture', 60, 'qty-microworm', 'micro-worm.%20jpg')">
+                🛒 ADD TO CART
             </button>
+
         </div>
- <div class="product">
-           <img src="moina-culture.jpg" alt="Moina Culture">
+
+
+        <div class="product">
+
+            <img src="moina-culture.jpg"
+                 alt="Moina Culture">
+
             <h3>Moina Culture</h3>
+
             <p>Live Moina culture for feeding ornamental fish fry.</p>
+
             <div class="price">₹50</div>
+
             <label>Quantity:</label>
-            <input type="number" id="qty-moina" min="1" value="1">
-            <br>
-            <button onclick="addToCart('Moina Culture', 50, 'qty-moina')">
-                Add to Cart
+
+            <input type="number" id="qty-moina"
+                   min="1" value="1">
+
+            <button class="order-button"
+                    onclick="addToCart('Moina Culture', 50, 'qty-moina', 'moina-culture.jpg')">
+                🛒 ADD TO CART
             </button>
+
         </div>
+
     </div>
 
-   
-       <div class="cart-box" id="cart-box">
-
-    <button onclick="showCart()" style="float:right;">✖ Close</button>
-
-    <h2>Your Cart</h2>
-
-    <div id="cart-items">Your cart is empty.</div>
-
-  
-        <p class="total">Total: ₹<span id="cart-total">0</span></p>
-
-        <h3>Delivery Details</h3>
-        <input type="text" id="customer-name" placeholder="Your Name">
-        <input type="tel" id="customer-phone" placeholder="Phone Number">
-        <textarea id="customer-address" placeholder="Full Delivery Address"></textarea>
-        <input type="text" id="customer-pincode" placeholder="PIN Code">
-
-        <button onclick="sendOrder()">Order through WhatsApp</button>
-    </div>
 </div>
 
+
+<!-- SHARED CART PANEL -->
+
+<div class="cart-overlay" id="cartOverlay"
+     onclick="if(event.target === this) closeCart()">
+
+    <div class="cart-panel">
+
+        <div class="cart-header">
+
+            <h2>Your Cart 🛒</h2>
+
+            <button class="close-cart" onclick="closeCart()">
+                ✖ Close
+            </button>
+
+        </div>
+
+        <div id="cart-items">
+            Your cart is empty.
+        </div>
+
+        <hr>
+
+        <h3>Delivery Details</h3>
+
+        <p>Product Total: ₹<span id="cart-total">0</span></p>
+
+        <p>Parcel Weight: <span id="parcel-weight">0 kg</span></p>
+
+        <p>Delivery Charge: ₹<span id="delivery-charge">0</span></p>
+
+        <p class="total">
+            Grand Total: ₹<span id="grand-total">0</span>
+        </p>
+
+        <h3>Customer Details</h3>
+
+        <input type="text" id="customer-name"
+               placeholder="Your Name">
+
+        <input type="tel" id="customer-phone"
+               placeholder="10-digit Phone Number">
+
+        <textarea id="customer-address"
+                  placeholder="Full Delivery Address"></textarea>
+
+        <input type="text" id="customer-pincode"
+               placeholder="6-digit PIN Code"
+               maxlength="6"
+               inputmode="numeric">
+
+        <button onclick="checkPincode()" style="width:100%">
+            Check PIN Code
+        </button>
+
+        <p id="pincode-result"></p>
+
+        <p id="delivery-location"></p>
+
+        <button class="whatsapp-button" onclick="sendOrder()">
+            ORDER THROUGH WHATSAPP
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
 <footer>
-    <p>Aqua Dream Ornamental Fish Farm</p>
+
+    <strong>AQUA DREAM ORNAMENTAL FISH FARM</strong>
+
     <p>Kanyakumari, Tamil Nadu</p>
+
+    <p>WhatsApp: +91 75388 67155</p>
+
+    <p>© 2026 Aqua Dream. All Rights Reserved.</p>
+
 </footer>
 
+
 <script>
-let cart = JSON.parse(localStorage.getItem("aquaDreamCart")) || [];
+
+/* SHARED CART */
+
+let cart = JSON.parse(
+    localStorage.getItem("aquaDreamCart")
+) || [];
+
+let verifiedPincode = "";
+let deliveryState = "";
+let deliveryCity = "";
+let deliveryDistrict = "";
+let deliveryCharge = 0;
+let parcelWeight = 0;
+
+
+/* SAVE CART */
 
 function saveCart() {
-    localStorage.setItem("aquaDreamCart", JSON.stringify(cart));
+
+    localStorage.setItem(
+        "aquaDreamCart",
+        JSON.stringify(cart)
+    );
+
 }
 
-function addToCart(name, price, qtyId) {
-    let quantity = parseInt(document.getElementById(qtyId).value);
+
+/* ADD TO CART */
+
+function addToCart(name, price, qtyId, image) {
+
+    let quantity = parseInt(
+        document.getElementById(qtyId).value
+    );
 
     if (!quantity || quantity < 1) {
+
         alert("Please enter a valid quantity.");
+
         return;
+
     }
 
-    let existing = cart.find(item => item.name === name);
+    let existing = cart.find(
+        item => item.name === name
+    );
 
     if (existing) {
+
         existing.quantity += quantity;
+
+        existing.weight = existing.weight || 250;
+
     } else {
+
         cart.push({
+
             name: name,
             price: price,
+            image: image,
             quantity: quantity,
             weight: 250
+
         });
+
     }
 
     saveCart();
+
     updateCart();
-    alert("Added to cart!");
+
+    alert(name + " added to cart!");
+
 }
+
+
+/* CHANGE QUANTITY */
+
+function changeQuantity(index, change) {
+
+    cart[index].quantity += change;
+
+    if (cart[index].quantity <= 0) {
+
+        cart.splice(index, 1);
+
+    }
+
+    saveCart();
+
+    updateCart();
+
+}
+
+
+/* REMOVE ITEM */
+
+function removeItem(index) {
+
+    cart.splice(index, 1);
+
+    saveCart();
+
+    updateCart();
+
+}
+
+
+/* UPDATE CART */
 
 function updateCart() {
 
-    // Calculate and display total quantity in the cart button
-    
     let cartItems = document.getElementById("cart-items");
-    let total = 0;
 
-    if (cart.length === 0) {
-    cartItems.innerHTML = "Your cart is empty.";
-    document.getElementById("cart-total").textContent = "0";
-    document.getElementById("cart-count").textContent = "0";
-    return;
-}
+    let total = 0;
+    let count = 0;
+    let weight = 0;
 
     cartItems.innerHTML = "";
 
     cart.forEach((item, index) => {
+
         let itemTotal = item.price * item.quantity;
+
         total += itemTotal;
+
+        count += item.quantity;
+
+        // Keep existing fish weights and live culture weights.
+        weight += (item.weight || 250) * item.quantity;
 
         cartItems.innerHTML += `
+
             <div class="cart-item">
-                <span>${item.name} × ${item.quantity} = ₹${itemTotal}</span>
-                <button onclick="removeItem(${index})">Remove</button>
+
+                <div>
+
+                    <strong>${item.name}</strong>
+
+                    <br>
+
+                    ₹${itemTotal}
+
+                    <div class="cart-quantity">
+
+                        <button onclick="changeQuantity(${index}, -1)">
+                            −
+                        </button>
+
+                        <span>${item.quantity}</span>
+
+                        <button onclick="changeQuantity(${index}, 1)">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button class="remove-button"
+                        onclick="removeItem(${index})">
+                    Remove
+                </button>
+
             </div>
+
         `;
+
     });
+
+    if (cart.length === 0) {
+
+        cartItems.innerHTML =
+            '<div class="empty-cart">Your cart is empty.</div>';
+
+    }
+
+    document.getElementById("cart-count").textContent = count;
 
     document.getElementById("cart-total").textContent = total;
-}
-let count = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-document.getElementById("cart-count").textContent = count;
-    
-function removeItem(index) {
-    cart.splice(index, 1);
-    saveCart();
+    parcelWeight = cart.length > 0
+        ? Math.ceil(weight / 1000)
+        : 0;
+
+    document.getElementById("parcel-weight").textContent =
+        cart.length ? parcelWeight + " kg" : "0 kg";
+
+    calculateDelivery();
+
+}
+
+
+/* DELIVERY CHARGE */
+
+function calculateDelivery() {
+
+    let kg = parcelWeight;
+
+    let charge = 0;
+
+    if (cart.length === 0 || !deliveryState) {
+
+        charge = 0;
+
+    }
+
+    // TAMIL NADU AND PUDUCHERRY
+
+    else if (
+        deliveryState === "Tamil Nadu" ||
+        deliveryState === "Puducherry"
+    ) {
+
+        let rates = [90, 160, 250, 320, 400];
+
+        charge = kg <= 5
+            ? rates[kg - 1]
+            : 400 + ((kg - 5) * 80);
+
+    }
+
+    // KERALA
+
+    else if (deliveryState === "Kerala") {
+
+        charge = 100 + ((kg - 1) * 80);
+
+    }
+
+    // KARNATAKA
+
+    else if (deliveryState === "Karnataka") {
+
+        charge = 100 + ((kg - 1) * 80);
+
+    }
+
+    deliveryCharge = charge;
+
+    let productTotal = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
+
+    document.getElementById("delivery-charge").textContent = charge;
+
+    document.getElementById("grand-total").textContent =
+        productTotal + charge;
+
+}
+
+
+/* OPEN CART */
+
+function openCart() {
+
+    document.getElementById("cartOverlay")
+        .classList.add("show");
+
     updateCart();
+
 }
 
-function showCart() {
-    document.getElementById("cart-box").classList.toggle("show");
+
+/* CLOSE CART */
+
+function closeCart() {
+
+    document.getElementById("cartOverlay")
+        .classList.remove("show");
+
 }
 
+
+/* PIN CODE CHECK */
+
+async function checkPincode() {
+
+    let pin = document.getElementById("customer-pincode")
+        .value.trim();
+
+    let result = document.getElementById("pincode-result");
+
+    let location = document.getElementById("delivery-location");
+
+    verifiedPincode = "";
+
+    deliveryState = "";
+
+    result.textContent = "Checking PIN Code...";
+
+    location.textContent = "";
+
+    calculateDelivery();
+
+    if (!/^[0-9]{6}$/.test(pin)) {
+
+        result.textContent =
+            "Enter a valid 6-digit PIN Code.";
+
+        return;
+
+    }
+
+    try {
+
+        let response = await fetch(
+            "https://api.postalpincode.in/pincode/" + pin
+        );
+
+        let data = await response.json();
+
+        if (
+            !data[0] ||
+            data[0].Status !== "Success" ||
+            !data[0].PostOffice
+        ) {
+
+            result.textContent = "Invalid PIN Code.";
+
+            return;
+
+        }
+
+        let post = data[0].PostOffice[0];
+
+        let state = post.State;
+
+        let allowedStates = [
+            "Tamil Nadu",
+            "Puducherry",
+            "Kerala",
+            "Karnataka"
+        ];
+
+        if (!allowedStates.includes(state)) {
+
+            result.textContent =
+                "Delivery is not currently available in " + state;
+
+            return;
+
+        }
+
+        if (post.DeliveryStatus === "Non-Delivery") {
+
+            result.textContent =
+                "This PIN Code is a non-delivery post office. Please contact us.";
+
+            return;
+
+        }
+
+        verifiedPincode = pin;
+
+        deliveryState = state;
+
+        deliveryCity = post.Name;
+
+        deliveryDistrict = post.District;
+
+        result.textContent =
+            "✅ PIN Code verified successfully!";
+
+        location.textContent =
+            "Post Office: " + deliveryCity +
+            " | District: " + deliveryDistrict +
+            " | State: " + deliveryState;
+
+        calculateDelivery();
+
+    }
+
+    catch (error) {
+
+        result.textContent =
+            "Unable to check PIN Code. Please try again.";
+
+    }
+
+}
+
+
+/* RESET VERIFICATION WHEN PIN CHANGES */
+
+document.getElementById("customer-pincode").addEventListener(
+    "input",
+    function() {
+
+        verifiedPincode = "";
+
+        deliveryState = "";
+
+        document.getElementById("pincode-result").textContent = "";
+
+        document.getElementById("delivery-location").textContent = "";
+
+        calculateDelivery();
+
+    }
+);
+
+
+/* WHATSAPP ORDER */
 
 function sendOrder() {
+
     if (cart.length === 0) {
+
         alert("Your cart is empty.");
+
         return;
+
     }
 
-    let name = document.getElementById("customer-name").value.trim();
-    let phone = document.getElementById("customer-phone").value.trim();
-    let address = document.getElementById("customer-address").value.trim();
-    let pincode = document.getElementById("customer-pincode").value.trim();
+    let name = document.getElementById("customer-name")
+        .value.trim();
 
-    if (!name || !phone || !address || !pincode) {
+    let phone = document.getElementById("customer-phone")
+        .value.trim();
+
+    let address = document.getElementById("customer-address")
+        .value.trim();
+
+    let pin = document.getElementById("customer-pincode")
+        .value.trim();
+
+    if (!name || !phone || !address || !pin) {
+
         alert("Please fill in all delivery details.");
+
         return;
+
     }
 
-    let total = 0;
-    let message = "Hello Aqua Dream! I would like to order:\n\n";
+    if (!/^[0-9]{10}$/.test(phone)) {
+
+        alert("Enter a valid 10-digit phone number.");
+
+        return;
+
+    }
+
+    if (verifiedPincode !== pin || !deliveryState) {
+
+        alert("Please verify your PIN Code first.");
+
+        return;
+
+    }
+
+    let productTotal = 0;
+
+    let message =
+        "Hello Aqua Dream! I would like to order:\n\n";
 
     cart.forEach(item => {
+
         let itemTotal = item.price * item.quantity;
-        total += itemTotal;
-        message += `${item.name} × ${item.quantity} = ₹${itemTotal}\n`;
+
+        productTotal += itemTotal;
+
+        message +=
+            item.name + " × " + item.quantity +
+            " = ₹" + itemTotal + "\n";
+
     });
 
-    message += `\nProduct Total: ₹${total}`;
-    message += `\n\nName: ${name}`;
-    message += `\nPhone: ${phone}`;
-    message += `\nAddress: ${address}`;
-    message += `\nPIN Code: ${pincode}`;
-    message += "\n\nPlease confirm delivery charges and order.";
+    message += "\nProduct Total: ₹" + productTotal;
+
+    message += "\nParcel Weight: " + parcelWeight + " kg";
+
+    message += "\nDelivery Charge: ₹" + deliveryCharge;
+
+    message += "\nGrand Total: ₹" +
+        (productTotal + deliveryCharge);
+
+    message += "\n\nName: " + name;
+
+    message += "\nPhone: " + phone;
+
+    message += "\nAddress: " + address;
+
+    message += "\nPIN Code: " + pin;
+
+    message += "\nPost Office: " + deliveryCity;
+
+    message += "\nDistrict: " + deliveryDistrict;
+
+    message += "\nState: " + deliveryState;
+
+    message += "\n\nPlease confirm the order.";
 
     let whatsappURL =
-        "https://wa.me/917538867155?text=" + encodeURIComponent(message);
+        "https://wa.me/917538867155?text=" +
+        encodeURIComponent(message);
 
     window.open(whatsappURL, "_blank");
+
 }
 
+
+/* INITIALIZE CART */
+
 updateCart();
+
 </script>
 
 </body>
