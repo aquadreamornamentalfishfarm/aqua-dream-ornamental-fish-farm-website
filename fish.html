@@ -1046,7 +1046,6 @@ function saveCart() {
     );
 }
 
-
 /* ADD TO CART */
 
 function addToCart(product, quantity) {
@@ -1058,26 +1057,41 @@ function addToCart(product, quantity) {
         return;
     }
 
+    // Estimated shipping weight:
+    // 1 pair of fish = 200 grams
+    // 1 individual fish = 200 grams
+    const fishWeight = 200;
+
     let existing = cart.find(
         item => item.name === product.name
     );
 
     if (existing) {
+
         existing.quantity += quantity;
+
+        existing.weight = existing.weight || fishWeight;
+
     } else {
+
         cart.push({
+
             name: product.name,
             price: product.price,
             image: product.image,
             quantity: quantity,
-            weight: 200
+            weight: fishWeight
+
         });
+
     }
 
     saveCart();
+
     updateCart();
 
     alert(product.name + " added to cart!");
+
 }
 
 
@@ -1159,8 +1173,9 @@ function updateCart() {
 
     document.getElementById("cart-total").textContent = total;
 
-    parcelWeight = Math.max(1, Math.ceil(weight / 1000));
-
+   parcelWeight = cart.length > 0
+    ? Math.ceil(weight / 1000)
+    : 0;
     document.getElementById("parcel-weight").textContent =
         cart.length ? parcelWeight + " kg" : "0 kg";
 
@@ -1176,8 +1191,12 @@ function calculateDelivery() {
     let charge = 0;
 
     if (cart.length === 0 || !deliveryState) {
+
         charge = 0;
+
     }
+
+    // TAMIL NADU AND PUDUCHERRY
 
     else if (
         deliveryState === "Tamil Nadu" ||
@@ -1192,19 +1211,19 @@ function calculateDelivery() {
 
     }
 
+    // KERALA
+
     else if (deliveryState === "Kerala") {
 
-        charge = kg === 1
-            ? 100
-            : 200 + ((kg - 2) * 100);
+        charge = 100 + ((kg - 1) * 80);
 
     }
 
+    // KARNATAKA
+
     else if (deliveryState === "Karnataka") {
 
-        charge = kg === 1
-            ? 110
-            : 180 + ((kg - 2) * 100);
+        charge = 100 + ((kg - 1) * 80);
 
     }
 
@@ -1219,8 +1238,8 @@ function calculateDelivery() {
 
     document.getElementById("grand-total").textContent =
         productTotal + charge;
-}
 
+}
 
 /* REMOVE ITEM */
 
