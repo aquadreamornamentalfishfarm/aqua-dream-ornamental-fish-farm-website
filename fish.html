@@ -376,9 +376,7 @@ button:hover {
     padding: 40px 10px;
     color: #666;
 }
-.cart-box.show {
-    display: block;
-}
+
 
 .cart-item {
     display: flex;
@@ -523,12 +521,7 @@ footer {
         padding: 10px 5px;
     }
 
-    .cart-box {
-        right: 10px;
-        width: calc(100% - 20px);
-        max-width: none;
-    }
-
+    
 }
 
 </style>
@@ -612,70 +605,68 @@ footer {
 <div class="product-grid" id="fish-products"></div>
 
 
-<!-- CART POPUP -->
+<!-- COMMON CART PANEL -->
 
-<div class="cart-box" id="cart-box">
+<div class="cart-overlay" id="cartOverlay"
+     onclick="if(event.target === this) closeCart()">
 
-    <button class="close-cart" onclick="showCart()">
+    <div class="cart-panel">
 
-        ✖ Close
+        <div class="cart-header">
+            <h2>Your Cart 🛒</h2>
+            <button class="close-cart" onclick="closeCart()">✖ Close</button>
+        </div>
 
-    </button>
+        <div id="cart-items">
+            Your cart is empty.
+        </div>
 
-    <h2>Your Cart 🛒</h2>
+        <hr>
 
-    <br>
+        <h3>Delivery Details</h3>
 
-    <div id="cart-items">
+        <p>Product Total: ₹<span id="cart-total">0</span></p>
 
-        Your cart is empty.
+        <p>Parcel Weight: <span id="parcel-weight">0 kg</span></p>
+
+        <p>Delivery Charge: ₹<span id="delivery-charge">0</span></p>
+
+        <p class="total">
+            Grand Total: ₹<span id="grand-total">0</span>
+        </p>
+
+        <h3>Customer Details</h3>
+
+        <input type="text" id="customer-name" placeholder="Your Name">
+
+        <input type="tel" id="customer-phone" placeholder="10-digit Phone Number">
+
+        <textarea id="customer-address"
+                  placeholder="Full Delivery Address"></textarea>
+
+        <input
+            type="text"
+            id="customer-pincode"
+            placeholder="6-digit PIN Code"
+            maxlength="6"
+            inputmode="numeric"
+        >
+
+        <button onclick="checkPincode()" style="width:100%">
+            Check PIN Code
+        </button>
+
+        <p id="pincode-result"></p>
+
+        <p id="delivery-location"></p>
+
+        <button class="whatsapp-button" onclick="sendOrder()">
+            ORDER THROUGH WHATSAPP
+        </button>
 
     </div>
 
-  <h3>Delivery Details</h3>
-
-<p>Product Total: ₹<span id="cart-total">0</span></p>
-
-<p>Parcel Weight: <span id="parcel-weight">0 kg</span></p>
-
-<p>Delivery Charge: ₹<span id="delivery-charge">0</span></p>
-
-<p class="total">
-    Grand Total: ₹<span id="grand-total">0</span>
-</p>
-
-<h3>Customer Details</h3>
-
-<input type="text" id="customer-name" placeholder="Your Name">
-
-<input type="tel" id="customer-phone" placeholder="10-digit Phone Number">
-
-<textarea id="customer-address"
-placeholder="Full Delivery Address"></textarea>
-
-<input
-    type="text"
-    id="customer-pincode"
-    placeholder="6-digit PIN Code"
-    maxlength="6"
-    inputmode="numeric"
->
-
-<button onclick="checkPincode()" style="width:100%">
-    Check PIN Code
-</button>
-
-<p id="pincode-result"></p>
-
-<p id="delivery-location"></p>
-
-<button class="whatsapp-button" onclick="sendOrder()">
-    Order through WhatsApp
-</button>
-
 </div>
-
-
 <!-- FOOTER -->
 
 <footer>
@@ -1243,12 +1234,20 @@ function removeItem(index) {
 }
 
 
-/* SHOW CART */
+/* OPEN AND CLOSE CART */
 
-function showCart() {
+function openCart() {
 
-    document.getElementById("cart-box")
-        .classList.toggle("show");
+    document.getElementById("cartOverlay").classList.add("show");
+
+    updateCart();
+
+}
+
+function closeCart() {
+
+    document.getElementById("cartOverlay").classList.remove("show");
+
 }
 
 
